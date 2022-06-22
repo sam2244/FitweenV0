@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import 'home.dart';
 import 'login.dart';
+import 'addplan.dart';
 import 'splash.dart';
 
 void main() async {
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login': (context) => const LoginPage(),
         '/home' : (context) => const MainScreen(title: ''),
-        //'/chat' : (context) => const ChatScreen(title: ''),
+        '/addplan' : (context) => const AddPlanPage(title: ''),
         //'/chating' : (context) => ChatPage(),
         //'explore' : (context) => const ExploreScreen(title: ''),
       },

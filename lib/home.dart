@@ -42,15 +42,18 @@ class MainScreenState extends State<MainScreen> {
                 return Container(
                   child: Column(
                     children: [
-                      Row(
-                        children: [
-
-                        ],
+                      IconButton(
+                        icon: new Icon(Icons.arrow_back_ios_new_rounded),
+                        color: Colors.black,
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/addplan',);
+                          },
                       ),
                     ],
                   ),
                 );
-              }).toList(),
+              }
+              ).toList(),
             );
           }
       ),
