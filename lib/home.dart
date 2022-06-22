@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key, required this.title}) : super(key: key);
@@ -26,6 +27,32 @@ class MainScreenState extends State<MainScreen> {
             Get.back();
           },
         ),
+      ),
+      body: StreamBuilder(
+          stream: FirebaseFirestore.instance.collection('plans').snapshots(),
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (!snapshot.hasData) {
+              return Center(
+                child: CircularProgressIndicator(
+                ),
+              );
+            }
+            return ListView(
+              children: snapshot.data!.docs.map((document) {
+                return Container(
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              }).toList(),
+            );
+          }
       ),
     );
   }

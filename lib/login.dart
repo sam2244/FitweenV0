@@ -82,6 +82,25 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ],
                   ),
+                  ButtonBar(
+                    alignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.blue, // background
+                          onPrimary: Colors.white, // foreground
+                        ),
+                        onPressed: ()  async{
+                          await signInWithGoogle();
+                          setUserinfo();
+                          setState(() => _flag = !_flag);
+                          //() => Get.off(() => const MainScreen(title: ''));
+                          Navigator.pushNamed(context, '/home',);
+                        },
+                        child: Text('Apple Login'),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
