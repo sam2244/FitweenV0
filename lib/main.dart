@@ -1,3 +1,4 @@
+import 'package:fitween1/firebase_options.dart';
 import 'package:fitween1/page/home.dart';
 import 'package:fitween1/page/login.dart';
 import 'package:fitween1/page/splash.dart';
@@ -7,7 +8,11 @@ import 'package:get/get.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    name: 'fitween',
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(const MyApp());
 }
 
