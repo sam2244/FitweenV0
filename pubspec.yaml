@@ -1,0 +1,37 @@
+name: fitween1
+description: Firween Project Version 1
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.17.3 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  firebase_core:
+  firebase_auth:
+  cloud_firestore:
+  firebase_storage:
+  google_sign_in:
+  get:
+  image_picker:
+
+  cupertino_icons: ^1.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+  - img/fitweenV1.png
+  - img/alarm.png
