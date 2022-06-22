@@ -1,6 +1,12 @@
 # fitween1
 
-Firween Project Version 1
+Fitween Project Version 1
+
+#Development Environment[2022.06.22]
+- Flutter
+- Firebase
+- Adobe Illustrator
+- Figma
 
 ## Getting Started
 
@@ -14,3 +20,4 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
