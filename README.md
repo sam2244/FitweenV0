@@ -1,4 +1,4 @@
-# fitween 1.0
+# Fitween 1.0
 
 Fitween Project Version 1
 
