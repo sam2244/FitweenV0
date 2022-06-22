@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            user.fitweenLogout();
+            user.fitweenGoogleLogout();
             Get.back();
           },
           child: const Text('logout'),

@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'package:fitween1/config/palette.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import 'login.dart';
@@ -24,15 +26,10 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-              width: 350,
-              child: Image.asset('img/fitweenV1.png'),
-            ),
-          ],
+      body: Container(
+        color: Palette.dark,
+        child: Center(
+          child: SvgPicture.asset('asset/img/logo/fitween.svg'),
         ),
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:fitween1/firebase_options.dart';
 import 'package:fitween1/page/home.dart';
 import 'package:fitween1/page/login.dart';
+import 'package:fitween1/page/register.dart';
 import 'package:fitween1/page/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(name: '/login', page: () => const LoginPage()),
         GetPage(name: '/home', page: () => const HomePage()),
+        GetPage(name: '/register', page: () => const RegisterPage()),
       ],
     );
   }

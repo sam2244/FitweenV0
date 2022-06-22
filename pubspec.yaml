@@ -21,6 +21,8 @@ dependencies:
   image_picker:
 
   cupertino_icons: ^1.0.2
+  flutter_svg: ^1.1.0
+
 
 dev_dependencies:
   flutter_test:
@@ -33,5 +35,21 @@ flutter:
   uses-material-design: true
 
   assets:
-  - img/fitweenV1.png
-  - img/alarm.png
+  - asset/img/
+  - asset/img/logo/
+
+fonts:
+  - family: Noto_Sans_KR
+    fonts:
+      - asset: assets/font/Noto_Sans_KR/NotoSansKR-Black.otf
+        weight: 900
+      - asset: assets/font/Noto_Sans_KR/NotoSansKR-Bold.otf
+        weight: 700
+      - asset: assets/font/Noto_Sans_KR/NotoSansKR-Medium.otf
+        weight: 600
+      - asset: assets/font/Noto_Sans_KR/NotoSansKR-Regular.otf
+        weight: 400
+      - asset: assets/font/Noto_Sans_KR/NotoSansKR-Light.otf
+        weight: 300
+      - asset: assets/font/Noto_Sans_KR/NotoSansKR-Thin.otf
+        weight: 200

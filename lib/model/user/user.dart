@@ -5,6 +5,9 @@ import 'package:get/get.dart';
 
 class FitweenUser extends GetxController {
   static const String defaultProfile = '';
+
+  bool logged = true;
+
   String? uid;
   String? name;
   String? email;
@@ -47,7 +50,7 @@ class FitweenUser extends GetxController {
   };
 
   // 피트윈 로그인
-  Future fitweenLogin() async {
+  Future fitweenGoogleLogin() async {
     UserCredential userCredential;
     try { userCredential = await signInWithGoogle(); }
     catch (e) { return; }
@@ -66,22 +69,20 @@ class FitweenUser extends GetxController {
 
     if (jsonData == null) return;
 
-    // 로그인
+    // 기존 회원
     if (json.exists) {
       nickname = jsonData['nickname'];
     }
 
-    // 회원가입
-    else {
-      // TODO: 닉네임 입력 창 추가
-    }
-
     fromJson(jsonData);
     instance.collection('users').doc(uid).set(toJson());
+    logged = true;
   }
 
-  void fitweenLogout() {
+  // 피트윈 로그아웃
+  void fitweenGoogleLogout() {
     signOutWithGoogle();
+    logged = false;
     uid = null;
     name = null;
     email = null;
