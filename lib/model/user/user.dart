@@ -5,19 +5,25 @@ import 'package:get/get.dart';
 
 class FitweenUser extends GetxController {
   static const String defaultProfile = '';
+
+  bool logged = true;
+
   String? uid;
   String? name;
   String? email;
   String? nickname;
   String imageUrl = defaultProfile;
   String? statusMsg;
-  List<String> planIds = [];
+  late String role;
+  List<String> trainerPlanIds = [];
+  List<String> traineePlanIds = [];
 
   FitweenUser({
     this.uid,
     this.name,
     this.email,
     this.nickname,
+    this.role = 'trainee',
     this.imageUrl = defaultProfile,
     this.statusMsg,
   });
@@ -33,7 +39,9 @@ class FitweenUser extends GetxController {
     nickname = json['nickname'];
     imageUrl = json['imageUrl'];
     statusMsg = json['statusMsg'];
-    planIds = json['planIds'];
+    role = json['role'];
+    trainerPlanIds = json['trainerPlanIds'].cast<String>();
+    traineePlanIds = json['traineePlanIds'].cast<String>();
   }
 
   Map<String, dynamic> toJson() => {
@@ -43,49 +51,63 @@ class FitweenUser extends GetxController {
     'nickname': nickname,
     'imageUrl': imageUrl,
     'statusMsg': statusMsg,
-    'planIds': planIds,
+    'role': role,
+    'trainerPlanIds': trainerPlanIds,
+    'traineePlanIds': traineePlanIds,
   };
 
   // 피트윈 로그인
-  Future fitweenLogin() async {
-    UserCredential userCredential;
-    try { userCredential = await signInWithGoogle(); }
-    catch (e) { return; }
-
-    User? user = userCredential.user;
-    if (user == null) return;
-
-    uid = user.uid;
-    name = user.displayName;
-    email = user.email;
-    imageUrl = user.photoURL ?? FitweenUser.defaultProfile;
-
+  Future fitweenGoogleLogin() async {
     var instance = FirebaseFirestore.instance;
-    var json = await instance.collection('users').doc(uid).get();
-    var jsonData = json.data();
 
-    if (jsonData == null) return;
-
-    // 로그인
-    if (json.exists) {
-      nickname = jsonData['nickname'];
+    UserCredential? userCredential = await signInWithGoogle();
+    if (userCredential == null) {
+      logged = false;
     }
-
-    // 회원가입
     else {
-      // TODO: 닉네임 입력 창 추가
-    }
+      User? user = userCredential.user;
 
-    fromJson(jsonData);
-    instance.collection('users').doc(uid).set(toJson());
+      var json = await instance.collection('users').doc(user!.uid).get();
+      Map<String, dynamic>? jsonData = json.data();
+
+      if (jsonData == null) return;
+      fromJson(jsonData);
+
+      // 기존 회원
+      if (json.exists) {
+        nickname = jsonData['nickname'];
+        imageUrl = jsonData['imageUrl'] ?? FitweenUser.defaultProfile;
+        role = jsonData['role'];
+      }
+
+      uid = user.uid;
+      name = user.displayName;
+      email = user.email;
+
+      instance.collection('users').doc(uid).set(toJson());
+
+      fromJson(jsonData);
+      instance.collection('users').doc(uid).set(toJson());
+      logged = true;
+    }
   }
 
-  void fitweenLogout() {
+  // 피트윈 로그아웃
+  void fitweenGoogleLogout() {
     signOutWithGoogle();
+    logged = false;
     uid = null;
     name = null;
     email = null;
     imageUrl = FitweenUser.defaultProfile;
     nickname = null;
+  }
+
+  void setNickname(String value) => nickname = value;
+  void toggleRole() {
+    role = role == 'trainer' ? 'trainee' : 'trainer';
+
+    var instance = FirebaseFirestore.instance;
+    instance.collection('users').doc(uid).set(toJson());
   }
 }

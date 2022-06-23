@@ -1,6 +1,7 @@
 import 'package:fitween1/firebase_options.dart';
 import 'package:fitween1/page/home.dart';
 import 'package:fitween1/page/login.dart';
+import 'package:fitween1/page/register.dart';
 import 'package:fitween1/page/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -29,28 +30,8 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(name: '/login', page: () => const LoginPage()),
         GetPage(name: '/home', page: () => const HomePage()),
+        GetPage(name: '/register', page: () => const RegisterPage()),
       ],
-      // initialRoute: '/',
-      // routes: {
-      //   '/login': (context) => const LoginPage(),
-      //   '/home' : (context) => const MainScreen(title: ''),
-      //   //'/chat' : (context) => const ChatScreen(title: ''),
-      //   //'/chatting' : (context) => ChatPage(),
-      //   //'explore' : (context) => const ExploreScreen(title: ''),
-      // },
-      // onGenerateRoute: _getRoute,
     );
   }
-  //
-  // Route<dynamic>? _getRoute(RouteSettings settings) {
-  //   if (settings.name != '/login') {
-  //     return null;
-  //   }
-  //
-  //   return MaterialPageRoute<void>(
-  //     settings: settings,
-  //     builder: (BuildContext context) => const LoginPage(),
-  //     fullscreenDialog: true,
-  //   );
-  // }
 }

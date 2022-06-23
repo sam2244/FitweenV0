@@ -11,13 +11,13 @@ class HomePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Welcome ${user.name}!'),
+        title: Text('${user.role} ${user.nickname}!'),
       ),
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            user.fitweenLogout();
-            Get.back();
+            user.fitweenGoogleLogout();
+            Get.offAllNamed('login');
           },
           child: const Text('logout'),
         ),
