@@ -63,6 +63,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   onPressed: () {
                     Get.offAllNamed('/home');
                     user.toggleRole();
+                    user.updateDB();
                   },
                 ),
                 const SizedBox(height: 15.0),
@@ -72,6 +73,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   darkTheme: true,
                   onPressed: () {
                     Get.offAllNamed('/home');
+                    user.updateDB();
                   },
                 )
               ],

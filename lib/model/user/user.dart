@@ -70,7 +70,14 @@ class FitweenUser extends GetxController {
       var json = await instance.collection('users').doc(user!.uid).get();
       Map<String, dynamic>? jsonData = json.data();
 
-      if (jsonData == null) return;
+      if (jsonData == null) {
+        uid = user.uid;
+        name = user.displayName;
+        email = user.email;
+
+        instance.collection('users').doc(uid).set(toJson());
+        return;
+      }
       fromJson(jsonData);
 
       // 기존 회원
@@ -90,6 +97,8 @@ class FitweenUser extends GetxController {
       instance.collection('users').doc(uid).set(toJson());
       logged = true;
     }
+
+    update();
   }
 
   // 피트윈 로그아웃
@@ -106,7 +115,9 @@ class FitweenUser extends GetxController {
   void setNickname(String value) => nickname = value;
   void toggleRole() {
     role = role == 'trainer' ? 'trainee' : 'trainer';
+  }
 
+  void updateDB() {
     var instance = FirebaseFirestore.instance;
     instance.collection('users').doc(uid).set(toJson());
   }
