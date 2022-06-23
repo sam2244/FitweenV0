@@ -218,7 +218,7 @@ class MainPage extends StatelessWidget {
                                   children: const [
                                     Icon(Icons.edit_note_outlined),
                                     SizedBox(width: 6.0),
-                                    FitweenText('플랜 수정', size: 10.0)
+                                    FitweenText('플랜 수정', size: 10.0),
                                   ],
                                 ),
                               ),
