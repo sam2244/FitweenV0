@@ -15,7 +15,7 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
-    FitweenUser user = Get.put(FitweenUser());
+    FitweenUser user = Get.find<FitweenUser>();
     TextEditingController nicknameCont = TextEditingController();
 
     return Scaffold(
@@ -38,7 +38,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 FitweenInputField(
                   controller: nicknameCont,
                   onSubmitted: (nickname) {
-                    setState(() => user.setNickname(nickname));
+                    user.setNickname(nickname);
+                    setState(() {});
                   },
                   hintText: '별명',
                   darkTheme: true,
@@ -50,7 +51,7 @@ class _RegisterPageState extends State<RegisterPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 FitweenText(
-                  '${user.nickname}님은 무엇을 하고 싶으신가요?',
+                  '${user.nickname} 님은 무엇을 하고 싶으신가요?',
                   size: 15.0,
                   color: Palette.light,
                 ),

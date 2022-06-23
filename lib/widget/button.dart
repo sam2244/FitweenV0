@@ -8,6 +8,7 @@ class FitweenButton extends StatelessWidget {
     Key? key,
     this.text,
     this.child,
+    this.fontSize = 15.0,
     required this.onPressed,
     this.width = 285.0,
     this.height = 45.0,
@@ -17,6 +18,7 @@ class FitweenButton extends StatelessWidget {
 
   final String? text;
   final Widget? child;
+  final double fontSize;
   final double width;
   final double height;
   final VoidCallback onPressed;
@@ -31,7 +33,7 @@ class FitweenButton extends StatelessWidget {
     // parameter 에 따라 버튼 색상 변경
     const List<Color> buttonColor = [Palette.light, Palette.dark];
 
-    outlineColor = buttonColor;
+    outlineColor = (darkTheme ? buttonColor : buttonColor.reversed).toList();
     backgroundColor = outlineColor;
     if (!fill) backgroundColor = outlineColor.reversed.toList();
 
@@ -41,6 +43,7 @@ class FitweenButton extends StatelessWidget {
       child: OutlinedButton(
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(
+          padding: EdgeInsets.zero,
           primary: backgroundColor.last,
           backgroundColor: backgroundColor.first,
           elevation: 0.0,
@@ -49,7 +52,7 @@ class FitweenButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(10.0),
           ),
         ),
-        child: child ?? FitweenText(text!, color: backgroundColor.last),
+        child: child ?? FitweenText(text!, color: backgroundColor.last, size: fontSize),
       ),
     );
   }

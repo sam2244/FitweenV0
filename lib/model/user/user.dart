@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitween1/global/global.dart';
 import 'package:fitween1/model/user/google_login.dart';
 import 'package:get/get.dart';
 
@@ -22,7 +22,6 @@ class FitweenUser extends GetxController {
     this.uid,
     this.name,
     this.email,
-    this.nickname,
     this.role = 'trainee',
     this.imageUrl = defaultProfile,
     this.statusMsg,
@@ -56,10 +55,20 @@ class FitweenUser extends GetxController {
     'traineePlanIds': traineePlanIds,
   };
 
+  // 닉네임 설정
+  void setNickname(String? value) {
+    nickname = value; update();
+  }
+
+  // 역할 변경
+  void toggleRole() {
+    role = role == 'trainer' ? 'trainee' : 'trainer';
+  }
+
+  /// firebase
+
   // 피트윈 로그인
   Future fitweenGoogleLogin() async {
-    var instance = FirebaseFirestore.instance;
-
     UserCredential? userCredential = await signInWithGoogle();
     if (userCredential == null) {
       logged = false;
@@ -67,7 +76,7 @@ class FitweenUser extends GetxController {
     else {
       User? user = userCredential.user;
 
-      var json = await instance.collection('users').doc(user!.uid).get();
+      var json = await loadDB(user!.uid);
       Map<String, dynamic>? jsonData = json.data();
 
       if (jsonData == null) {
@@ -75,14 +84,14 @@ class FitweenUser extends GetxController {
         name = user.displayName;
         email = user.email;
 
-        instance.collection('users').doc(uid).set(toJson());
+        updateDB();
         return;
       }
       fromJson(jsonData);
 
       // 기존 회원
       if (json.exists) {
-        nickname = jsonData['nickname'];
+        nickname = json['nickname'];
         imageUrl = jsonData['imageUrl'] ?? FitweenUser.defaultProfile;
         role = jsonData['role'];
       }
@@ -91,10 +100,10 @@ class FitweenUser extends GetxController {
       name = user.displayName;
       email = user.email;
 
-      instance.collection('users').doc(uid).set(toJson());
+      updateDB();
 
       fromJson(jsonData);
-      instance.collection('users').doc(uid).set(toJson());
+      updateDB();
       logged = true;
     }
 
@@ -112,13 +121,13 @@ class FitweenUser extends GetxController {
     nickname = null;
   }
 
-  void setNickname(String value) => nickname = value;
-  void toggleRole() {
-    role = role == 'trainer' ? 'trainee' : 'trainer';
+  // firebase 에서 데이터 불러오기
+  Future loadDB(String uid) async {
+    return (await instance.collection('users').doc(uid).get());
   }
 
+  // firebase 에 데이터 최신화
   void updateDB() {
-    var instance = FirebaseFirestore.instance;
     instance.collection('users').doc(uid).set(toJson());
   }
 }

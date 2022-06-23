@@ -1,6 +1,8 @@
 import 'package:fitween1/firebase_options.dart';
+import 'package:fitween1/model/user/user.dart';
 import 'package:fitween1/page/home.dart';
 import 'package:fitween1/page/login.dart';
+import 'package:fitween1/page/main.dart';
 import 'package:fitween1/page/register.dart';
 import 'package:fitween1/page/splash.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +24,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(FitweenUser());
+
     return GetMaterialApp(
       title: 'Fitween',
       debugShowCheckedModeBanner: false,
@@ -31,6 +35,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/login', page: () => const LoginPage()),
         GetPage(name: '/home', page: () => const HomePage()),
         GetPage(name: '/register', page: () => const RegisterPage()),
+        GetPage(name: '/main', page: () => const MainPage()),
       ],
     );
   }

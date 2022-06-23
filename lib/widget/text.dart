@@ -6,20 +6,33 @@ class FitweenText extends StatelessWidget {
     Key? key,
     this.color = Palette.dark,
     this.size = 14.0,
+    this.weight = 'normal',
   }) : super(key: key);
 
   final String data;
   final Color color;
   final double size;
+  final String weight;
 
   @override
   Widget build(BuildContext context) {
+    FontWeight fontWeight = FontWeight.w600;
+
+    if (weight != 'normal') {
+      fontWeight = weight == 'bold' ? FontWeight.w800 : FontWeight.w400;
+    }
+
+    TextStyle textStyle = TextStyle(
+      overflow: TextOverflow.ellipsis,
+      fontSize: size,
+      color: color,
+      fontFamily: 'Noto_Sans_KR',
+      fontWeight: fontWeight,
+    );
+
     return Text(
       data,
-      style: TextStyle(
-        color: color,
-        fontFamily: 'Noto_Sans_KR',
-      ),
+      style: textStyle,
     );
   }
 }

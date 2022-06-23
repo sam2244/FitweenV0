@@ -11,7 +11,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = Get.put(FitweenUser());
+    FitweenUser user = Get.find<FitweenUser>();
 
     return Scaffold(
       body: Container(
@@ -42,7 +42,7 @@ class LoginPage extends StatelessWidget {
                             Get.toNamed('/register');
                           }
                           else {
-                            Get.offAllNamed('/home');
+                            Get.offAllNamed('/main');
                           }
                         }
                       },
