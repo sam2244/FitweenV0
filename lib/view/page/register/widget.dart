@@ -54,43 +54,45 @@ class RoleSelectionButtonView extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<UserPresenter>();
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Flexible(
-              child: Container(
-                constraints: const BoxConstraints(maxWidth: 100.0),
-                child: FWText('${controller.user.nickname}',
-                  size: 15.0,
-                  color: Palette.accent,
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Flexible(
+                child: Container(
+                  constraints: const BoxConstraints(maxWidth: 100.0),
+                  child: FWText('${controller.user.nickname}',
+                    size: 15.0,
+                    color: Palette.accent,
+                  ),
                 ),
               ),
-            ),
-            FWText(
-              ' 님은 무엇을 하고 싶으신가요?',
-              size: 15.0,
+              FWText(
+                ' 님은 무엇을 하고 싶으신가요?',
+                size: 15.0,
+                weight: FWFontWeight.thin,
+                color: theme.color,
+              ),
+            ],
+          ),
+          const SizedBox(height: 8.0),
+          RoleSelectionButton(theme: theme, role: Role.trainer),
+          const SizedBox(height: 15.0),
+          RoleSelectionButton(theme: theme, role: Role.trainee),
+          Container(
+            height: 50.0,
+            alignment: Alignment.center,
+            child: FWText(
+              'TIP: 역할은 언제든지 바꿀 수 있어요!',
+              size: 12.0,
               weight: FWFontWeight.thin,
               color: theme.color,
             ),
-          ],
-        ),
-        const SizedBox(height: 8.0),
-        RoleSelectionButton(theme: theme, role: Role.trainer),
-        const SizedBox(height: 15.0),
-        RoleSelectionButton(theme: theme, role: Role.trainee),
-        Container(
-          height: 50.0,
-          alignment: Alignment.center,
-          child: FWText(
-            'TIP: 역할은 언제든지 바꿀 수 있어요!',
-            size: 12.0,
-            weight: FWFontWeight.thin,
-            color: theme.color,
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -181,30 +183,37 @@ class CarouselView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
+    bool keyboardDisabled = WidgetsBinding.instance.window.viewInsets.bottom < 100.0;
+
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Expanded(
-          child: Align(
+          child: Container(
+            padding: const EdgeInsets.only(top: 50.0),
             alignment: Alignment.topCenter,
-            child: CarouselSlider(
-              carouselController: RegisterPresenter.carouselCont,
-              items: carouselWidgets(theme).map((widget) => Container(
-                padding: const EdgeInsets.symmetric(horizontal: 45.0),
-                child: widget,
-              )).toList(),
-              options: CarouselOptions(
-                initialPage: 0,
-                reverse: false,
-                enableInfiniteScroll: false,
-                scrollPhysics: const NeverScrollableScrollPhysics(),
-                viewportFraction: 1.0,
-                // onPageChanged: controller.pageChanged,
+            child: Container(
+              constraints: BoxConstraints(minWidth: screenSize.width),
+              child: CarouselSlider(
+                carouselController: RegisterPresenter.carouselCont,
+                items: carouselWidgets(theme).map((widget) => Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 45.0),
+                  child: widget,
+                )).toList(),
+                options: CarouselOptions(
+                  initialPage: 0,
+                  reverse: false,
+                  enableInfiniteScroll: false,
+                  scrollPhysics: const NeverScrollableScrollPhysics(),
+                  viewportFraction: 1.0,
+                  // onPageChanged: controller.pageChanged,
+                ),
               ),
             ),
           ),
         ),
-        Padding(
+        Container(
+          height: keyboardDisabled ? 200.0 : 100.0,
           padding: const EdgeInsets.symmetric(horizontal: 45.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -237,7 +246,7 @@ class CarouselIndicator extends StatelessWidget {
     return GetBuilder<RegisterPresenter>(
       builder: (controller) {
         return SizedBox(
-          height: 200.0,
+          height: 100.0,
           child: DotsIndicator(
             dotsCount: count,
             position: controller.pageIndex.toDouble(),
@@ -266,7 +275,10 @@ class CarouselNextButton extends StatelessWidget {
     final controller = Get.find<RegisterPresenter>();
 
     return FWButton(
-      onPressed: controller.nextPressed,
+      onPressed: () {
+        controller.nextPressed();
+        FocusScope.of(context).unfocus();
+      },
       width: 120.0,
       height: 45.0,
       text: '다음',

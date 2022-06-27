@@ -41,12 +41,12 @@ flutter:
   uses-material-design: true
 
   assets:
-  - assets/img/alarm.png
-  - assets/img/fitweenV1.png
-  - assets/img/guestuser.png
-  - assets/img/logo/apple.svg
-  - assets/img/logo/fitween.svg
-  - assets/img/logo/google.svg
+    - assets/img/alarm.png
+    - assets/img/fitweenV1.png
+    - assets/img/guest.png
+    - assets/img/logo/apple.svg
+    - assets/img/logo/fitween.svg
+    - assets/img/logo/google.svg
 
 fonts:
   - family: Noto_Sans_KR

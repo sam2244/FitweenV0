@@ -15,6 +15,7 @@ class UserPresenter extends GetxController {
   // json 데이터를 user 객체에 주입
   Future fromJson(Map<String, dynamic> json) async {
     Map<String, dynamic> map = {...json};
+    print(json);
     map['role'] = FWUser.toRole(json['role']);
     map['sex'] = FWUser.toSex(json['sex']);
     map['trainerPlans'] ??= await planPresenter.loadDB(json['trainerUid']);
@@ -30,7 +31,7 @@ class UserPresenter extends GetxController {
     'email': user.email,
     'nickname': user.nickname,
     'imageUrl': user.imageUrl,
-    'statusMsg': user.statusMessage,
+    'statusMessage': user.statusMessage,
     'role': user.role.name,
     'sex': user.sex?.name,
     'height': user.height,
@@ -58,7 +59,7 @@ class UserPresenter extends GetxController {
   // firebase 에서 로드된 데이터 가공 후 user 객체로 반환
   Future<FWUser?> loadDB(String uid) async {
     var data = await FirebasePresenter.f.collection('users').doc(uid).get();
-    Map<String, dynamic> json = data.data() ?? {};
+    Map<String, dynamic> json = data.data() ?? toJson();
     if (data.exists) await fromJson(json);
 
     return user;

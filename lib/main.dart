@@ -1,17 +1,9 @@
 import 'package:fitween1/firebase_options.dart';
-import 'package:fitween1/global/global.dart';
-import 'package:fitween1/model/user/user.dart';
 import 'package:fitween1/presenter/page/chat.dart';
 import 'package:fitween1/presenter/page/register.dart';
 import 'package:fitween1/presenter/model/plan.dart';
 import 'package:fitween1/presenter/model/user.dart';
 import 'package:fitween1/route.dart';
-import 'package:fitween1/view/page/add_plan/addPlan.dart';
-import 'package:fitween1/view/page/chat/chat.dart';
-import 'package:fitween1/view/page/login/login.dart';
-import 'package:fitween1/view/page/main/trainee/trainee.dart';
-import 'package:fitween1/view/page/main/trainer/trainer.dart';
-import 'package:fitween1/view/page/register/register.dart';
 import 'package:fitween1/view/page/splash/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -41,7 +33,7 @@ class MyApp extends StatelessWidget {
       title: 'Fitween',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        // useMaterial3: true,
+        useMaterial3: true,
       ),
       home: const SplashPage(),
       getPages: FWRoute.getPages,
