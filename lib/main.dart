@@ -1,10 +1,10 @@
 import 'package:fitween1/firebase_options.dart';
-import 'package:fitween1/model/user/user.dart';
-import 'package:fitween1/page/home.dart';
-import 'package:fitween1/page/login.dart';
-import 'package:fitween1/page/main.dart';
-import 'package:fitween1/page/register.dart';
-import 'package:fitween1/page/splash.dart';
+import 'package:fitween1/presenter/page/chat.dart';
+import 'package:fitween1/presenter/page/register.dart';
+import 'package:fitween1/presenter/model/plan.dart';
+import 'package:fitween1/presenter/model/user.dart';
+import 'package:fitween1/route.dart';
+import 'package:fitween1/view/page/splash/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
@@ -24,19 +24,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(FitweenUser());
+    Get.put(UserPresenter());
+    Get.put(PlanPresenter());
+    Get.put(RegisterPresenter());
+    Get.put(ChatPresenter());
 
     return GetMaterialApp(
       title: 'Fitween',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(),
+      theme: ThemeData(
+        // useMaterial3: true,
+      ),
       home: const SplashPage(),
-      getPages: [
-        GetPage(name: '/login', page: () => const LoginPage()),
-        GetPage(name: '/home', page: () => const HomePage()),
-        GetPage(name: '/register', page: () => const RegisterPage()),
-        GetPage(name: '/main', page: () => const MainPage()),
-      ],
+      getPages: FWRoute.getPages,
     );
   }
 }

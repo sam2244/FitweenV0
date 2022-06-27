@@ -1,133 +1,103 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fitween1/global/global.dart';
-import 'package:fitween1/model/user/google_login.dart';
+import 'package:fitween1/model/plan/plan.dart';
+import 'package:fitween1/presenter/model/user.dart';
 import 'package:get/get.dart';
 
-class FitweenUser extends GetxController {
-  static const String defaultProfile = '';
+// 역할
+enum Role {
+  trainer, trainee;
 
-  bool logged = true;
+  String get kr {
+    switch (name) {
+      case 'trainer': return '트레이너';
+      case 'trainee': return '피트위너';
+    }
+    return '';
+  }
+}
 
+enum Sex {
+  male, female;
+
+  String get kr {
+    switch (name) {
+      case 'male': return '남성';
+      case 'female': return '여성';
+    }
+    return '';
+  }
+}
+
+// 사용자 모델
+class FWUser {
   String? uid;
   String? name;
   String? email;
   String? nickname;
-  String imageUrl = defaultProfile;
-  String? statusMsg;
-  late String role;
-  List<String> trainerPlanIds = [];
-  List<String> traineePlanIds = [];
+  String? statusMessage;
+  String imageUrl = UserPresenter.defaultProfile;
+  Role role = Role.trainee;
+  Sex? sex;
+  double? height;
+  double? weight;
 
-  FitweenUser({
-    this.uid,
-    this.name,
-    this.email,
-    this.role = 'trainee',
-    this.imageUrl = defaultProfile,
-    this.statusMsg,
-  });
+  List<Plan>? trainerPlans;
+  List<Plan>? traineePlans;
 
-  FitweenUser.fromJson(Map<String, dynamic> json) {
-    fromJson(json);
+  FWUser();
+
+  FWUser.fromMap(Map<String, dynamic> map) {
+    fromMap(map);
   }
 
-  void fromJson(Map<String, dynamic> json) {
-    uid = json['uid'];
-    name = json['name'];
-    email = json['email'];
-    nickname = json['nickname'];
-    imageUrl = json['imageUrl'];
-    statusMsg = json['statusMsg'];
-    role = json['role'];
-    trainerPlanIds = json['trainerPlanIds'].cast<String>();
-    traineePlanIds = json['traineePlanIds'].cast<String>();
+  void fromMap(Map<String, dynamic> map) {
+    uid = map['uid'];
+    name = map['name'];
+    email = map['email'];
+    nickname = map['nickname'];
+    imageUrl = map['imageUrl'];
+    statusMessage = map['statusMessage'];
+    role = map['role'];
+    sex = map['sex'];
+    height = map['height'];
+    weight = map['weight'];
+    trainerPlans = map['trainerPlans'];
+    traineePlans = map['traineePlans'];
   }
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toMap() => {
     'uid': uid,
     'name': name,
     'email': email,
     'nickname': nickname,
     'imageUrl': imageUrl,
-    'statusMsg': statusMsg,
+    'statusMessage': statusMessage,
     'role': role,
-    'trainerPlanIds': trainerPlanIds,
-    'traineePlanIds': traineePlanIds,
+    'sex': sex,
+    'height': height,
+    'weight': weight,
+    'trainerPlans': trainerPlans,
+    'traineePlans': traineePlans,
   };
 
-  // 닉네임 설정
-  void setNickname(String? value) {
-    nickname = value; update();
-  }
+  // 문자열을 역할 enum 으로 전환 ('trainer' => Role.trainer)
+  static Role toRole(String string) => Role.values.firstWhere(
+    (role) => role.name == string,
+    orElse: () => Role.trainee,
+  );
 
-  // 역할 변경
+  // 문자열을 성별 enum 으로 전환 ('male' => Sex.male)
+  static Sex? toSex(String? string) => Sex.values.firstWhereOrNull(
+    (sex) => sex.name == string,
+  );
+
+  // 역할을 전환
   void toggleRole() {
-    role = role == 'trainer' ? 'trainee' : 'trainer';
+    role = Role.values.firstWhere((value) => value != role);
   }
 
-  /// firebase
-
-  // 피트윈 로그인
-  Future fitweenGoogleLogin() async {
-    UserCredential? userCredential = await signInWithGoogle();
-    if (userCredential == null) {
-      logged = false;
-    }
-    else {
-      User? user = userCredential.user;
-
-      var json = await loadDB(user!.uid);
-      Map<String, dynamic>? jsonData = json.data();
-
-      if (jsonData == null) {
-        uid = user.uid;
-        name = user.displayName;
-        email = user.email;
-
-        updateDB();
-        return;
-      }
-      fromJson(jsonData);
-
-      // 기존 회원
-      if (json.exists) {
-        nickname = json['nickname'];
-        imageUrl = jsonData['imageUrl'] ?? FitweenUser.defaultProfile;
-        role = jsonData['role'];
-      }
-
-      uid = user.uid;
-      name = user.displayName;
-      email = user.email;
-
-      updateDB();
-
-      fromJson(jsonData);
-      updateDB();
-      logged = true;
-    }
-
-    update();
-  }
-
-  // 피트윈 로그아웃
-  void fitweenGoogleLogout() {
-    signOutWithGoogle();
-    logged = false;
-    uid = null;
-    name = null;
-    email = null;
-    imageUrl = FitweenUser.defaultProfile;
-    nickname = null;
-  }
-
-  // firebase 에서 데이터 불러오기
-  Future loadDB(String uid) async {
-    return (await instance.collection('users').doc(uid).get());
-  }
-
-  // firebase 에 데이터 최신화
-  void updateDB() {
-    instance.collection('users').doc(uid).set(toJson());
+  // 사용자 리스트의 각 사용자의 uid 값으로 이루어진 리스트 반환 (List<FWUser> => List<String>)
+  static List<String>? toUids(List<FWUser>? users) {
+    if (users == null) return null;
+    return users.map((user) => user.uid ?? '').toList();
   }
 }
