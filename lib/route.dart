@@ -19,11 +19,13 @@ class FWRoute {
     '/addPlan': AddPlanPage2(),
   };
 
-  static const Transition transition = Transition.native;
+  static const Transition transition = Transition.fadeIn;
+  static const Duration duration = Duration.zero;
 
   static List<GetPage> get getPages => pages.entries.map((page) => GetPage(
     name: page.key,
     page: () => page.value,
     transition: transition,
+    transitionDuration: duration,
   )).toList();
 }

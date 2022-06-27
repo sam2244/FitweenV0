@@ -41,7 +41,7 @@ class FWButton extends StatelessWidget {
     return SizedBox(
       width: width,
       height: height,
-      child: OutlinedButton(
+      child: ElevatedButton(
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(
           padding: EdgeInsets.zero,

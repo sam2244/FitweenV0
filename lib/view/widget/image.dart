@@ -50,7 +50,7 @@ class ProfileImageCircle extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(5.0),
           child: Image.asset(
-            'assets/img/guestuser.png',
+            'assets/img/guest.png',
           ),
         ),
       ),

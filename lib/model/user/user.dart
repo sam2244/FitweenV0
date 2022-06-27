@@ -1,5 +1,6 @@
 import 'package:fitween1/model/plan/plan.dart';
 import 'package:fitween1/presenter/model/user.dart';
+import 'package:get/get.dart';
 
 // 역할
 enum Role {
@@ -54,7 +55,7 @@ class FWUser {
     email = map['email'];
     nickname = map['nickname'];
     imageUrl = map['imageUrl'];
-    statusMessage = map['statusMsg'];
+    statusMessage = map['statusMessage'];
     role = map['role'];
     sex = map['sex'];
     height = map['height'];
@@ -69,7 +70,7 @@ class FWUser {
     'email': email,
     'nickname': nickname,
     'imageUrl': imageUrl,
-    'statusMsg': statusMessage,
+    'statusMessage': statusMessage,
     'role': role,
     'sex': sex,
     'height': height,
@@ -85,7 +86,7 @@ class FWUser {
   );
 
   // 문자열을 성별 enum 으로 전환 ('male' => Sex.male)
-  static Sex? toSex(String string) => Sex.values.firstWhere(
+  static Sex? toSex(String? string) => Sex.values.firstWhereOrNull(
     (sex) => sex.name == string,
   );
 
