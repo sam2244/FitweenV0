@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       title: 'Fitween',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        // useMaterial3: true,
+        useMaterial3: true,
       ),
       home: const SplashPage(),
       getPages: FWRoute.getPages,
