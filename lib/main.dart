@@ -1,14 +1,29 @@
+import 'package:fitween1/firebase_options.dart';
+import 'package:fitween1/global/global.dart';
+import 'package:fitween1/model/user/user.dart';
+import 'package:fitween1/presenter/page/chat.dart';
+import 'package:fitween1/presenter/page/register.dart';
+import 'package:fitween1/presenter/model/plan.dart';
+import 'package:fitween1/presenter/model/user.dart';
+import 'package:fitween1/route.dart';
+import 'package:fitween1/view/page/add_plan/addPlan.dart';
+import 'package:fitween1/view/page/chat/chat.dart';
+import 'package:fitween1/view/page/login/login.dart';
+import 'package:fitween1/view/page/main/trainee/trainee.dart';
+import 'package:fitween1/view/page/main/trainer/trainer.dart';
+import 'package:fitween1/view/page/register/register.dart';
+import 'package:fitween1/view/page/splash/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 
-import 'home.dart';
-import 'login.dart';
-import 'splash.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    name: 'fitween',
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(const MyApp());
 }
 
@@ -17,41 +32,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(UserPresenter());
+    Get.put(PlanPresenter());
+    Get.put(RegisterPresenter());
+    Get.put(ChatPresenter());
+
     return GetMaterialApp(
       title: 'Fitween',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(),
-      home: const HomePage(),
-      initialRoute: '/',
-      routes: {
-        '/login': (context) => const LoginPage(),
-        '/home' : (context) => const MainScreen(title: ''),
-        //'/chat' : (context) => const ChatScreen(title: ''),
-        //'/chating' : (context) => ChatPage(),
-        //'explore' : (context) => const ExploreScreen(title: ''),
-      },
-      onGenerateRoute: _getRoute,
+      theme: ThemeData(
+        // useMaterial3: true,
+      ),
+      home: const SplashPage(),
+      getPages: FWRoute.getPages,
     );
-  }
-
-  Route<dynamic>? _getRoute(RouteSettings settings) {
-    if (settings.name != '/login') {
-      return null;
-    }
-
-    return MaterialPageRoute<void>(
-      settings: settings,
-      builder: (BuildContext context) => const LoginPage(),
-      fullscreenDialog: true,
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const SplashScreen();
   }
 }
