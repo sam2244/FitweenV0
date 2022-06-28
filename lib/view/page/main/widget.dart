@@ -185,11 +185,6 @@ class MainBottomBar extends StatefulWidget {
 
 class _MainBottomBarState extends State<MainBottomBar> {
   late int _selectedIndex = 1;
-  static const _pages = <Widget>[
-    SchedulerPage(),//this is a stateful widget on a separate file
-    TrainerMainPage(),//this is a stateful widget on a separate file
-    ChatPage(),//this is a stateful widget on a separate file
-  ];
 
   void _onItemTapped(int index) {
     setState(() {

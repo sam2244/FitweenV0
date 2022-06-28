@@ -1,5 +1,7 @@
 import 'package:fitween1/view/page/chat/widget.dart';
+import 'package:fitween1/view/page/main/widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ChatPage extends StatelessWidget {
   const ChatPage({Key? key}) : super(key: key);
@@ -7,7 +9,9 @@ class ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const ChatAppBar(),
+      appBar: AppBar(
+        title: const Text('Chat'),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: const [
@@ -15,6 +19,7 @@ class ChatPage extends StatelessWidget {
           BottomUserInputField(),
         ],
       ),
+      //bottomNavigationBar: const MainBottomBar(),
     );
   }
 }

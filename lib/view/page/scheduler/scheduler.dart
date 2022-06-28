@@ -1,6 +1,8 @@
 import 'package:fitween1/model/schedule/scheduler.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:fitween1/view/page/main/widget.dart';
+import 'package:get/get.dart';
 
 
 class SchedulerPage extends StatefulWidget {
@@ -150,6 +152,7 @@ class _SchedulerPageState extends State<SchedulerPage> {
           ),
         ],
       ),
+      //bottomNavigationBar: const MainBottomBar(),
     );
   }
 }
