@@ -67,7 +67,7 @@ class _AddPlanPage2State extends State<AddPlanPage2> {
                     e1selectedValue1,
                     e2selectedValue1,
                   );
-                  Get.offAllNamed('/home');
+                  Get.toNamed('/main/trainee');
                 }
               }),
         ],
@@ -483,7 +483,8 @@ class _AddPlanPage2State extends State<AddPlanPage2> {
       "id": "",
       "state":"training",
       "trainerUid":TrainerId,
-      "traineeUid": userPresenter.user.uid,
+      "traineeUid": "",
+      //"traineeUid": userPresenter.user.uid,
       "purpose": purpose,
       'weight': weight,
       'height': height,
