@@ -1,5 +1,8 @@
-import 'package:fitween1/global/palette.dart';
+import 'package:fitween1/global/global.dart';
 import 'package:fitween1/presenter/model/user.dart';
+import 'package:fitween1/view/widget/text.dart';
+import 'package:fitween1/global/palette.dart';
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
@@ -32,10 +35,12 @@ class _AddPlanPage2State extends State<AddPlanPage2> {
         .of(context)
         .size;
 
+    FWTheme theme = FWTheme.primaryLight;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Plan', style: TextStyle(color: Colors.white),),
-        //backgroundColor: const Color(0xFF38597E),
+        title: FWText('기본 정보', size: 20.0, color: theme.color),
+        backgroundColor: theme.backgroundColor,
         elevation: 0.0,
         centerTitle: true,
         leading: IconButton(
@@ -48,8 +53,7 @@ class _AddPlanPage2State extends State<AddPlanPage2> {
         ),
         actions: <Widget>[
           TextButton(
-              child: const Text(
-                  "Done", style: TextStyle(fontSize: 18, color: Colors.white)),
+              child: FWText('Done', size: 20.0, color: theme.color),
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
                   await addPlan(
@@ -76,7 +80,7 @@ class _AddPlanPage2State extends State<AddPlanPage2> {
               children: [
                 Container(
                   margin: const EdgeInsets.only(top: 20.0, left: 20.0),
-                  child: const Text('목적', style: TextStyle(fontSize: 15.0)),
+                  child: FWText('목적', size: 20.0, color: theme.color)
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -87,15 +91,12 @@ class _AddPlanPage2State extends State<AddPlanPage2> {
                       width: 170,
                       height: 40,
                       decoration: BoxDecoration(
-                          color: diet ? const Color(0xFF98C9FF) : const Color(
-                              0xFFF0EEEE),
+                          color: diet ? theme.color : Palette.white,
                           borderRadius: const BorderRadius.all(
                               Radius.circular(10)) //모서리를 둥글게
                       ),
                       child: TextButton(
-                          child: const Text(
-                              "다이어트", style: TextStyle(fontSize: 15, color: Colors
-                              .black)),
+                          child: FWText('다이어트', size: 20.0, color: diet ? Palette.white : theme.color,),
                           onPressed: () {
                             setState(() {
                               diet = true;
@@ -110,15 +111,12 @@ class _AddPlanPage2State extends State<AddPlanPage2> {
                       width: 170,
                       height: 40,
                       decoration: BoxDecoration(
-                          color: bulk ? const Color(0xFF98C9FF) : const Color(
-                              0xFFF0EEEE),
+                          color: bulk ? theme.color : Palette.white,
                           borderRadius: const BorderRadius.all(
                               Radius.circular(10)) //모서리를 둥글게
                       ),
                       child: TextButton(
-                          child: const Text(
-                              "벌크업", style: TextStyle(fontSize: 15, color: Colors
-                              .black)),
+                          child: FWText('벌크업', size: 20.0, color: bulk ? Palette.white : theme.color,),
                           onPressed: () {
                             setState(() {
                               diet = false;
@@ -131,7 +129,7 @@ class _AddPlanPage2State extends State<AddPlanPage2> {
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 30.0, left: 20.0),
-                  child: const Text('담당 트레이너 정보', style: TextStyle(fontSize: 15.0)),
+                  child: FWText('담당 트레이너 정보', size: 20.0, color: theme.color)
                 ),
                 Container(
                   margin: const EdgeInsets.only(
@@ -151,7 +149,7 @@ class _AddPlanPage2State extends State<AddPlanPage2> {
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 30.0, left: 20.0),
-                  child: const Text('키', style: TextStyle(fontSize: 15.0)),
+                  child: FWText('키', size: 20.0, color: theme.color)
                 ),
                 Container(
                   margin: const EdgeInsets.only(
@@ -171,7 +169,7 @@ class _AddPlanPage2State extends State<AddPlanPage2> {
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 30.0, left: 20.0),
-                  child: const Text('몸무게', style: TextStyle(fontSize: 15.0)),
+                  child: FWText('몸무게', size: 20.0, color: theme.color)
                 ),
                 Container(
                   margin: const EdgeInsets.only(
@@ -194,8 +192,7 @@ class _AddPlanPage2State extends State<AddPlanPage2> {
                   children: <Widget>[
                     Container(
                       margin: const EdgeInsets.only(top: 30.0, left: 20.0),
-                      child: const Text(
-                          '감량 목표', style: TextStyle(fontSize: 15.0)),
+                      child: FWText('감량 목표', size: 20.0, color: theme.color)
                     ),
                     Container(
                       alignment: Alignment.center,
@@ -228,7 +225,7 @@ class _AddPlanPage2State extends State<AddPlanPage2> {
                     ),
                     Container(
                         margin: const EdgeInsets.only(top: 30.0, left: 10.0),
-                        child: const Text('kg')
+                        child: FWText('kg', size: 20.0, color: theme.color),
                     ),
                   ],
                 ),
@@ -237,8 +234,7 @@ class _AddPlanPage2State extends State<AddPlanPage2> {
                   children: <Widget>[
                     Container(
                       margin: const EdgeInsets.only(top: 30.0, left: 20.0),
-                      child: const Text(
-                          '트레이닝 시작일', style: TextStyle(fontSize: 15.0)),
+                      child: FWText('트레이닝 시작일', size: 20.0, color: theme.color)
                     ),
                     Container(
                       alignment: Alignment.center,
@@ -284,7 +280,7 @@ class _AddPlanPage2State extends State<AddPlanPage2> {
                     ),
                     Container(
                         margin: const EdgeInsets.only(top: 30.0, left: 10.0),
-                        child: const Text('월')
+                        child: FWText('월', size: 20.0, color: theme.color),
                     ),
                     Container(
                       alignment: Alignment.center,
@@ -349,7 +345,7 @@ class _AddPlanPage2State extends State<AddPlanPage2> {
                     ),
                     Container(
                         margin: const EdgeInsets.only(top: 30.0, left: 10.0),
-                        child: const Text('일')
+                        child: FWText('일', size: 20.0, color: theme.color),
                     ),
                   ],
                 ),
@@ -358,8 +354,7 @@ class _AddPlanPage2State extends State<AddPlanPage2> {
                   children: <Widget>[
                     Container(
                       margin: const EdgeInsets.only(top: 30.0, left: 20.0),
-                      child: const Text(
-                          '트레이닝 종료일', style: TextStyle(fontSize: 15.0)),
+                      child: FWText('트레이닝 종료일', size: 20.0, color: theme.color)
                     ),
                     Container(
                       alignment: Alignment.center,
@@ -405,7 +400,7 @@ class _AddPlanPage2State extends State<AddPlanPage2> {
                     ),
                     Container(
                         margin: const EdgeInsets.only(top: 30.0, left: 10.0),
-                        child: const Text('월')
+                        child: FWText('월', size: 20.0, color: theme.color),
                     ),
                     Container(
                       alignment: Alignment.center,
@@ -470,7 +465,7 @@ class _AddPlanPage2State extends State<AddPlanPage2> {
                     ),
                     Container(
                         margin: const EdgeInsets.only(top: 30.0, left: 10.0),
-                        child: const Text('일')
+                        child: FWText('일', size: 20.0, color: theme.color),
                     ),
                   ],
                 ),
