@@ -1,3 +1,4 @@
+import 'package:fitween1/global/palette.dart';
 import 'package:fitween1/presenter/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -38,7 +39,8 @@ class _AddPlanPage2State extends State<AddPlanPage2> {
         elevation: 0.0,
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
+          icon: const Icon(Icons.arrow_back_ios_new_rounded),
+          color: Palette.light,
           iconSize: 25.0,
           onPressed: () {
             Get.back();
