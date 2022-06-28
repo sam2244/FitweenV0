@@ -8,7 +8,12 @@ class Palette {
   static const Color light = Color(0xFFF5F5F5);
   static const Color white = Colors.white;
 
-  static const Color primary = Color(0xFF0187FF);
-  static const Color secondary = Color(0xFF01DBFF);
-  static const Color accent = Color(0xFFFFC200);
+  // static const Color primary = Color(0xFF0187FF);
+  // static const Color secondary = Color(0xFF01DBFF);
+  // static const Color accent = Color(0xFFFFC200);
+
+  static const MaterialColor primary = MaterialColor(
+    0xFF0187FF,
+    { 0: Color(0xFFFFFFFF)} ,
+  );
 }
