@@ -4,6 +4,10 @@ import 'package:fitween1/model/user/user.dart';
 import 'package:fitween1/presenter/page/main.dart';
 import 'package:fitween1/presenter/model/user.dart';
 import 'package:fitween1/view/widget/text.dart';
+import 'package:fitween1/view/page/main/trainer/trainer.dart';
+import 'package:fitween1/view/page/main/trainee/trainee.dart';
+import 'package:fitween1/view/page/scheduler/scheduler.dart';
+import 'package:fitween1/view/page/chat/chat.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -172,16 +176,50 @@ class TextPartition extends StatelessWidget {
 }
 
 // 메인페이지 하단 바
-class MainBottomBar extends StatelessWidget {
+class MainBottomBar extends StatefulWidget {
   const MainBottomBar({Key? key}) : super(key: key);
 
   @override
+  State<MainBottomBar> createState() => _MainBottomBarState();
+}
+
+class _MainBottomBarState extends State<MainBottomBar> {
+  late int _selectedIndex = 1;
+  static const _pages = <Widget>[
+    SchedulerPage(),//this is a stateful widget on a separate file
+    TrainerMainPage(),//this is a stateful widget on a separate file
+    ChatPage(),//this is a stateful widget on a separate file
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    switch (_selectedIndex) {
+      case 0:
+        Get.toNamed('/scheduler');
+        //widget = SchedulerPage();
+        break;
+      case 1:
+        Get.toNamed('/main/trainee');
+        //widget = TrainerMainPage();
+        break;
+      case 2:
+        Get.toNamed('/chat');
+        //widget = ChatPage();
+        break;
+    }
+
     return BottomNavigationBar(
       iconSize: 40.0,
       showSelectedLabels: false,
       showUnselectedLabels: false,
-      currentIndex: 1,
+      currentIndex: _selectedIndex,
+      onTap: _onItemTapped,
       items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.calendar_month),

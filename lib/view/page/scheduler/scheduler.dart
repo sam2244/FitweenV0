@@ -1,4 +1,3 @@
-
 import 'package:fitween1/model/schedule/scheduler.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
