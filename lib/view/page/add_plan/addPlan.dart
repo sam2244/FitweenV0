@@ -45,7 +45,7 @@ class _AddPlanPage2State extends State<AddPlanPage2> {
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new_rounded),
-          color: Palette.light,
+          color: theme.color,
           iconSize: 25.0,
           onPressed: () {
             Get.back();
