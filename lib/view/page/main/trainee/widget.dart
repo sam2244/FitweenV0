@@ -110,13 +110,19 @@ class _PlanTabBarState extends State<PlanTabBar> with TickerProviderStateMixin {
             ),
             child: Align(
               alignment: Alignment.centerRight,
-              child: Container(
-                width: 60.0,
+              child:
+              Container(
+                width: 65.0,
                 height: 30.0,
                 decoration: const BoxDecoration(
                   color: Colors.transparent,
                 ),
-                child: const Center(
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    primary: Colors.transparent,
+                    textStyle: const TextStyle(fontSize: 15),
+                  ),
+                  onPressed: () => Get.toNamed('/addPlan'),
                   child: FWText(
                     '+ 새 플랜',
                     size: 12.0,
