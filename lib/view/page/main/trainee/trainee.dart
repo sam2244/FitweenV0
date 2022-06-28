@@ -15,12 +15,18 @@ class TraineeMainPage extends StatelessWidget {
     TodoListView(),
     TextPartition('식단', index: 1),
     DietCardView(),
+    // Expanded(flex: 4, child: TopProfile()),
+    // Expanded(flex: 1, child: PlanTabBar()),
+    // Expanded(flex: 1, child: TextPartition('운동', index: 1)),
+    // Expanded(flex: 5, child: TodoListView()),
+    // Expanded(flex: 1, child: TextPartition('식단', index: 1)),
+    // Expanded(flex: 3, child: DietCardView()),
   ];
 
-  static List<Widget> paddedWidgets(double padding) {
+  static List<Widget> paddedWidgets() {
     List<Widget> widgets = [];
     for (var widget in pageWidgets) {
-      widgets.addAll([widget, SizedBox(height: padding)]);
+      widgets.addAll([widget]);
     }
     return widgets;
   }
@@ -34,8 +40,10 @@ class TraineeMainPage extends StatelessWidget {
           horizontal: defaultMargin.width,
           vertical: defaultMargin.height,
         ),
-        child: Column(
-          children: paddedWidgets(8.0),
+        child: SingleChildScrollView(
+          child: Column(
+            children: paddedWidgets(),
+          ),
         ),
       ),
       bottomNavigationBar: const MainBottomBar(),

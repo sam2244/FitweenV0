@@ -17,21 +17,24 @@ class TopProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     UserPresenter userPresenter = Get.find<UserPresenter>();
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        ProfileImageCircle(user: userPresenter.user, size: 90.0),
-        const SizedBox(height: 10.0),
-        const FWText('스티브', size: 24),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            FWText('#5kg감량', size: 12, color: Palette.grey),
-            SizedBox(width: 5.0),
-            FWText('#BMI25', size: 12, color: Palette.grey),
-          ],
-        )
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          ProfileImageCircle(user: userPresenter.user, size: 90.0),
+          const SizedBox(height: 10.0),
+          const FWText('스티브', size: 24),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              FWText('#5kg감량', size: 12, color: Palette.grey),
+              SizedBox(width: 5.0),
+              FWText('#BMI25', size: 12, color: Palette.grey),
+            ],
+          )
+        ],
+      ),
     );
   }
 }
@@ -43,6 +46,7 @@ class PlanTabBar extends StatefulWidget {
   @override
   State<PlanTabBar> createState() => _PlanTabBarState();
 }
+
 class _PlanTabBarState extends State<PlanTabBar> with TickerProviderStateMixin {
   late TabController tabCont;
 
@@ -54,7 +58,6 @@ class _PlanTabBarState extends State<PlanTabBar> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-
     List<Widget> tabBars = [
       Container(
         width: 80.0,
@@ -64,11 +67,13 @@ class _PlanTabBarState extends State<PlanTabBar> with TickerProviderStateMixin {
     ];
 
     tabBars.addAll(
-      List.generate(5, (index) => Container(
-        width: 80.0,
-        alignment: Alignment.center,
-        child: FWText('플랜${index + 1}', weight: FWFontWeight.thin),
-      )),
+      List.generate(
+          5,
+          (index) => Container(
+                width: 80.0,
+                alignment: Alignment.center,
+                child: FWText('플랜${index + 1}', weight: FWFontWeight.thin),
+              )),
     );
 
     return Row(
@@ -140,6 +145,7 @@ class TodoListView extends StatefulWidget {
   @override
   State<TodoListView> createState() => _TodoListViewState();
 }
+
 class _TodoListViewState extends State<TodoListView> {
   List<Todo> todos = [
     Todo(exercise: Exercise(name: '푸시업'), countPerSet: 20),
@@ -151,39 +157,41 @@ class _TodoListViewState extends State<TodoListView> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 220.0,
-      decoration: const BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: Palette.grey,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Container(
+        height: 220.0,
+        decoration: const BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              color: Palette.grey,
+            ),
           ),
         ),
-      ),
-      child: Scrollbar(
-        child: ListView.builder(
-            padding: EdgeInsets.zero,
-            shrinkWrap: true,
-            itemCount: todos.length,
-            itemBuilder: (context, index) {
-              return InkWell(
-                onTap: () {
-                  todos[index].toggleComplete();
-                  setState(() {});
-                },
-                child: ListTile(
-                  dense: true,
-                  leading: Icon(
-                    todos[index].completed
-                        ? Icons.check_box
-                        : Icons.check_box_outline_blank,
-                    color: Palette.dark,
+        child: Scrollbar(
+          child: ListView.builder(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              itemCount: todos.length,
+              itemBuilder: (context, index) {
+                return InkWell(
+                  onTap: () {
+                    todos[index].toggleComplete();
+                    setState(() {});
+                  },
+                  child: ListTile(
+                    dense: true,
+                    leading: Icon(
+                      todos[index].completed
+                          ? Icons.check_box
+                          : Icons.check_box_outline_blank,
+                      color: Palette.dark,
+                    ),
+                    minLeadingWidth: 0.0,
+                    title: FWText(todos[index].toString()),
                   ),
-                  minLeadingWidth: 0.0,
-                  title: FWText(todos[index].toString()),
-                ),
-              );
-            }
+                );
+              }),
         ),
       ),
     );
@@ -196,32 +204,35 @@ class DietCardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 95.0,
-      child: ListView.separated(
-        itemCount: 3,
-        itemBuilder: (context, index) => Material(
-          borderRadius: BorderRadius.circular(15.0),
-          child: InkWell(
-            onTap: () {},
-            child: Container(
-              width: 95.0,
-              margin: const EdgeInsets.symmetric(horizontal: 5.0),
-              decoration: BoxDecoration(
-                border: Border.all(color: Palette.grey),
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              child: const Icon(
-                Icons.camera_alt_outlined,
-                size: 30.0,
-                color: Palette.grey,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: SizedBox(
+        width: double.infinity,
+        height: 95.0,
+        child: ListView.separated(
+          itemCount: 3,
+          itemBuilder: (context, index) => Material(
+            borderRadius: BorderRadius.circular(15.0),
+            child: InkWell(
+              onTap: () {},
+              child: Container(
+                width: 95.0,
+                margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Palette.grey),
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                child: const Icon(
+                  Icons.camera_alt_outlined,
+                  size: 30.0,
+                  color: Palette.grey,
+                ),
               ),
             ),
           ),
+          separatorBuilder: (context, index) => const SizedBox(width: 10.0),
+          scrollDirection: Axis.horizontal,
         ),
-        separatorBuilder: (context, index) => const SizedBox(width: 10.0),
-        scrollDirection: Axis.horizontal,
       ),
     );
   }
