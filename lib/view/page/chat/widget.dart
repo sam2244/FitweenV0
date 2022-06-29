@@ -1,5 +1,4 @@
 import 'package:fitween1/global/global.dart';
-import 'package:fitween1/global/palette.dart';
 import 'package:fitween1/model/chat/chat.dart';
 import 'package:fitween1/presenter/page/chat.dart';
 import 'package:flutter/material.dart';
@@ -108,7 +107,7 @@ class BottomUserInputField extends StatelessWidget {
     return GetBuilder<ChatPresenter>(
       builder: (controller) {
         return Container(
-          color: Palette.grey,
+          color: Theme.of(context).primaryColor,
           child: Row(
             children: [
               Expanded(

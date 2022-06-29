@@ -1,8 +1,6 @@
-import 'package:fitween1/global/palette.dart';
 import 'package:fitween1/model/schedule/scheduler.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:fitween1/view/page/main/widget.dart';
 import 'package:get/get.dart';
 
 
@@ -91,7 +89,6 @@ class _SchedulerPageState extends State<SchedulerPage> {
         title: const Text('TableCalendar - Events'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new_rounded),
-          color: Palette.light,
           iconSize: 25.0,
           onPressed: () {
             Get.back();

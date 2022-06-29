@@ -23,5 +23,6 @@ class Chat {
     'date': date,
   };
 
-  DateTime ignoreTime() => DateTime(date.year, date.month, date.day);
+  static DateTime removeTime(DateTime date) => DateTime(date.year, date.month, date.day);
+  DateTime ignoreTime() => removeTime(date);
 }

@@ -1,6 +1,5 @@
-import 'dart:collection';
-
-import 'package:fitween1/model/plan/record.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fitween1/model/chat/chat.dart';
 import 'package:fitween1/model/plan/todo.dart';
 import 'package:fitween1/model/user/user.dart';
 
@@ -10,46 +9,50 @@ enum PlanState { training, fail, complete }
 // 플랜 모델
 class Plan {
   String? id;
+  String? category;
   PlanState state = PlanState.training;
   FWUser? trainer;
   FWUser? trainee;
   DateTime? startDate;
   DateTime? endDate;
-  String? goal;
-  double? value;
-  double? goalValue;
-  List<String>? tags;
-
-  LinkedHashMap todos = LinkedHashMap<DateTime, List<Todo>>();
-  LinkedHashMap records = LinkedHashMap<DateTime, Record>();
+  bool isDiet = true;
+  bool isWeight = true;
+  Map<Timestamp, List<Todo>>? todos;
 
   Plan();
 
   void fromMap(Map<String, dynamic> map) {
     id = map['id'];
+    category = map['category'];
     state = map['state'];
     trainer = map['trainer'];
     trainee = map['trainee'];
     startDate = map['startDate'];
     endDate = map['endDate'];
-    goal = map['goal'];
-    value = map['value'];
-    goalValue = map['goalValue'];
-    tags = map['tags'];
+    isDiet = map['isDiet'];
+    isWeight = map['isWeight'];
+    todos = map['todos'];
   }
 
   Map<String, dynamic> toMap() => {
     'id': id,
+    'category': category,
     'state': state,
     'trainer': trainer,
     'trainee': trainee,
     'startDate': startDate,
     'endDate': endDate,
-    'goal': goal,
-    'value': value,
-    'goalValue': goalValue,
-    'tags': tags,
+    'isDiet': isDiet,
+    'isWeight': isWeight,
+    'todos': todos,
   };
+
+  @override
+  String toString() {
+    return '\n\n${toMap().entries.map(
+          (data) => '${data.key}: ${data.value}',
+    ).join('\n')}';
+  }
 
   // 문자열을 상태 enum 으로 전환 ('training' => State.training)
   static PlanState toState(String string) {
@@ -61,4 +64,6 @@ class Plan {
     if (plans == null) return null;
     return plans.map((plan) => plan.id ?? '').toList();
   }
+
+  static DateTime get today => Chat.removeTime(DateTime.now());
 }

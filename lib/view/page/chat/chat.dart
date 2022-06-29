@@ -1,6 +1,4 @@
-import 'package:fitween1/global/palette.dart';
 import 'package:fitween1/view/page/chat/widget.dart';
-import 'package:fitween1/view/page/main/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -19,7 +17,6 @@ class _ChatPageState extends State<ChatPage> {
         title: const Text('Chat'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new_rounded),
-          color: Palette.light,
           iconSize: 25.0,
           onPressed: () {
             Get.back();

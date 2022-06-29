@@ -29,6 +29,9 @@ dependencies:
   date_format: ^2.0.6
   intl: ^0.17.0
   table_calendar: ^3.0.6
+  toggle_list: ^0.2.1
+  google_fonts: ^3.0.1
+  flutter_screenutil: ^5.5.3+2
 
 dev_dependencies:
   flutter_test:
@@ -41,12 +44,12 @@ flutter:
   uses-material-design: true
 
   assets:
-  - assets/img/alarm.png
-  - assets/img/fitweenV1.png
-  - assets/img/guestuser.png
-  - assets/img/logo/apple.svg
-  - assets/img/logo/fitween.svg
-  - assets/img/logo/google.svg
+    - assets/img/alarm.png
+    - assets/img/fitweenV1.png
+    - assets/img/guest.png
+    - assets/img/logo/apple.svg
+    - assets/img/logo/fitween.svg
+    - assets/img/logo/google.svg
 
 fonts:
   - family: Noto_Sans_KR
@@ -56,7 +59,7 @@ fonts:
       - asset: assets/font/Noto_Sans_KR/NotoSansKR-Bold.otf
         weight: 700
       - asset: assets/font/Noto_Sans_KR/NotoSansKR-Medium.otf
-        weight: 600
+        weight: 500
       - asset: assets/font/Noto_Sans_KR/NotoSansKR-Regular.otf
         weight: 400
       - asset: assets/font/Noto_Sans_KR/NotoSansKR-Light.otf

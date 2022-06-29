@@ -36,7 +36,7 @@ class RegisterPresenter extends GetxController {
   void backPressed() {
     LoginPresenter.fitweenGoogleLogout();
     nicknameCont.clear();
-    if (pageIndex == 0) Get.offAllNamed('/login');
+    if (pageIndex == 0) Get.back();
     carouselCont.previousPage(
       curve: transitionCurve,
       duration: transitionDuration,

@@ -16,7 +16,6 @@ class PlanPresenter extends GetxController {
     map['trainee'] ??= await userPresenter.loadDB(json['traineeUid']);
     map['startDate'] = json['startDate'] as DateTime;
     map['endDate'] = json['endDate'] as DateTime;
-    map['tags'] = json['purposes'].cast<String>();
     plan.fromMap(map);
     update();
   }
@@ -29,10 +28,6 @@ class PlanPresenter extends GetxController {
     'trainee': plan.trainee?.uid,
     'startDate': plan.startDate as Timestamp,
     'endDate': plan.endDate as Timestamp,
-    'goal': plan.goal,
-    'value': plan.value,
-    'goalValue': plan.goalValue,
-    'tags': plan.tags,
   };
 
   // firebase 에서 로드된 데이터 가공 후 plan 객체로 반환
