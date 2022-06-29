@@ -1,4 +1,3 @@
-import 'package:fitween1/global/palette.dart';
 import 'package:fitween1/global/global.dart';
 import 'package:fitween1/model/user/user.dart';
 import 'package:fitween1/presenter/page/main.dart';
@@ -27,9 +26,9 @@ class MainAppbar extends StatelessWidget implements PreferredSizeWidget {
           return AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0.0,
-            shape: role == Role.trainer ? const Border(
+            shape: role == Role.trainer ? Border(
               bottom: BorderSide(
-                color: Palette.dark,
+                color: Theme.of(context).primaryColor,
                 width: .5,
               )
             ) : const Border(),
@@ -42,14 +41,14 @@ class MainAppbar extends StatelessWidget implements PreferredSizeWidget {
                   children: [
                     Row(
                       children: [
-                        FWText(controller.user.nickname ?? '', size: 24.0),
+                        FWText(controller.user.nickname!, size: 24.0),
                         IconButton(
                           onPressed: () {
                             Get.dialog(const ToggleRoleDialog());
                           },
-                          icon: const Icon(
+                          icon: Icon(
                             Icons.keyboard_arrow_down_rounded,
-                            color: Palette.dark,
+                            color: Theme.of(context).primaryColor,
                           ),
                         ),
                       ],
@@ -64,30 +63,30 @@ class MainAppbar extends StatelessWidget implements PreferredSizeWidget {
             actions: [
               IconButton(
                 onPressed: () => Get.toNamed('/chat'),
-                icon: const Icon(
+                icon: Icon(
                   Icons.chat,
-                  color: Palette.dark,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
-              const IconButton(
+              IconButton(
                 onPressed: MainPresenter.logoutButtonPressed,
                 icon: Icon(
                   Icons.logout,
-                  color: Palette.dark,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
               IconButton(
                 onPressed: () => Get.toNamed('/scheduler'),
-                icon: const Icon(
+                icon: Icon(
                   Icons.calendar_month,
-                  color: Palette.dark,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
               IconButton(
                 onPressed: () => Get.toNamed('/addPlan'),
-                icon: const Icon(
+                icon: Icon(
                   Icons.person,
-                  color: Palette.dark,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
             ],
@@ -119,81 +118,6 @@ class ToggleRoleDialog extends StatelessWidget {
         TextButton(
           onPressed: MainPresenter.dialogClosed,
           child: Text('Close'),
-        ),
-      ],
-    );
-  }
-}
-
-// 텍스트 파티션 위젯
-class TextPartition extends StatelessWidget {
-  const TextPartition(this.data, {
-    Key? key,
-    required this.index,
-  }) : super(key: key);
-
-  final String data;
-  final int index;
-
-  @override
-  Widget build(BuildContext context) {
-    List<Widget> widgets = [
-      SizedBox(
-        height: 20.0,
-        child: Stack(
-          children: [
-            const Divider(
-              color: Palette.grey,
-              thickness: 1.0,
-            ),
-            Positioned(
-              left: defaultMargin.width,
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                color: Palette.light,
-                child: FWText(data, size: 20.0, color: Palette.grey),
-              ),
-            ),
-          ],
-        ),
-      ),
-      Container(
-        alignment: Alignment.centerLeft,
-        child: FWText(
-          data, size: 14.0,
-          weight: FWFontWeight.thin,
-          color: Palette.grey,
-        ),
-      ),
-    ];
-
-    return widgets[index];
-  }
-}
-
-// 메인페이지 하단 바
-class MainBottomBar extends StatelessWidget {
-  const MainBottomBar({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      iconSize: 40.0,
-      showSelectedLabels: false,
-      showUnselectedLabels: false,
-      currentIndex: 1,
-      items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.calendar_month),
-          label: '달력',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: '홈',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.message),
-          label: '메시지',
         ),
       ],
     );

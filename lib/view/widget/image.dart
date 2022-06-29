@@ -1,5 +1,5 @@
-import 'package:fitween1/global/palette.dart';
 import 'package:fitween1/model/user/user.dart';
+import 'package:fitween1/presenter/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -20,12 +20,12 @@ class FWLogo extends StatelessWidget {
 class ProfileImageCircle extends StatelessWidget {
   const ProfileImageCircle({
     Key? key,
-    required this.user,
+    this.user,
     this.active = false,
     this.size = 45.0,
   }) : super(key: key);
 
-  final FWUser user;
+  final FWUser? user;
   final bool active;
   final double size;
 
@@ -40,7 +40,7 @@ class ProfileImageCircle extends StatelessWidget {
         width: size,
         height: size,
         decoration: BoxDecoration(
-          color: Palette.grey,
+          color: Theme.of(context).primaryColor,
           border: Border.all(
             width: 1,
             color: active ? Colors.green : Colors.transparent,
@@ -49,9 +49,11 @@ class ProfileImageCircle extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.all(5.0),
-          child: Image.asset(
-            'assets/img/guest.png',
-          ),
+          child: Image.network(
+            user == null
+                ? UserPresenter.defaultProfile
+                : user!.imageUrl,
+          )
         ),
       ),
     );

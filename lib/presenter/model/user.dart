@@ -7,17 +7,24 @@ import 'package:get/get.dart';
 // 사용자 모델 프리젠터
 class UserPresenter extends GetxController {
   static final planPresenter = Get.find<PlanPresenter>();
-  static const String defaultProfile = '';
+  static const String defaultProfile = 'https://firebasestorage.googleapis.com/v0/b/fitween-v1.appspot.com/o/users%2Fguest.png?alt=media&token=906ce482-e8ce-47e9-814a-6da7e3d5365c';
   bool logged = false;
 
   FWUser user = FWUser();
 
+  List<String> getNullData() {
+    return toJson().entries.where(
+      (entry) => FWUser.isRequired(entry.key) && entry.value == null
+    ).map((entry) => entry.key).toList();
+  }
+
   // json 데이터를 user 객체에 주입
   Future fromJson(Map<String, dynamic> json) async {
-    Map<String, dynamic> map = {...json};
-    print(json);
+    Map<String, dynamic> map = toJson();
+    map.addAll(json);
     map['role'] = FWUser.toRole(json['role']);
     map['sex'] = FWUser.toSex(json['sex']);
+    map['tags'] = json['tags']?.cast<String>();
     map['trainerPlans'] ??= await planPresenter.loadDB(json['trainerUid']);
     map['traineePlans'] ??= await planPresenter.loadDB(json['traineeUid']);
     user.fromMap(map);
@@ -27,15 +34,12 @@ class UserPresenter extends GetxController {
   // user 객체에서 json 데이터 추출
   Map<String, dynamic> toJson() => {
     'uid': user.uid,
-    'name': user.name,
     'email': user.email,
     'nickname': user.nickname,
     'imageUrl': user.imageUrl,
-    'statusMessage': user.statusMessage,
     'role': user.role.name,
     'sex': user.sex?.name,
     'height': user.height,
-    'weight': user.weight,
     'trainerPlanIds': Plan.toIds(user.trainerPlans),
     'traineePlanIds': Plan.toIds(user.traineePlans),
   };
@@ -60,6 +64,7 @@ class UserPresenter extends GetxController {
   Future<FWUser?> loadDB(String uid) async {
     var data = await FirebasePresenter.f.collection('users').doc(uid).get();
     Map<String, dynamic> json = data.data() ?? toJson();
+
     if (data.exists) await fromJson(json);
 
     return user;
