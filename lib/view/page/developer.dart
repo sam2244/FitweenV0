@@ -62,6 +62,18 @@ class DeveloperPage extends StatelessWidget {
                   const Text('AddPlanPage()'),
                 ],
               ),
+              const SizedBox(height: 10.0),
+              Row(
+                children: [
+                  FWButton(
+                    onPressed: () => Get.toNamed('/my'),
+                    text: '마이페이지',
+                    width: 100.0,
+                  ),
+                  const SizedBox(width: 20.0),
+                  const Text('MyPage()'),
+                ],
+              ),
             ],
           ),
         ),
