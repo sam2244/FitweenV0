@@ -16,7 +16,7 @@ class RegisterPage extends StatelessWidget {
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
       child: Scaffold(
-        appBar: RegisterAppBar(
+        appBar: RegisterAppBar(git
           onBackPressed: controller.backPressed,
         ),
         body: const CarouselView(),
