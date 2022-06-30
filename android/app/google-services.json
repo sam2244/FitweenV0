@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "633351554586",
+    "firebase_url": "https://fitween-v1-default-rtdb.firebaseio.com",
+    "project_id": "fitween-v1",
+    "storage_bucket": "fitween-v1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:633351554586:android:c76ed0c083a4b2027633a3",
+        "android_client_info": {
+          "package_name": "com.example.fitween1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "633351554586-lgom827nkrne49ko48n27e03e2v74l5r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJctv_nML0-lcP8017GsVzjKneBsgiEuU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "633351554586-lgom827nkrne49ko48n27e03e2v74l5r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "633351554586-jjkah84abeij1q8ki1ubvm55diam0et4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.fitween1"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
