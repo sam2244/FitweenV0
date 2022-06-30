@@ -29,13 +29,13 @@ class _MyPageState extends State<MyPage> {
             AspectRatio(
               aspectRatio: 3 / 2,
               child: Container(
-                decoration: BoxDecoration(
+                /*decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(
                       Radius.circular(10),
                     ),
-                    color: Colors.white),
+                    color: Colors.white),*/
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 40, horizontal: 10),
+                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                   child: LineChart(
                     mainChart(),
                   ),
@@ -52,6 +52,58 @@ class _MyPageState extends State<MyPage> {
         ),
       )
     );
+  }
+
+  Widget bottomTitleWidgets(double value, TitleMeta meta) {
+    const style = TextStyle(
+      color: Colors.black,
+      fontSize: 15,
+    );
+    Widget text;
+    switch (value.toInt()) {
+      case 2:
+        text = const Text('MAR', style: style);
+        break;
+      case 5:
+        text = const Text('JUN', style: style);
+        break;
+      case 8:
+        text = const Text('SEP', style: style);
+        break;
+      default:
+        text = const Text('', style: style);
+        break;
+    }
+
+    return SideTitleWidget(
+      axisSide: meta.axisSide,
+      space: 8.0,
+      child: text,
+    );
+  }
+
+  Widget leftTitleWidgets(double value, TitleMeta meta) {
+    const style = TextStyle(
+      color: Color(0xff67727d),
+      fontWeight: FontWeight.bold,
+      fontSize: 15,
+    );
+    String text;
+    switch (value.toInt()) {
+      case 1:
+        text = '30';
+        break;
+      case 3:
+        text = '50';
+        break;
+      case 5:
+        text = '70';
+        break;
+      default:
+        return Container();
+    }
+
+    return Text(text, style: style, textAlign: TextAlign.left);
   }
 
   LineChartData mainChart() {
@@ -73,11 +125,23 @@ class _MyPageState extends State<MyPage> {
           );
         },*/
       ),
-      /*titlesData: FlTitlesData(
+      titlesData: FlTitlesData(
         show: true,
-        leftTitles: ,
-        bottomTitles: ,
-      ),*/
+       /*bottomTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            reservedSize: 30,
+            getTitlesWidget: bottomTitleWidgets,
+            interval: 1,
+          ),
+        ),*/
+        topTitles: AxisTitles(
+          sideTitles: SideTitles(showTitles: false),
+        ),
+        rightTitles: AxisTitles(
+          sideTitles: SideTitles(showTitles: false),
+        ),
+      ),
       /*titlesData: FlTitlesData(
         show: true,
         bottomTitles: SideTitles(
