@@ -18,58 +18,67 @@ class _MyPageState extends State<MyPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBar(),
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            Container(
-              child: Text("사진 자리"),
+      body: Column(
+        children: <Widget>[
+          Container(
+            child: Text("사진 자리"),
+          ),
+          Container(
+            child: FWText(
+              '닉네임',
+              size: 20.0,
+              color: Colors.black,
             ),
-            Container(
+          ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              padding: EdgeInsets.only(left:30),
               child: FWText(
-                '닉네임',
+                '체중',
                 size: 20.0,
                 color: Colors.black,
               ),
             ),
-            AspectRatio(
-              aspectRatio: 3 / 2,
-              child: Container(
-                /*decoration: BoxDecoration(
+          ),
+          AspectRatio(
+            aspectRatio: 3 / 2,
+            child: Container(
+              /*decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(
                       Radius.circular(10),
                     ),
                     color: Colors.white),*/
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                  child: LineChart(
-                    mainChart(),
-                  ),
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                child: LineChart(
+                  mainChart(),
                 ),
               ),
             ),
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  width: 1,
-                  color: Colors.black,
-                ),
-              ),
-              child: FWText(
-                '체중 변화 기록',
-                size: 20.0,
+          ),
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                width: 1,
                 color: Colors.black,
               ),
             ),
-            Container(
-              child: FWText(
-                "키" + " 190 " + "cm",
-                size: 20.0,
-                color: Colors.black,
-              ),
+            child: FWText(
+              '체중 변화 기록',
+              size: 20.0,
+              color: Colors.black,
             ),
-          ],
-        ),
-      )
+          ),
+          Container(
+            child: FWText(
+              "키" + " 190 " + "cm",
+              size: 20.0,
+              color: Colors.black,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
