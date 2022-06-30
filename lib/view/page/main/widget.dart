@@ -1,7 +1,9 @@
 import 'package:fitween1/global/global.dart';
 import 'package:fitween1/model/user/user.dart';
 import 'package:fitween1/presenter/model/user.dart';
+import 'package:fitween1/view/widget/image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 // 메인 페이지의 위젯 모음
@@ -29,11 +31,12 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
             ) : const Border(),
             leadingWidth: 600.0,
             leading:
-            const Padding(
+            Padding(
                 padding: EdgeInsets.zero,
-                child: Image(
-                  image: AssetImage('assets/img/fitweenV1.png'),
-                )
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: SvgPicture.asset(FWLogo.asset),
+                ),
             ),
             actions: [
               IconButton(
