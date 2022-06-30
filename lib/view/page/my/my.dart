@@ -9,7 +9,18 @@ class MyPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBar(),
-      body: Container(),
+      body: Center(
+        child: Column(
+          children: [
+            Container(
+              child: Text("사진"),
+            ),
+            Container(
+              child: Text("닉네임"),
+            ),
+          ],
+        ),
+      )
     );
   }
 }
