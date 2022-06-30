@@ -9,15 +9,16 @@ import 'package:get/get.dart';
 // 회원가입 페이지 프리젠터
 class RegisterPresenter extends GetxController {
   int pageIndex = 0;
-  bool invalid = false;
+  List<bool> invalids = [false, false];
 
   static const Duration shakeDuration = Duration(milliseconds: 500);
 
   static Curve transitionCurve = Curves.fastOutSlowIn;
   static const Duration transitionDuration = Duration(milliseconds: 300);
 
-  static final userPresenter = Get.put(UserPresenter());
+  static final userPresenter = Get.find<UserPresenter>();
   static final nicknameCont = TextEditingController();
+  static final dateOfBirthCont = TextEditingController();
   static final carouselCont = CarouselController();
 
   // 현재 페이지 인덱스 증가
@@ -34,9 +35,8 @@ class RegisterPresenter extends GetxController {
 
   // 뒤로가기 버튼 클릭 트리거
   void backPressed() {
-    LoginPresenter.fitweenGoogleLogout();
-    nicknameCont.clear();
-    if (pageIndex == 0) Get.back();
+    if (pageIndex == 0) LoginPresenter.fitweenGoogleLogout();
+
     carouselCont.previousPage(
       curve: transitionCurve,
       duration: transitionDuration,
@@ -48,10 +48,19 @@ class RegisterPresenter extends GetxController {
   void nextPressed() async {
     if (pageIndex == 0) {
       if (nicknameCont.text == '') {
-        validateInput();
+        validate(0);
         return;
       }
       nicknameSubmitted(nicknameCont.text);
+    }
+    else if (pageIndex == 2) {
+      if (userPresenter.user.sex == null) { validate(0); return; }
+
+      try { int.parse(dateOfBirthCont.text); }
+      catch (e) { validate(1); return; }
+      if (dateOfBirthCont.text.length != 6) { validate(1); return; }
+
+      userPresenter.setDateOfBirth(dateOfBirthCont.text);
     }
     else if (pageIndex == CarouselView.widgetCount - 1) {
       Get.offAllNamed('/main/${userPresenter.user.role.name}');
@@ -66,17 +75,17 @@ class RegisterPresenter extends GetxController {
     pageIndexIncrease();
   }
 
-  // 입력값 검사 후 잘못되었을 때 효과 트리거
-  void validateInput() async {
-    invalid = true; update();
+  // 잘못되었을 때 효과 트리거
+  void validate(index) async {
+    invalids[index] = true; update();
     await Future.delayed(shakeDuration, () {
-      invalid = false; update();
+      invalids[index] = false; update();
     });
   }
 
   // 닉네임 제출 버튼 클릭 트리거 (닉네임 인풋 박스에서 Enter 버튼 클릭 트리거)
   void nicknameSubmitted(String value) {
-    userPresenter.nickname = value;
+    userPresenter.nickname = value; update();
   }
 
   // 역할 선택 버튼 트리거
@@ -86,4 +95,22 @@ class RegisterPresenter extends GetxController {
   }
 
   //
+  void sexSelected(Sex sex) {
+    if (sex != userPresenter.user.sex) userPresenter.toggleSex();
+    update();
+  }
+
+  void dateOfBirthChanged(DateTime dateOfBirth) {
+    userPresenter.user.dateOfBirth = dateOfBirth;
+    update();
+  }
+
+  void weightChanged(double weight) {
+    userPresenter.defaultWeight = weight;
+    update();
+  }
+  void heightChanged(double height) {
+    userPresenter.user.height = height;
+    update();
+  }
 }

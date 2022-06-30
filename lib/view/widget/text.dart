@@ -1,3 +1,4 @@
+import 'package:fitween1/global/config/theme.dart';
 import 'package:flutter/material.dart';
 
 enum FWFontWeight { bold, normal, thin }
@@ -52,7 +53,7 @@ class FWInputField extends StatelessWidget {
     this.width = 285.0,
     this.height = 45.0,
     this.hintText,
-    this.hintTextColor,
+    this.hintTextColor = FWTheme.grey,
     this.invalid = true,
   }) : super(key: key);
 
@@ -67,6 +68,7 @@ class FWInputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return SizedBox(
       height: height,
       child: TextFormField(
@@ -74,9 +76,13 @@ class FWInputField extends StatelessWidget {
         onFieldSubmitted: onSubmitted ?? (_) {},
         onChanged: onChanged ?? (_) {},
         cursorColor: Theme.of(context).primaryColor,
-        decoration: const InputDecoration(
-          contentPadding: EdgeInsets.symmetric(horizontal: 15.0),
-          border: OutlineInputBorder(),
+        decoration: InputDecoration(
+          contentPadding: const EdgeInsets.symmetric(horizontal: 15.0),
+          border: const OutlineInputBorder(),
+          hintText: hintText,
+          hintStyle: TextStyle(
+            color: hintTextColor,
+          )
         ),
         style: TextStyle(
           color: Theme.of(context).colorScheme.primary,

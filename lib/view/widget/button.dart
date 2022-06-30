@@ -9,8 +9,8 @@ class FWButton extends StatelessWidget {
     this.child,
     this.fontSize = 15.0,
     required this.onPressed,
-    this.width = 285.0,
-    this.height = 45.0,
+    this.width = 100.0,
+    this.height = 40.0,
     this.fill = true,
     this.borderRadius = 1.0,
   }) : assert(text == null || child == null), super(key: key);
