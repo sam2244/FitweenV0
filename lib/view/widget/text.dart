@@ -1,22 +1,20 @@
-import 'package:fitween1/global/global.dart';
-import 'package:fitween1/global/palette.dart';
 import 'package:flutter/material.dart';
 
 enum FWFontWeight { bold, normal, thin }
 
 class FWText extends StatelessWidget {
-  const FWText(this.data, {
+  FWText(this.data, {
     Key? key,
-    this.color = Palette.dark,
+    this.color,
     this.size = 14.0,
     this.weight = FWFontWeight.normal,
-    this.textStyle
+    this.textStyle,
   }) : assert((
     color == null && size == null && weight == null
   ) || textStyle == null), super(key: key);
 
   final String data;
-  final Color? color;
+  Color? color;
   final double? size;
   final FWFontWeight? weight;
   final TextStyle? textStyle;
@@ -24,6 +22,7 @@ class FWText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     FontWeight fontWeight = FontWeight.w600;
+    color ??= Theme.of(context).colorScheme.primary;
 
     if (weight != FWFontWeight.normal) {
       fontWeight = weight == FWFontWeight.bold
@@ -48,22 +47,22 @@ class FWInputField extends StatelessWidget {
   const FWInputField({
     Key? key,
     required this.controller,
-    required this.theme,
     this.onSubmitted,
+    this.onChanged,
     this.width = 285.0,
     this.height = 45.0,
     this.hintText,
-    this.hintTextColor = Palette.grey,
+    this.hintTextColor,
     this.invalid = true,
   }) : super(key: key);
 
   final TextEditingController controller;
-  final FWTheme theme;
   final Function(String)? onSubmitted;
+  final Function(String)? onChanged;
   final double width;
   final double height;
   final String? hintText;
-  final Color hintTextColor;
+  final Color? hintTextColor;
   final bool invalid;
 
   @override
@@ -73,28 +72,14 @@ class FWInputField extends StatelessWidget {
       child: TextFormField(
         controller: controller,
         onFieldSubmitted: onSubmitted ?? (_) {},
-        cursorColor: theme.color,
-        decoration: InputDecoration(
-          contentPadding: const EdgeInsets.all(10.0),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: invalid ? Colors.red : theme.color,
-              width: 1.0,
-            ),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: theme.color,
-              width: 1.0,
-            ),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          hintText: hintText ?? '',
-          hintStyle: TextStyle(color: hintTextColor),
+        onChanged: onChanged ?? (_) {},
+        cursorColor: Theme.of(context).primaryColor,
+        decoration: const InputDecoration(
+          contentPadding: EdgeInsets.symmetric(horizontal: 15.0),
+          border: OutlineInputBorder(),
         ),
         style: TextStyle(
-          color: theme.color,
+          color: Theme.of(context).colorScheme.primary,
         ),
       ),
     );

@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:fitween1/global/config/theme.dart';
 import 'package:fitween1/global/global.dart';
-import 'package:fitween1/global/palette.dart';
 import 'package:fitween1/model/user/user.dart';
 import 'package:fitween1/presenter/page/register.dart';
 import 'package:fitween1/presenter/model/user.dart';
@@ -18,11 +18,9 @@ class RegisterAppBar extends StatelessWidget implements PreferredSizeWidget {
   const RegisterAppBar({
     Key? key,
     required this.onBackPressed,
-    required this.theme,
   }) : super(key: key);
 
   final VoidCallback onBackPressed;
-  final FWTheme theme;
 
   @override
   Size get preferredSize => const Size.fromHeight(appbarHeight);
@@ -31,11 +29,18 @@ class RegisterAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       leading: IconButton(
-        icon: Icon(Icons.arrow_back, color: theme.color),
+        icon: Icon(
+          Icons.arrow_back,
+          color: Theme.of(context).colorScheme.primary,
+        ),
         onPressed: onBackPressed,
       ),
-      title: FWText('기본 정보', size: 20.0, color: theme.color),
-      backgroundColor: theme.backgroundColor,
+      title: FWText(
+        '기본 정보',
+        size: 20.0,
+        color: Theme.of(context).colorScheme.primary,
+      ),
+      backgroundColor: Theme.of(context).colorScheme.onPrimary,
       elevation: 0.0,
     );
   }
@@ -43,12 +48,7 @@ class RegisterAppBar extends StatelessWidget implements PreferredSizeWidget {
 
 // 역할 선택 버튼 뷰
 class RoleSelectionButtonView extends StatelessWidget {
-  const RoleSelectionButtonView({
-    Key? key,
-    required this.theme,
-  }) : super(key: key);
-
-  final FWTheme theme;
+  const RoleSelectionButtonView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +65,7 @@ class RoleSelectionButtonView extends StatelessWidget {
                   constraints: const BoxConstraints(maxWidth: 100.0),
                   child: FWText('${controller.user.nickname}',
                     size: 15.0,
-                    color: Palette.accent,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
               ),
@@ -73,14 +73,13 @@ class RoleSelectionButtonView extends StatelessWidget {
                 ' 님은 무엇을 하고 싶으신가요?',
                 size: 15.0,
                 weight: FWFontWeight.thin,
-                color: theme.color,
               ),
             ],
           ),
           const SizedBox(height: 8.0),
-          RoleSelectionButton(theme: theme, role: Role.trainer),
+          const RoleSelectionButton(role: Role.trainer),
           const SizedBox(height: 15.0),
-          RoleSelectionButton(theme: theme, role: Role.trainee),
+          const RoleSelectionButton(role: Role.trainee),
           Container(
             height: 50.0,
             alignment: Alignment.center,
@@ -88,7 +87,7 @@ class RoleSelectionButtonView extends StatelessWidget {
               'TIP: 역할은 언제든지 바꿀 수 있어요!',
               size: 12.0,
               weight: FWFontWeight.thin,
-              color: theme.color,
+              color: Theme.of(context).primaryColor,
             ),
           ),
         ],
@@ -102,11 +101,9 @@ class RoleSelectionButton extends StatelessWidget {
   const RoleSelectionButton({
     Key? key,
     required this.role,
-    required this.theme,
   }) : super(key: key);
 
   final Role role;
-  final FWTheme theme;
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +119,6 @@ class RoleSelectionButton extends StatelessWidget {
         return FWButton(
           text: texts[role],
           width: double.infinity,
-          theme: theme,
           fill: role == userCont.user.role,
           onPressed: () => registerCont.roleSelected(role),
         );
@@ -133,12 +129,7 @@ class RoleSelectionButton extends StatelessWidget {
 
 // 닉네임 입력 필드 위젯
 class NicknameInputField extends StatelessWidget {
-  const NicknameInputField({
-    Key? key,
-    required this.theme,
-  }) : super(key: key);
-
-  final FWTheme theme;
+  const NicknameInputField({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -147,7 +138,7 @@ class NicknameInputField extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            FWText('별명을 입력하세요.', size: 15.0, color: theme.color),
+            FWText('별명을 입력하세요.', size: 15.0),
             const SizedBox(height: 8.0),
             ShakeWidget(
               autoPlay: controller.invalid,
@@ -156,7 +147,6 @@ class NicknameInputField extends StatelessWidget {
                 controller: RegisterPresenter.nicknameCont,
                 onSubmitted: (_) => controller.nextPressed(),
                 hintText: '별명',
-                theme: theme,
                 invalid: controller.invalid,
               ),
             ),
@@ -170,14 +160,13 @@ class NicknameInputField extends StatelessWidget {
 
 // Carousel 뷰 위젯
 class CarouselView extends StatelessWidget {
-  const CarouselView({Key? key, required this.theme}) : super(key: key);
+  const CarouselView({Key? key}) : super(key: key);
 
-  final FWTheme theme;
 
   // 회원가입 페이지 carousel 리스트
-  static List<Widget> carouselWidgets([FWTheme theme = FWTheme.dark]) => [
-    NicknameInputField(theme: theme),
-    RoleSelectionButtonView(theme: theme),
+  static List<Widget> carouselWidgets() => const [
+    NicknameInputField(),
+    RoleSelectionButtonView(),
   ];
   static int widgetCount = carouselWidgets().length;
 
@@ -196,7 +185,7 @@ class CarouselView extends StatelessWidget {
               constraints: BoxConstraints(minWidth: screenSize.width),
               child: CarouselSlider(
                 carouselController: RegisterPresenter.carouselCont,
-                items: carouselWidgets(theme).map((widget) => Container(
+                items: carouselWidgets().map((widget) => Container(
                   padding: const EdgeInsets.symmetric(horizontal: 45.0),
                   child: widget,
                 )).toList(),
@@ -219,9 +208,9 @@ class CarouselView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               // Carousel 인디케이터
-              CarouselIndicator(theme: theme, count: widgetCount),
+              CarouselIndicator(count: widgetCount),
               // Carousel 다음 버튼
-              CarouselNextButton(theme: theme),
+              const CarouselNextButton(),
             ],
           ),
         ),
@@ -235,11 +224,9 @@ class CarouselIndicator extends StatelessWidget {
   const CarouselIndicator({
     Key? key,
     required this.count,
-    this.theme = FWTheme.dark,
   }) : super(key: key);
 
   final int count;
-  final FWTheme theme;
 
   @override
   Widget build(BuildContext context) {
@@ -251,8 +238,8 @@ class CarouselIndicator extends StatelessWidget {
             dotsCount: count,
             position: controller.pageIndex.toDouble(),
             decorator: DotsDecorator(
-              color: Palette.grey,
-              activeColor: theme.color,
+              color: FWTheme.grey,
+              activeColor: Theme.of(context).primaryColor,
             ),
           ),
         );
@@ -263,12 +250,7 @@ class CarouselIndicator extends StatelessWidget {
 
 // Carousel 다음 버튼
 class CarouselNextButton extends StatelessWidget {
-  const CarouselNextButton({
-    Key? key,
-    required this.theme,
-  }) : super(key: key);
-
-  final FWTheme theme;
+  const CarouselNextButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -283,7 +265,6 @@ class CarouselNextButton extends StatelessWidget {
       height: 45.0,
       text: '다음',
       borderRadius: 1.0,
-      theme: theme,
     );
   }
 }

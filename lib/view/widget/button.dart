@@ -1,4 +1,3 @@
-import 'package:fitween1/global/global.dart';
 import 'package:fitween1/view/widget/text.dart';
 import 'package:flutter/material.dart';
 
@@ -12,8 +11,7 @@ class FWButton extends StatelessWidget {
     required this.onPressed,
     this.width = 285.0,
     this.height = 45.0,
-    this.theme = FWTheme.light,
-    this.fill = false,
+    this.fill = true,
     this.borderRadius = 0.5,
   }) : assert(text == null || child == null), super(key: key);
 
@@ -23,20 +21,12 @@ class FWButton extends StatelessWidget {
   final double width;
   final double height;
   final VoidCallback onPressed;
-  final FWTheme theme;
   final bool fill;
   final double borderRadius;
 
   @override
   Widget build(BuildContext context) {
     double radius = width < height ? width : height;
-
-    late Color fillColor;
-    late Color inverseColor;
-
-    // parameter 에 따라 버튼 색상 변경
-    fillColor = fill ? theme.color : theme.backgroundColor;
-    inverseColor = fill ? theme.backgroundColor : theme.color;
 
     return SizedBox(
       width: width,
@@ -45,17 +35,23 @@ class FWButton extends StatelessWidget {
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(
           padding: EdgeInsets.zero,
-          primary: inverseColor,
-          backgroundColor: fillColor,
+          primary: fill
+              ? Theme.of(context).colorScheme.onPrimary
+              : Theme.of(context).colorScheme.primary,
+          backgroundColor: fill
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).colorScheme.onPrimary,
           elevation: 0.0,
-          side: BorderSide(color: theme.color),
+          side: BorderSide(color: Theme.of(context).colorScheme.primary),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(radius * 0.5 * borderRadius),
           ),
         ),
         child: child ?? FWText(
           text!,
-          color: inverseColor,
+          color: fill
+              ? Theme.of(context).colorScheme.onPrimary
+              : Theme.of(context).colorScheme.primary,
           size: fontSize,
         ),
       ),

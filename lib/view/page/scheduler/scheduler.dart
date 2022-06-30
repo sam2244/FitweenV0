@@ -1,7 +1,7 @@
-
 import 'package:fitween1/model/schedule/scheduler.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:get/get.dart';
 
 
 class SchedulerPage extends StatefulWidget {
@@ -87,6 +87,13 @@ class _SchedulerPageState extends State<SchedulerPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('TableCalendar - Events'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new_rounded),
+          iconSize: 25.0,
+          onPressed: () {
+            Get.back();
+          },
+        ),
       ),
       body: Column(
         children: [
@@ -151,6 +158,7 @@ class _SchedulerPageState extends State<SchedulerPage> {
           ),
         ],
       ),
+      //bottomNavigationBar: const MainBottomBar(),
     );
   }
 }

@@ -1,22 +1,16 @@
-import 'package:fitween1/global/global.dart';
 import 'package:fitween1/view/page/login/widget.dart';
 import 'package:fitween1/view/widget/image.dart';
 import 'package:flutter/material.dart';
 
 // 로그인 페이지
 class LoginPage extends StatelessWidget {
-  const LoginPage({
-    Key? key,
-    this.theme = FWTheme.primaryLight,
-  }) : super(key: key);
-
-  final FWTheme theme;
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: theme.backgroundColor,
+        color: Theme.of(context).colorScheme.onPrimary,
         child: Stack(
           children: [
             // 중앙에 로고 배치
@@ -28,16 +22,16 @@ class LoginPage extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Expanded(child: SizedBox()),
+                  children: const [
+                    Expanded(child: SizedBox()),
 
                     // 구글 로그인 버튼
-                    SignInButton(type: LoginType.google, theme: theme.grayScale),
-                    const SizedBox(height: 15.0),
+                    SignInButton(type: LoginType.google),
+                    SizedBox(height: 15.0),
 
                     // 애플 로그인 버튼
-                    SignInButton(type: LoginType.apple, theme: theme.grayScale, fill: true),
-                    const SizedBox(height: 77.0),
+                    SignInButton(type: LoginType.apple),
+                    SizedBox(height: 77.0),
                   ],
                 ),
               ),
