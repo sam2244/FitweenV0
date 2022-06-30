@@ -2,6 +2,7 @@ import 'package:fitween1/view/page/my/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:fitween1/view/widget/text.dart';
+import 'package:image_picker/image_picker.dart';
 
 // 마이 페이지
 class MyPage extends StatefulWidget {
@@ -12,8 +13,10 @@ class MyPage extends StatefulWidget {
 }
 
 class _MyPageState extends State<MyPage> {
+  final ImagePicker _picker = ImagePicker();
+  // Pick an image
+  //final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
 
-  bool showAvg = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
