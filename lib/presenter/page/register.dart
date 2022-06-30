@@ -84,6 +84,4 @@ class RegisterPresenter extends GetxController {
     if (role != userPresenter.user.role) userPresenter.toggleRole();
     update();
   }
-
-  //
 }

@@ -26,6 +26,17 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             Get.back();
           },
         ),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.settings,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            onPressed: () {
+              Get.back();
+            },
+          ),
+        ],
         title: FWText(
           '마이페이지',
           size: 20.0,
