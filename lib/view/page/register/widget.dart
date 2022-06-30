@@ -167,6 +167,7 @@ class CarouselView extends StatelessWidget {
   static List<Widget> carouselWidgets() => const [
     NicknameInputField(),
     RoleSelectionButtonView(),
+    UserInfoView(),
   ];
   static int widgetCount = carouselWidgets().length;
 
@@ -266,5 +267,14 @@ class CarouselNextButton extends StatelessWidget {
       text: '다음',
       borderRadius: 1.0,
     );
+  }
+}
+
+class UserInfoView extends StatelessWidget {
+  const UserInfoView({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }

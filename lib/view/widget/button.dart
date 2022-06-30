@@ -12,7 +12,7 @@ class FWButton extends StatelessWidget {
     this.width = 285.0,
     this.height = 45.0,
     this.fill = true,
-    this.borderRadius = 0.5,
+    this.borderRadius = 1.0,
   }) : assert(text == null || child == null), super(key: key);
 
   final String? text;
