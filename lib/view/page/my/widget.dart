@@ -37,11 +37,6 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             },
           ),
         ],
-        title: FWText(
-          '마이페이지',
-          size: 20.0,
-          color: Theme.of(context).colorScheme.primary,
-        ),
         backgroundColor: Theme.of(context).colorScheme.onPrimary,
         elevation: 0.0,
       )
