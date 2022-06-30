@@ -45,19 +45,9 @@ class _MyPageState extends State<MyPage> {
             Container(
               child: Text("체중 변화 기록 차트"),
             ),
-            Row(
-              children: [
-                Container(
-                  child: Text("키"),
-                ),
-                Container(
-                  child: Text("190"),
-                ),
-                Container(
-                  child: Text("cm"),
-                ),
-              ],
-            )
+            Container(
+              child: Text("키" + " 190 " + "cm"),
+            ),
           ],
         ),
       )
@@ -144,21 +134,21 @@ class _MyPageState extends State<MyPage> {
       lineBarsData: [
         LineChartBarData(
           spots: [
-            FlSpot(1, 50),
-            FlSpot(2, 52),
-            FlSpot(3, 48),
-            FlSpot(4, 47),
-            FlSpot(5, 45),
-            FlSpot(6, 47),
-            FlSpot(7, 47),
-            FlSpot(8, 45),
-            FlSpot(8, 46),
-            FlSpot(9, 47),
-            FlSpot(10, 45),
+            FlSpot(1, 55),
+            FlSpot(2, 52.1),
+            FlSpot(3, 49.7),
+            FlSpot(4, 47.4),
+            FlSpot(5, 46.2),
+            FlSpot(6, 47.1),
+            FlSpot(7, 46.0),
+            FlSpot(8, 45.7),
+            FlSpot(8, 46.1),
+            FlSpot(9, 47.0),
+            FlSpot(10, 45.2),
           ],
           isCurved: true,
           color: Colors.red,
-          barWidth: 5,
+          barWidth: 4,
           isStrokeCapRound: true,
           dotData: FlDotData(
             show: true,
