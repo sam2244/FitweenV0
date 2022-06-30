@@ -1,6 +1,7 @@
 import 'package:fitween1/global/global.dart';
 import 'package:flutter/material.dart';
-
+import 'package:fitween1/view/widget/text.dart';
+import 'package:get/get.dart';
 // 마이 페이지의 위젯 모음
 
 // 마이 페이지 AppBar
@@ -15,7 +16,24 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return PreferredSize(
       preferredSize: const Size.fromHeight(60.0),
-      child: AppBar(),
+      child: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Theme.of(context).colorScheme.primary,
+          ),
+          onPressed: () {
+            Get.back();
+          },
+        ),
+        title: FWText(
+          '마이페이지',
+          size: 20.0,
+          color: Theme.of(context).colorScheme.primary,
+        ),
+        backgroundColor: Theme.of(context).colorScheme.onPrimary,
+        elevation: 0.0,
+      )
     );
   }
 }
