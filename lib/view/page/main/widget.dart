@@ -1,8 +1,6 @@
 import 'package:fitween1/global/global.dart';
 import 'package:fitween1/model/user/user.dart';
-import 'package:fitween1/presenter/model/user.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 // 메인 페이지의 위젯 모음
 
