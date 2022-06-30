@@ -18,6 +18,9 @@ class MyPage extends StatelessWidget {
             Container(
               child: Text("닉네임"),
             ),
+            Container(
+              child: Text("차트"),
+            ),
           ],
         ),
       )
