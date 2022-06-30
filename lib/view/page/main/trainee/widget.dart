@@ -6,9 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-final List<Widget> cardList = [
-  const TraineeCard(),
-];
+import '../../../widget/container.dart';
 
 //피트위너 페이지의 위젯 모음
 
@@ -20,6 +18,10 @@ class TraineeCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> cardList = [
+      const TraineeCard(),
+    ];
+
     final double height = MediaQuery
         .of(context)
         .size
@@ -51,7 +53,7 @@ class TraineeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Card(
+        FWCard(
           child: Row(
             children: [
               SizedBox(
