@@ -19,11 +19,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return PreferredSize(
       preferredSize: const Size.fromHeight(60.0),
-      child: GetBuilder<UserPresenter>(
-        builder: (controller) {
-          return AppBar();
-        }
-      ),
+      child: AppBar(),
     );
   }
 }

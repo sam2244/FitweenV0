@@ -93,7 +93,6 @@ class RegisterPresenter extends GetxController {
     if (role != userPresenter.user.role) userPresenter.toggleRole();
     update();
   }
-
   //
   void sexSelected(Sex sex) {
     if (sex != userPresenter.user.sex) userPresenter.toggleSex();
@@ -109,6 +108,7 @@ class RegisterPresenter extends GetxController {
     userPresenter.defaultWeight = weight;
     update();
   }
+
   void heightChanged(double height) {
     userPresenter.user.height = height;
     update();
