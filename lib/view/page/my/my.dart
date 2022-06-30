@@ -1,6 +1,7 @@
 import 'package:fitween1/view/page/my/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:fitween1/view/widget/text.dart';
 
 // 마이 페이지
 class MyPage extends StatefulWidget {
@@ -21,10 +22,14 @@ class _MyPageState extends State<MyPage> {
         child: Column(
           children: <Widget>[
             Container(
-              child: Text("사진"),
+              child: Text("사진 자리"),
             ),
             Container(
-              child: Text("닉네임"),
+              child: FWText(
+                '닉네임',
+                size: 20.0,
+                color: Colors.black,
+              ),
             ),
             AspectRatio(
               aspectRatio: 3 / 2,
@@ -43,10 +48,24 @@ class _MyPageState extends State<MyPage> {
               ),
             ),
             Container(
-              child: Text("체중 변화 기록 차트"),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: 1,
+                  color: Colors.black,
+                ),
+              ),
+              child: FWText(
+                '체중 변화 기록',
+                size: 20.0,
+                color: Colors.black,
+              ),
             ),
             Container(
-              child: Text("키" + " 190 " + "cm"),
+              child: FWText(
+                "키" + " 190 " + "cm",
+                size: 20.0,
+                color: Colors.black,
+              ),
             ),
           ],
         ),
@@ -142,52 +161,6 @@ class _MyPageState extends State<MyPage> {
           sideTitles: SideTitles(showTitles: false),
         ),
       ),
-      /*titlesData: FlTitlesData(
-        show: true,
-        bottomTitles: SideTitles(
-          showTitles: true,
-          reservedSize: 22,
-          textStyle: const TextStyle(
-              color: Color(0xff68737d),
-              fontWeight: FontWeight.bold,
-              fontSize: 16),
-          getTitles: (value) {
-            print('bottomTitles $value');
-            switch (value.toInt()) {
-              case 2:
-                return 'MAR';
-              case 5:
-                return 'JUN';
-              case 8:
-                return 'SEP';
-            }
-            return '';
-          },
-          margin: 8,
-        ),
-        leftTitles: SideTitles(
-          showTitles: true,
-          textStyle: const TextStyle(
-            color: Color(0xff67727d),
-            fontWeight: FontWeight.bold,
-            fontSize: 15,
-          ),
-          getTitles: (value) {
-            print('leftTitles $value');
-            switch (value.toInt()) {
-              case 1:
-                return '10k';
-              case 3:
-                return '30k';
-              case 5:
-                return '50k';
-            }
-            return '';
-          },
-          reservedSize: 28,
-          margin: 12,
-        ),
-      ),*/
       borderData: FlBorderData(
           show: true,
           border: Border.all(color: Colors.black, width: 1)),
