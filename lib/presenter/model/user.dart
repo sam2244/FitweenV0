@@ -9,6 +9,7 @@ class UserPresenter extends GetxController {
   static final planPresenter = Get.find<PlanPresenter>();
   static const String defaultProfile = 'https://firebasestorage.googleapis.com/v0/b/fitween-v1.appspot.com/o/users%2Fguest.png?alt=media&token=906ce482-e8ce-47e9-814a-6da7e3d5365c';
   bool logged = false;
+  double defaultWeight = 60.0;
 
   FWUser user = FWUser();
 
@@ -40,6 +41,7 @@ class UserPresenter extends GetxController {
     'role': user.role.name,
     'sex': user.sex?.name,
     'height': user.height,
+    'dateOfBirth': user.dateOfBirth,
     'trainerPlanIds': Plan.toIds(user.trainerPlans),
     'traineePlanIds': Plan.toIds(user.traineePlans),
   };
@@ -49,6 +51,16 @@ class UserPresenter extends GetxController {
 
   // 역할 변경
   void toggleRole() { user.toggleRole(); update(); }
+
+  // 성별 변경
+  void toggleSex() { user.toggleSex(); update(); }
+
+  // 생년월일 설정
+  void setDateOfBirth(String string) {
+    user.dateOfBirth = DateTime.parse(
+      '${int.parse(string.substring(2)) < 50 ? '19' : '20'}$string'
+    );
+  }
 
   // 로그인, 로그아웃
   void login() { logged = true; update(); }

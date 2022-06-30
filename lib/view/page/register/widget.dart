@@ -6,6 +6,7 @@ import 'package:fitween1/model/user/user.dart';
 import 'package:fitween1/presenter/page/register.dart';
 import 'package:fitween1/presenter/model/user.dart';
 import 'package:fitween1/view/widget/button.dart';
+import 'package:fitween1/view/widget/container.dart';
 import 'package:fitween1/view/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shake_animated/flutter_shake_animated.dart';
@@ -35,11 +36,7 @@ class RegisterAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         onPressed: onBackPressed,
       ),
-      title: FWText(
-        '기본 정보',
-        size: 20.0,
-        color: Theme.of(context).colorScheme.primary,
-      ),
+      title: FWText('기본 정보', size: 20.0),
       backgroundColor: Theme.of(context).colorScheme.onPrimary,
       elevation: 0.0,
     );
@@ -141,13 +138,13 @@ class NicknameInputField extends StatelessWidget {
             FWText('별명을 입력하세요.', size: 15.0),
             const SizedBox(height: 8.0),
             ShakeWidget(
-              autoPlay: controller.invalid,
+              autoPlay: controller.invalids[0],
               shakeConstant: ShakeHorizontalConstant2(),
               child: FWInputField(
                 controller: RegisterPresenter.nicknameCont,
                 onSubmitted: (_) => controller.nextPressed(),
                 hintText: '별명',
-                invalid: controller.invalid,
+                invalid: controller.invalids[0],
               ),
             ),
             const SizedBox(height: 8.0),
@@ -167,7 +164,8 @@ class CarouselView extends StatelessWidget {
   static List<Widget> carouselWidgets() => const [
     NicknameInputField(),
     RoleSelectionButtonView(),
-    UserInfoView(),
+    SexDateOfBirthView(),
+    WeightHeightView(),
   ];
   static int widgetCount = carouselWidgets().length;
 
@@ -187,10 +185,11 @@ class CarouselView extends StatelessWidget {
               child: CarouselSlider(
                 carouselController: RegisterPresenter.carouselCont,
                 items: carouselWidgets().map((widget) => Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 45.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: widget,
                 )).toList(),
                 options: CarouselOptions(
+                  height: double.infinity,
                   initialPage: 0,
                   reverse: false,
                   enableInfiniteScroll: false,
@@ -265,16 +264,150 @@ class CarouselNextButton extends StatelessWidget {
       width: 120.0,
       height: 45.0,
       text: '다음',
-      borderRadius: 1.0,
     );
   }
 }
 
-class UserInfoView extends StatelessWidget {
-  const UserInfoView({Key? key}) : super(key: key);
+class SexDateOfBirthView extends StatelessWidget {
+  const SexDateOfBirthView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    Map<String, Widget> contents = {
+      '성별': Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          GetBuilder<RegisterPresenter>(
+            builder: (controller) {
+              return ShakeWidget(
+                autoPlay: controller.invalids[0],
+                shakeConstant: ShakeHorizontalConstant2(),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: const [
+                    SexSelectionButton(sex: Sex.male),
+                    SexSelectionButton(sex: Sex.female),
+                  ],
+                ),
+              );
+            }
+          ),
+        ],
+      ),
+      '생년월일': Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          GetBuilder<RegisterPresenter>(
+            builder: (controller) {
+              return Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: ShakeWidget(
+                    autoPlay: controller.invalids[1],
+                    shakeConstant: ShakeHorizontalConstant2(),
+                    child: FWInputField(
+                      controller: RegisterPresenter.dateOfBirthCont,
+                      hintText: '011223',
+                    ),
+                  ),
+                ),
+              );
+            }
+          ),
+        ],
+      ),
+    };
+
+    return ListView.separated(
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: contents.length,
+      itemBuilder: (context, index) => FWCard(
+        title: contents.keys.toList()[index],
+        child: contents[contents.keys.toList()[index]]!,
+      ),
+      separatorBuilder: (context, index) => const SizedBox(height: 20.0),
+    );
+  }
+}
+
+class WeightHeightView extends StatelessWidget {
+  const WeightHeightView({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Map<String, Widget> contents = {
+      '체중': Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          GetBuilder<RegisterPresenter>(
+            builder: (controller) {
+              return FWNumberPicker(
+                label: 'kg',
+                onChanged: (value) => controller.weightChanged(value * 0.1),
+                value: RegisterPresenter.userPresenter.defaultWeight,
+                minValue: 20.0,
+                maxValue: 200.0,
+                step: 0.1,
+              );
+            }
+          ),
+        ],
+      ),
+      '신장': Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          GetBuilder<RegisterPresenter>(
+              builder: (controller) {
+                return FWNumberPicker(
+                  label: 'cm',
+                  onChanged: (value) => controller.heightChanged(value * 0.1),
+                  value: RegisterPresenter.userPresenter.user.height,
+                  minValue: 100.0,
+                  maxValue: 220.0,
+                  step: 0.1,
+                );
+              }
+          ),
+        ],
+      ),
+    };
+
+    return ListView.separated(
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: contents.length,
+      itemBuilder: (context, index) => FWCard(
+        height: 140.0,
+        title: contents.keys.toList()[index],
+        child: contents[contents.keys.toList()[index]]!,
+      ),
+      separatorBuilder: (context, index) => const SizedBox(height: 20.0),
+    );
+  }
+}
+
+class SexSelectionButton extends StatelessWidget {
+  const SexSelectionButton({Key? key, required this.sex}) : super(key: key);
+
+  final Sex sex;
+
+  @override
+  Widget build(BuildContext context) {
+    final registerCont = Get.find<RegisterPresenter>();
+
+    const Map<Sex, String> texts = {
+      Sex.male: '남자',
+      Sex.female: '여자',
+    };
+
+    return GetBuilder<UserPresenter>(
+        builder: (userCont) {
+          return FWButton(
+            text: texts[sex],
+            width: 128.0,
+            fill: sex == userCont.user.sex,
+            onPressed: () => registerCont.sexSelected(sex),
+          );
+        }
+    );
   }
 }
