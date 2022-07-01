@@ -43,13 +43,13 @@ class FWNumberPicker extends StatelessWidget {
               itemHeight: 20.0,
               textMapper: (value) => (int.parse(value) * step)
                   .toStringAsFixed(decimalPlace),
-              selectedTextStyle: const TextStyle(
-                color: FWTheme.black,
+              selectedTextStyle: TextStyle(
+                color: Theme.of(context).primaryColor,
                 fontSize: 15.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            FWText(label, color: FWTheme.black),
+            FWText(label, color: Theme.of(context).primaryColor),
           ],
         ),
         Positioned.fill(
@@ -95,7 +95,7 @@ class FWCard extends StatelessWidget {
     Key? key,
     this.title,
     required this.child,
-    this.height = 600.0,
+    this.height = 115.0,
   }) : super(key: key);
 
   final String? title;
@@ -107,7 +107,6 @@ class FWCard extends StatelessWidget {
     return SizedBox(
       height: height,
       child: Card(
-        margin: EdgeInsets.all(15.0),
         elevation: 0.0,
         shape: RoundedRectangleBorder(
           side: BorderSide(color: Theme.of(context).colorScheme.primary),

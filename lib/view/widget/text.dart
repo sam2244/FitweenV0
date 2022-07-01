@@ -10,14 +10,12 @@ class FWText extends StatelessWidget {
     this.size = 14.0,
     this.weight = FWFontWeight.normal,
     this.textStyle,
-  }) : assert((
-    color == null && size == null && weight == null
-  ) || textStyle == null), super(key: key);
+  }) : assert(color == null || textStyle == null), super(key: key);
 
   final String data;
   Color? color;
-  final double? size;
-  final FWFontWeight? weight;
+  double size;
+  FWFontWeight weight;
   final TextStyle? textStyle;
 
   @override
@@ -55,6 +53,7 @@ class FWInputField extends StatelessWidget {
     this.hintText,
     this.hintTextColor = FWTheme.grey,
     this.invalid = true,
+    this.enabled = true,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -65,6 +64,7 @@ class FWInputField extends StatelessWidget {
   final String? hintText;
   final Color? hintTextColor;
   final bool invalid;
+  final bool enabled;
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +84,7 @@ class FWInputField extends StatelessWidget {
             color: hintTextColor,
           )
         ),
+        enabled: enabled,
         style: TextStyle(
           color: Theme.of(context).colorScheme.primary,
         ),

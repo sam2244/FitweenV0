@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitween1/model/chat/chat.dart';
 import 'package:fitween1/model/plan/todo.dart';
 import 'package:fitween1/model/user/user.dart';
+import 'package:intl/intl.dart';
 
 // 플랜의 상태
 enum PlanState { training, fail, complete }
@@ -9,7 +10,7 @@ enum PlanState { training, fail, complete }
 // 플랜 모델
 class Plan {
   String? id;
-  String? category;
+  String? purpose;
   PlanState state = PlanState.training;
   FWUser? trainer;
   FWUser? trainee;
@@ -23,7 +24,7 @@ class Plan {
 
   void fromMap(Map<String, dynamic> map) {
     id = map['id'];
-    category = map['category'];
+    purpose = map['purpose'];
     state = map['state'];
     trainer = map['trainer'];
     trainee = map['trainee'];
@@ -36,7 +37,7 @@ class Plan {
 
   Map<String, dynamic> toMap() => {
     'id': id,
-    'category': category,
+    'purpose': purpose,
     'state': state,
     'trainer': trainer,
     'trainee': trainee,
@@ -65,5 +66,8 @@ class Plan {
     return plans.map((plan) => plan.id ?? '').toList();
   }
 
+  static dateToString(DateTime date) => DateFormat('yyyy년 MM월 dd일').format(date);
   static DateTime get today => Chat.removeTime(DateTime.now());
+
+  static const List<String> purposes = ['다이어트', '벌크업', '기타'];
 }
