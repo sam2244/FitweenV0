@@ -337,7 +337,8 @@ class _MyPageState extends State<MyPage> {
             FlSpot(10, 45.2),
           ],
           isCurved: true,
-          color: Colors.red,
+          color: Theme.of(context).colorScheme.primary,
+          //Colors.red,
           barWidth: 4,
           isStrokeCapRound: true,
           dotData: FlDotData(
@@ -349,6 +350,18 @@ class _MyPageState extends State<MyPage> {
           ),
         ),
       ],
+
+      lineTouchData: LineTouchData(
+      handleBuiltInTouches: true,
+      touchTooltipData: LineTouchTooltipData( // 마우스 올릴 시 나오는 툴팁 데이터에 관한 설정
+        tooltipBgColor: Theme.of(context).colorScheme.surface,
+        //tooltipRoundedRadius: 20,
+        //fitInsideHorizontally: true,
+        fitInsideVertically: true, // 툴팁 데이터가 차트 밖으로 나가지 않게 함
+        maxContentWidth: 40.0,
+        //rotateAngle: 20,
+      ),
+    ),
     );
   }
 }
