@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class FWTheme {
   FWTheme._();
 
+  static const Color black = Colors.black;
   static const Color dark = Color(0xFF1F1F1F);
-  static const Color grey = Color(0xFFB6B5B5);
+  static const Color grey = Color(0xFF929292);
   static const Color light = Color(0xFFF5F5F5);
   static const Color white = Colors.white;
 
@@ -105,7 +106,7 @@ class FWTheme {
     onErrorContainer: Color(0xFF410002),
     background: Color(0xFFF6FEFF),
     onBackground: Color(0xFF001F24),
-    surface: Color(0xFFF6FEFF),
+    surface: Color(0xFFFBFFFF),
     onSurface: Color(0xFF001F24),
     surfaceVariant: Color(0xFFE0E2EC),
     onSurfaceVariant: Color(0xFF43474E),

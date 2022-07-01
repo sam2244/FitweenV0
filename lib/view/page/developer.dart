@@ -1,5 +1,4 @@
 import 'package:fitween1/view/widget/button.dart';
-import 'package:fitween1/view/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

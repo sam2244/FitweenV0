@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:fitween1/global/global.dart';
 import 'package:fitween1/model/plan/plan.dart';
 import 'package:fitween1/presenter/model/user.dart';
@@ -36,8 +38,9 @@ class FWUser {
   String imageUrl = UserPresenter.defaultProfile;
   Role role = Role.trainee;
   Sex? sex;
-  double? height;
-  Map<DateTime, double>? weights;
+  double height = 175.0;
+  DateTime? dateOfBirth;
+  LinkedHashMap<DateTime, double>? weights;
   List<Plan>? trainerPlans;
   List<Plan>? traineePlans;
   List<FWUser>? friends;
@@ -58,6 +61,7 @@ class FWUser {
     sex = map['sex'];
     height = map['height'];
     weights = map['weights'];
+    dateOfBirth = map['dateOfBirth'];
     trainerPlans = map['trainerPlans'];
     traineePlans = map['traineePlans'];
     friends = map['friends'];
@@ -73,6 +77,7 @@ class FWUser {
     'sex': sex,
     'height': height,
     'weights': weights,
+    'dateOfBirth': dateOfBirth,
     'trainerPlans': trainerPlans,
     'traineePlans': traineePlans,
     'friends': friends,
@@ -113,6 +118,11 @@ class FWUser {
   // 역할을 전환
   void toggleRole() {
     role = Role.values.firstWhere((value) => value != role);
+  }
+
+  // 성별을 전환
+  void toggleSex() {
+    sex = Sex.values.firstWhere((value) => value != sex);
   }
 
   // 사용자 리스트의 각 사용자의 uid 값으로 이루어진 리스트 반환 (List<FWUser> => List<String>)
