@@ -1,9 +1,10 @@
 import 'package:fitween1/view/page/my/widget.dart';
+import 'package:fitween1/view/widget/text.dart';
+
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:fitween1/view/widget/text.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -296,6 +297,14 @@ class _MyPageState extends State<MyPage> {
             reservedSize: 30,
             getTitlesWidget: bottomTitleWidgets,
             interval: 1,
+          ),
+        ),*/
+        /*leftTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            interval: 1,
+            getTitlesWidget: leftTitleWidgets,
+            reservedSize: 42,
           ),
         ),*/
         topTitles: AxisTitles(
