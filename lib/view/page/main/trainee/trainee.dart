@@ -11,7 +11,11 @@ class TraineeMainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       appBar: MainAppBar(role: Role.trainee),
-      body: TraineeCarousel(role: Role.trainee),
+      body: Center(
+          child: TraineeCarousel(
+              role: Role.trainee)
+      ),
+      floatingActionButton: TraineeFAB(),
       bottomNavigationBar: MainBottomBar(role: Role.trainee,),
     );
   }
