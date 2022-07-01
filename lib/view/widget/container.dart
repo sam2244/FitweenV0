@@ -95,7 +95,7 @@ class FWCard extends StatelessWidget {
     Key? key,
     this.title,
     required this.child,
-    this.height = 600.0,
+    this.height = 115.0,
   }) : super(key: key);
 
   final String? title;
@@ -107,7 +107,6 @@ class FWCard extends StatelessWidget {
     return SizedBox(
       height: height,
       child: Card(
-        margin: EdgeInsets.all(15.0),
         elevation: 0.0,
         shape: RoundedRectangleBorder(
           side: BorderSide(color: Theme.of(context).colorScheme.primary),

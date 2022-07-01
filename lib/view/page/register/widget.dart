@@ -276,7 +276,7 @@ class SexDateOfBirthView extends StatelessWidget {
         title: contents.keys.toList()[index],
         child: contents[contents.keys.toList()[index]]!,
       ),
-      separatorBuilder: (context, index) => const SizedBox(height: 20.0),
+      separatorBuilder: (context, index) => const SizedBox(height: 10.0),
     );
   }
 }
@@ -356,11 +356,11 @@ class WeightHeightView extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: contents.length,
       itemBuilder: (context, index) => FWCard(
-        height: 140.0,
+        height: 150.0,
         title: contents.keys.toList()[index],
         child: contents[contents.keys.toList()[index]]!,
       ),
-      separatorBuilder: (context, index) => const SizedBox(height: 20.0),
+      separatorBuilder: (context, index) => const SizedBox(height: 10.0),
     );
   }
 }

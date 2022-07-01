@@ -164,7 +164,7 @@ class PurposeDietView extends StatelessWidget {
         title: contents.keys.toList()[index],
         child: contents[contents.keys.toList()[index]]!,
       ),
-      separatorBuilder: (context, index) => const SizedBox(height: 20.0),
+      separatorBuilder: (context, index) => const SizedBox(height: 10.0),
     );
   }
 }
@@ -177,17 +177,17 @@ class PTPeriodView extends StatelessWidget {
     Map<String, Widget> contents = {
       'PT 시작일': const DateSelectionButton(type: DateType.start),
       'PT 종료일': const DateSelectionButton(type: DateType.end),
-      '기간': PeriodSelectionButton(),
+      '기간': const PeriodSelectionButton(),
     };
 
     return ListView.separated(
       itemCount: contents.length,
       itemBuilder: (context, index) => FWCard(
-        height: 100.0,
+        height: 130.0,
         title: contents.keys.toList()[index],
         child: Center(child: contents[contents.keys.toList()[index]]!),
       ),
-      separatorBuilder: (context, index) => const SizedBox(height: 20.0),
+      separatorBuilder: (context, index) => const SizedBox(height: 10.0),
     );
   }
 }
@@ -202,16 +202,15 @@ class DateSelectionButton extends StatelessWidget {
     return GetBuilder<AddPlanPresenter>(
       builder: (controller) {
         return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            FWButton(
-              onPressed: type == DateType.start
-                  ? controller.startDateDecreased
-                  : controller.endDateDecreased,
-              text: '-',
-              width: 40.0,
-              fill: false,
-            ),
+            // IconButton(
+            //   onPressed: type == DateType.start
+            //       ? controller.startDateDecreased
+            //       : controller.endDateDecreased,
+            //   icon: const Icon(Icons.arrow_back_ios),
+            //   iconSize: 10.0,
+            // ),
             TextButton(
               onPressed: type == DateType.start
                   ? controller.startDateSelected
@@ -224,14 +223,13 @@ class DateSelectionButton extends StatelessWidget {
                 ) ?? Plan.today),
               ),
             ),
-            FWButton(
-              onPressed: type == DateType.start
-                  ? controller.startDateIncreased
-                  : controller.endDateIncreased,
-              text: '+',
-              width: 40.0,
-              fill: false,
-            ),
+            // IconButton(
+            //   onPressed: type == DateType.start
+            //       ? controller.startDateIncreased
+            //       : controller.endDateIncreased,
+            //   icon: const Icon(Icons.arrow_forward_ios),
+            //   iconSize: 10.0,
+            // ),
           ],
         );
       }
@@ -249,11 +247,10 @@ class PeriodSelectionButton extends StatelessWidget {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            FWButton(
+            IconButton(
               onPressed: controller.periodDecreased,
-              text: '-',
-              width: 40.0,
-              fill: false,
+              icon: const Icon(Icons.arrow_back_ios),
+              iconSize: 10.0,
             ),
             NumberPicker(
               itemCount: 5,
@@ -262,13 +259,12 @@ class PeriodSelectionButton extends StatelessWidget {
               value: controller.period,
               onChanged: controller.periodSelected,
               axis: Axis.horizontal,
-              itemWidth: 40.0,
+              itemWidth: 35.0,
             ),
-            FWButton(
+            IconButton(
               onPressed: controller.periodIncreased,
-              text: '+',
-              width: 40.0,
-              fill: false,
+              icon: const Icon(Icons.arrow_forward_ios),
+              iconSize: 10.0,
             ),
           ],
         );
