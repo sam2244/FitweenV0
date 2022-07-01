@@ -20,11 +20,8 @@ class _MyPageState extends State<MyPage> {
   File? _image;
   String imgData = "";
   var _user;
-  final ImagePicker _picker = ImagePicker();
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
-  // Pick an image
-  //final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +32,8 @@ class _MyPageState extends State<MyPage> {
           Container(
             margin: const EdgeInsets.only(
                 top: 20.0, left: 20.0, right: 20.0, bottom: 20.0),
-            width: 70,
-            height: 70,
+            width: 80,
+            height: 80,
             decoration: const BoxDecoration(
                 color: Color(0xFF38597E),
                 borderRadius:
