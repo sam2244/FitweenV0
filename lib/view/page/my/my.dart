@@ -358,7 +358,7 @@ class _MyPageState extends State<MyPage> {
         //tooltipRoundedRadius: 20,
         //fitInsideHorizontally: true,
         fitInsideVertically: true, // 툴팁 데이터가 차트 밖으로 나가지 않게 함
-        maxContentWidth: 30.0,
+        maxContentWidth: 40.0,
         //rotateAngle: 20,
       ),
     ),
