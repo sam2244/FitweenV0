@@ -5,6 +5,7 @@ import 'package:fitween1/view/widget/image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
 // 메인 페이지의 위젯 모음
 
