@@ -35,7 +35,10 @@ class RegisterPresenter extends GetxController {
 
   // 뒤로가기 버튼 클릭 트리거
   void backPressed() {
-    if (pageIndex == 0) LoginPresenter.fitweenGoogleLogout();
+    if (pageIndex == 0) {
+      LoginPresenter.fitweenGoogleLogout();
+      Get.back();
+    }
 
     carouselCont.previousPage(
       curve: transitionCurve,
@@ -45,7 +48,7 @@ class RegisterPresenter extends GetxController {
   }
 
   // 다음 버튼 클릭 트리거
-  void nextPressed() async {
+  void nextPressed() {
     if (pageIndex == 0) {
       if (nicknameCont.text == '') {
         validate(0);

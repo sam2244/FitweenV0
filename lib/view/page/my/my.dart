@@ -1,8 +1,13 @@
 import 'package:fitween1/view/page/my/widget.dart';
+import 'package:fitween1/view/widget/text.dart';
+
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:fitween1/view/widget/text.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 // 마이 페이지
 class MyPage extends StatefulWidget {
@@ -13,9 +18,11 @@ class MyPage extends StatefulWidget {
 }
 
 class _MyPageState extends State<MyPage> {
-  final ImagePicker _picker = ImagePicker();
-  // Pick an image
-  //final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+  File? _image;
+  String imgData = "";
+  var _user;
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +31,23 @@ class _MyPageState extends State<MyPage> {
       body: Column(
         children: <Widget>[
           Container(
-            child: Text("사진 자리"),
+            margin: const EdgeInsets.only(
+                top: 20.0, left: 20.0, right: 20.0, bottom: 20.0),
+            width: 80,
+            height: 80,
+            decoration: const BoxDecoration(
+                color: Color(0xFF38597E),
+                borderRadius:
+                BorderRadius.all(Radius.circular(100)) //모서리를 둥글게
+            ),
+            child: IconButton(
+              icon: (imgData == "")
+                  ? const Icon(Icons.person)
+                  : Image.network(imgData),
+              color: Colors.white,
+              iconSize: 45.0,
+              onPressed: () => selectDialog(),
+            ),
           ),
           Container(
             child: FWText(
@@ -61,6 +84,8 @@ class _MyPageState extends State<MyPage> {
             ),
           ),
           Container(
+            margin: const EdgeInsets.only(
+                top: 20.0, left: 20.0, right: 20.0, bottom: 20.0),
             decoration: BoxDecoration(
               border: Border.all(
                 width: 1,
@@ -83,6 +108,114 @@ class _MyPageState extends State<MyPage> {
         ],
       ),
     );
+  }
+  void selectDialog() {
+    showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            // RoundedRectangleBorder - Dialog 화면 모서리 둥글게 조절
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)),
+            //Dialog Main Title
+            title: Column(
+              children: const <Widget>[
+                Text("이미지 선택"),
+              ],
+            ),
+            //
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const <Widget>[
+                Text(
+                  "이미지를 가져올 곳을 선택해주세요.",
+                ),
+              ],
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text("갤러리"),
+                onPressed: () {
+                  Navigator.pop(context);
+                  _uploadImageToStorage(ImageSource.gallery);
+                },
+              ),
+              TextButton(
+                child: const Text("카메라"),
+                onPressed: () {
+                  Navigator.pop(context);
+                  _uploadImageToStorage(ImageSource.camera);
+                },
+              )
+            ],
+          );
+        });
+  }
+  Future<String> storeImage() async {
+    _user = await _firebaseAuth.currentUser!;
+    final response = await _firebaseStorage
+        .ref()
+        .child("profile/${_user.uid}")
+        .getDownloadURL();
+    print("@######################");
+    return response;
+  }
+
+  bool needDelExist = false;
+  Future<bool> checkExist() async {
+    try {
+      await FirebaseFirestore.instance.doc(_firebaseAuth.currentUser!.uid).get().then((doc)
+      {
+        needDelExist = doc.exists;
+      });
+      FirebaseFirestore.instance
+          .collection("profile")
+          .doc(_firebaseAuth.currentUser!.uid)
+          .delete();
+      print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@44");
+      return needDelExist ;
+    } catch(e) {
+      return false ;
+    }
+  }
+
+  Future addImage(final url) async {
+    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@33");
+    final userInfo = FirebaseFirestore.instance
+        .collection("profile")
+        .doc(_firebaseAuth.currentUser!.uid) ;
+
+    userInfo.set({
+      'email': FirebaseAuth.instance.currentUser!.email,
+      'imageURL': url,
+      'name': FirebaseAuth.instance.currentUser!.displayName,
+      'userId': FirebaseAuth.instance.currentUser!.uid,
+    });
+    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@33");
+  }
+
+  Future<void> _uploadImageToStorage(ImageSource source) async {
+    final _picker = ImagePicker();
+    final image = await ImagePicker.platform.getImage(source: source);
+    //ImagePicker.platform.getImage(source: source);
+    if (image == null) return;
+    setState(() {
+      _image = File(image.path);
+      print(_image);
+    });
+    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+    final storageReference =
+    _firebaseStorage.ref().child("profile/${_user.uid}");
+    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+    final storageUploadTask = await storageReference.putFile(_image!);
+
+    final response = await storeImage();
+    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+    print(response);
+    checkExist();
+    await addImage(response);
   }
 
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
@@ -166,6 +299,14 @@ class _MyPageState extends State<MyPage> {
             interval: 1,
           ),
         ),*/
+        /*leftTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            interval: 1,
+            getTitlesWidget: leftTitleWidgets,
+            reservedSize: 42,
+          ),
+        ),*/
         topTitles: AxisTitles(
           sideTitles: SideTitles(showTitles: false),
         ),
@@ -179,7 +320,7 @@ class _MyPageState extends State<MyPage> {
       minX: 1,
       maxX: 10,
       minY: 30,
-      maxY: 150,
+      maxY: 70,
       lineBarsData: [
         LineChartBarData(
           spots: [

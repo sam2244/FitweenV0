@@ -20,7 +20,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
-            color: Colors.black,
+            color: Theme.of(context).colorScheme.primary,
           ),
           onPressed: () {
             Get.back();
@@ -30,7 +30,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           IconButton(
             icon: Icon(
               Icons.settings,
-              color: Colors.black,
+              color: Theme.of(context).colorScheme.primary,
             ),
             onPressed: () {
               Get.back();
