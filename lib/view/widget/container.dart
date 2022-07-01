@@ -43,13 +43,13 @@ class FWNumberPicker extends StatelessWidget {
               itemHeight: 20.0,
               textMapper: (value) => (int.parse(value) * step)
                   .toStringAsFixed(decimalPlace),
-              selectedTextStyle: const TextStyle(
-                color: FWTheme.black,
+              selectedTextStyle: TextStyle(
+                color: Theme.of(context).primaryColor,
                 fontSize: 15.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            FWText(label, color: FWTheme.black),
+            FWText(label, color: Theme.of(context).primaryColor),
           ],
         ),
         Positioned.fill(
