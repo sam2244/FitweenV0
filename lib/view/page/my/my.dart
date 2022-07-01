@@ -317,8 +317,8 @@ class _MyPageState extends State<MyPage> {
       borderData: FlBorderData(
           show: true,
           border: Border.all(color: Colors.black, width: 1)),
-      minX: 1,
-      maxX: 10,
+      minX: 1-1,
+      maxX: 10+1,
       minY: 30,
       maxY: 70,
       lineBarsData: [
@@ -346,7 +346,7 @@ class _MyPageState extends State<MyPage> {
           ),
           belowBarData: BarAreaData(
             show: true,
-            color: Colors.white,
+            color: Colors.transparent,
           ),
         ),
       ],
