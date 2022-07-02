@@ -12,9 +12,7 @@ import '../../../widget/container.dart';
 
 //피트위너 페이지 Body CarouselSlider Widget
 class TraineeCarousel extends StatelessWidget {
-  const TraineeCarousel({Key? key, required this.role}) : super(key: key);
-
-  final Role role;
+  const TraineeCarousel({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +26,7 @@ class TraineeCarousel extends StatelessWidget {
         .height;
     return CarouselSlider(
       options: CarouselOptions(
+        enableInfiniteScroll: cardList.length > 1,
         height: height,
         viewportFraction: 1.0,
         enlargeCenterPage: false,
@@ -53,40 +52,42 @@ class TraineeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        FWCard(
-          child: Row(
-            children: [
-              SizedBox(
-                width: 100.0,
-                height: 100.0,
-                child: Container(
-                  color: FWTheme.light,
-                  child: Icon(Icons.account_circle_outlined),
-                  width: 300.0,
-                  height: 300.0,
-                )
-              ),
-              Column(
-                children: const [
-                  SizedBox(
-                    child:
-                    Text(
-                      "Nickname",
-                      style: TextStyle(color: FWTheme.dark),
-                    ),
-
-                  ),
-                  SizedBox(
-                    child:
+        Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: FWCard(
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 100.0,
+                  height: 100.0,
+                  child: Container(
+                    color: FWTheme.light,
+                    width: 300.0,
+                    height: 300.0,
+                    child: const Icon(Icons.account_circle_outlined),
+                  )
+                ),
+                Column(
+                  children: const [
+                    SizedBox(
+                      child:
                       Text(
-                        "D-50",
+                        "Nickname",
                         style: TextStyle(color: FWTheme.dark),
                       ),
-                  ),
-                ],
-              )
-            ],
-          )
+                    ),
+                    SizedBox(
+                      child:
+                        Text(
+                          "D-50",
+                          style: TextStyle(color: FWTheme.dark),
+                        ),
+                    ),
+                  ],
+                )
+              ],
+            )
+          ),
         ),
       ],
     );

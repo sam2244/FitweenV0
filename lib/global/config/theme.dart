@@ -9,6 +9,102 @@ class FWTheme {
   static const Color light = Color(0xFFF5F5F5);
   static const Color white = Colors.white;
 
+  static const MaterialColor primary = MaterialColor(0xFF2692FF, {
+    100: Color(0xFFFFFFFF),
+    99: Color(0xFFFDFCFF),
+    95: Color(0xFFEBF1FF),
+    90: Color(0xFFD4E3FF),
+    80: Color(0xFFA5C8FF),
+    70: Color(0xFF72ADFF),
+    60: Color(0xFF2692FF),
+    50: Color(0xFF0078DA),
+    40: Color(0xFF005FAF),
+    30: Color(0xFF004786),
+    20: Color(0xFF00315F),
+    10: Color(0xFF001C3A),
+    0: Color(0xFF000000),
+  });
+
+  static const MaterialColor secondary = MaterialColor(0xFF009BD2, {
+    100: Color(0xFFFFFFFF),
+    99: Color(0xFFFBFCFF),
+    95: Color(0xFFE3F3FF),
+    90: Color(0xFFC4E7FF),
+    80: Color(0xFF7DD0FF),
+    70: Color(0xFF00B7F8),
+    60: Color(0xFF009BD2),
+    50: Color(0xFF0080AE),
+    40: Color(0xFF00658B),
+    30: Color(0xFF004C69),
+    20: Color(0xFF00344A),
+    10: Color(0xFF001E2D),
+    0: Color(0xFF000000),
+  });
+
+  static const MaterialColor tertiary = MaterialColor(0xFF00A0B0, {
+    100: Color(0xFFFFFFFF),
+    99: Color(0xFFF6FEFF),
+    95: Color(0xFFD0F8FF),
+    90: Color(0xFF97F0FF),
+    80: Color(0xFF4FD8EB),
+    70: Color(0xFF22BCCF),
+    60: Color(0xFF00A0B0),
+    50: Color(0xFF008391),
+    40: Color(0xFF006874),
+    30: Color(0xFF004F58),
+    20: Color(0xFF00363D),
+    10: Color(0xFF001F24),
+    0: Color(0xFF000000),
+  });
+
+  static const MaterialColor error = MaterialColor(0xFFFF5449, {
+    100: Color(0xFFFFFFFF),
+    99: Color(0xFFFFFBFF),
+    95: Color(0xFFFFEDEA),
+    90: Color(0xFFFFDAD6),
+    80: Color(0xFFFFB4AB),
+    70: Color(0xFFFF897D),
+    60: Color(0xFFFF5449),
+    50: Color(0xFFDE3730),
+    40: Color(0xFFBA1A1A),
+    30: Color(0xFF93000A),
+    20: Color(0xFF690005),
+    10: Color(0xFF410002),
+    0: Color(0xFF000000),
+  });
+
+  static const MaterialColor neutral = MaterialColor(0xFF909094, {
+    100: Color(0xFFFFFFFF),
+    99: Color(0xFFFDFCFF),
+    95: Color(0xFFF1F0F4),
+    90: Color(0xFFE3E2E6),
+    80: Color(0xFFC7C6CA),
+    70: Color(0xFFABABAE),
+    60: Color(0xFF909094),
+    50: Color(0xFF76777A),
+    40: Color(0xFF5D5E62),
+    30: Color(0xFF46474A),
+    20: Color(0xFF2F3033),
+    10: Color(0xFF1A1C1E),
+    0: Color(0xFF000000),
+  });
+
+  static const MaterialColor neutralVariant = MaterialColor(0xFF8D9199, {
+    100: Color(0xFFFFFFFF),
+    99: Color(0xFFFDFCFF),
+    95: Color(0xFFEEF0FA),
+    90: Color(0xFFE0E2EC),
+    80: Color(0xFFC3C6CF),
+    70: Color(0xFFA8ABB4),
+    60: Color(0xFF8D9199),
+    50: Color(0xFF74777F),
+    40: Color(0xFF5B5E66),
+    30: Color(0xFF43474E),
+    20: Color(0xFF2D3138),
+    10: Color(0xFF181C22),
+    0: Color(0xFF000000),
+  });
+
   static const fontFamily = 'Noto_Sans_KR';
 
   static TextTheme textTheme = const TextTheme(
@@ -39,7 +135,7 @@ class FWTheme {
     titleMedium: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w500,
-      fontSize: 16,
+      fontSize: 16.0,
       height: 24 / 16,
     ),
     titleSmall: TextStyle(

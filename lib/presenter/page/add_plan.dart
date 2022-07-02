@@ -12,6 +12,8 @@ class AddPlanPresenter extends GetxController {
   bool fieldActive = false;
   int period = 1;
 
+  static const int max = 999;
+
   static const Duration shakeDuration = Duration(milliseconds: 500);
 
   static Curve transitionCurve = Curves.fastOutSlowIn;
@@ -115,7 +117,7 @@ class AddPlanPresenter extends GetxController {
       context: Get.context!,
       initialDate: planPresenter.plan.startDate!,
       firstDate: Plan.today.subtract(const Duration(days: 30)),
-      lastDate: Plan.today.add(const Duration(days: 1000)),
+      lastDate: Plan.today.add(const Duration(days: max)),
     );
     planPresenter.plan.startDate = await date;
     if (planPresenter.plan.startDate == null) return;
@@ -151,7 +153,7 @@ class AddPlanPresenter extends GetxController {
       context: Get.context!,
       initialDate: planPresenter.plan.endDate!,
       firstDate: Plan.today.subtract(const Duration(days: 30)),
-      lastDate: Plan.today.add(const Duration(days: 1000)),
+      lastDate: Plan.today.add(const Duration(days: max)),
     );
     planPresenter.plan.endDate = await date;
     if (planPresenter.plan.endDate == null) return;
@@ -189,7 +191,7 @@ class AddPlanPresenter extends GetxController {
     update();
   }
 
-  void periodIncreased() { period++; update(); }
-  void periodDecreased() { period--; update(); }
+  void periodIncreased() { if (period < max) period++; update(); }
+  void periodDecreased() { if (period > 1) period--; update(); }
 
 }

@@ -25,24 +25,23 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
       child: GetBuilder<UserPresenter>(
         builder: (controller) {
           return AppBar(
-              shape: role == Role.trainee ? Border(
+            shape: role == Role.trainee ? Border(
               bottom: BorderSide(
                 color: Theme.of(context).primaryColor,
-                )
+              ),
             ) : const Border(),
             leadingWidth: 600.0,
-            leading:
-            Padding(
-                padding: EdgeInsets.zero,
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: SvgPicture.asset(FWLogo.asset),
-                ),
+            leading: Padding(
+              padding: EdgeInsets.zero,
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: SvgPicture.asset(FWLogo.asset),
+              ),
             ),
             actions: [
               IconButton(
-                icon: Icon(Icons.calendar_month_outlined),
-                padding: EdgeInsets.only(right: 20.0),
+                icon: const Icon(Icons.calendar_month_outlined),
+                padding: const EdgeInsets.only(right: 20.0),
                 onPressed: () {
                   print("Not ready yet!");
                 },
@@ -55,7 +54,6 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 }
 
-
 // 메인 페이지 Bottom NavigationBar
 class MainBottomBar extends StatelessWidget {
   const MainBottomBar({Key? key, required this.role}) : super(key: key);
@@ -64,16 +62,20 @@ class MainBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+      items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home'),
+          icon: Icon(Icons.home),
+          label: 'Home',
+        ),
         BottomNavigationBarItem(
-            icon: Icon(Icons.chat_rounded),
-            label: 'Chat'),
+          icon: Icon(Icons.chat_rounded),
+          label: 'Chat',
+        ),
         BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle_outlined),
-            label: 'MyPage'),
-      ],);
+          icon: Icon(Icons.account_circle_outlined),
+          label: 'MyPage',
+        ),
+      ],
+    );
   }
 }

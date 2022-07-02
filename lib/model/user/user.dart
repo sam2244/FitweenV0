@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:fitween1/global/global.dart';
 import 'package:fitween1/model/plan/plan.dart';
 import 'package:fitween1/presenter/model/user.dart';
@@ -40,7 +38,26 @@ class FWUser {
   Sex? sex;
   double height = 175.0;
   DateTime? dateOfBirth;
-  LinkedHashMap<DateTime, double>? weights;
+  Map<DateTime, double>? weights = {
+    DateTime(2019, 5, 3): 53.0,
+    DateTime(2019, 7, 8): 52.0,
+    DateTime(2019, 11, 11): 51.0,
+    DateTime(2020, 3, 5): 51.2,
+    DateTime(2020, 6, 5): 50.0,
+    DateTime(2020, 9, 11): 49.1,
+    DateTime(2020, 11, 11): 48.0,
+    DateTime(2021, 4, 5): 47.6,
+    DateTime(2021, 7, 7): 47.4,
+    DateTime(2021, 11, 25): 47.4,
+    DateTime(2022, 1, 1): 47.2,
+    DateTime(2022, 2, 7): 46.5,
+    DateTime(2022, 3, 2): 46.4,
+    DateTime(2022, 4, 1): 45.4,
+    DateTime(2022, 5, 1): 45.7,
+    DateTime(2022, 6, 6): 45.1,
+    DateTime(2022, 6, 25): 44.8,
+    DateTime(2022, 7, 2): 44.5,
+  };
   List<Plan>? trainerPlans;
   List<Plan>? traineePlans;
   List<FWUser>? friends;
