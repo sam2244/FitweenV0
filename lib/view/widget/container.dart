@@ -9,12 +9,18 @@ class FWNumberPicker extends StatelessWidget {
     required this.label,
     required this.onChanged,
     required this.value,
+    this.axis = Axis.vertical,
+    this.itemCount = 5,
     this.minValue = 0.0,
     this.maxValue = 100.0,
     this.step = 1.0,
     this.decimalPlace = 1,
+    this.itemWidth = 50.0,
+    this.itemHeight = 20.0,
   }) : super(key: key);
 
+  final Axis axis;
+  final int itemCount;
   final String label;
   final Function(int) onChanged;
   final double value;
@@ -22,6 +28,8 @@ class FWNumberPicker extends StatelessWidget {
   final double maxValue;
   final double step;
   final int decimalPlace;
+  final double itemWidth;
+  final double itemHeight;
 
   @override
   Widget build(BuildContext context) {
@@ -32,21 +40,21 @@ class FWNumberPicker extends StatelessWidget {
         Row(
           children: [
             NumberPicker(
-              itemCount: 5,
+              axis: axis,
+              itemCount: itemCount,
               haptics: true,
               onChanged: onChanged,
               value: value ~/ step,
               minValue: minValue ~/ step,
               maxValue: maxValue ~/ step,
               step: 1,
-              itemWidth: 50.0,
-              itemHeight: 20.0,
+              itemWidth: itemWidth,
+              itemHeight: itemHeight,
               textMapper: (value) => (int.parse(value) * step)
                   .toStringAsFixed(decimalPlace),
-              selectedTextStyle: TextStyle(
-                color: Theme.of(context).primaryColor,
-                fontSize: 15.0,
-                fontWeight: FontWeight.bold,
+              textStyle: Theme.of(context).textTheme.labelLarge,
+              selectedTextStyle: Theme.of(context).textTheme.labelLarge?.merge(
+                const TextStyle(color: FWTheme.primary, fontWeight: FontWeight.w700),
               ),
             ),
             FWText(label, color: Theme.of(context).primaryColor),
@@ -113,11 +121,18 @@ class FWCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 15.0,
+            vertical: 10.0,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (title != null) FWText(title!),
+              if (title != null)
+              FWText(
+                title!,
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
               Expanded(child: child),
             ],
           ),

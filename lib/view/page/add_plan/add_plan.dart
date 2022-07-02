@@ -9,9 +9,10 @@ class AddPlanPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
-      child: const Scaffold(
-        appBar: AddPlanAppBar(),
-        body: CarouselView(),
+      child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        appBar: const AddPlanAppBar(),
+        body: const CarouselView(),
       ),
     );
   }

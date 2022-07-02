@@ -33,8 +33,10 @@ class AddPlanAppBar extends StatelessWidget implements PreferredSizeWidget {
           );
         }
       ),
-      title: FWText('플랜 추가', size: 20.0),
-      backgroundColor: Theme.of(context).colorScheme.onPrimary,
+      title: FWText(
+        '플랜 추가',
+        style: Theme.of(context).textTheme.headlineMedium,
+      ),
       elevation: 0.0,
     );
   }
@@ -110,29 +112,32 @@ class PurposeDietView extends StatelessWidget {
   Widget build(BuildContext context) {
     Map<String, Widget> contents = {
       '목적': GetBuilder<AddPlanPresenter>(
-        builder: (controller) => Row(
-          children: [
-            SizedBox(
-              width: 80.0,
-              child: DropdownButton<String>(
-                value: AddPlanPresenter.planPresenter.plan.purpose,
-                style: Theme.of(context).textTheme.labelLarge,
-                items: Plan.purposes.map((purpose) => DropdownMenuItem<String>(
-                  value: purpose,
-                  child: Center(child: Text(purpose)),
-                )).toList(),
-                onChanged: (purpose) => controller.purposeSelected(purpose ?? ''),
+        builder: (controller) => Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Row(
+            children: [
+              SizedBox(
+                width: 80.0,
+                child: DropdownButton<String>(
+                  value: AddPlanPresenter.planPresenter.plan.purpose,
+                  style: Theme.of(context).textTheme.labelLarge,
+                  items: Plan.purposes.map((purpose) => DropdownMenuItem<String>(
+                    value: purpose,
+                    child: Center(child: FWText(purpose)),
+                  )).toList(),
+                  onChanged: (purpose) => controller.purposeSelected(purpose ?? ''),
+                ),
               ),
-            ),
-            const SizedBox(width: 15.0),
-            Expanded(
-              child: FWInputField(
-                controller: AddPlanPresenter.purposeCont,
-                hintText: controller.hintText,
-                enabled: controller.fieldActive,
+              const SizedBox(width: 15.0),
+              Expanded(
+                child: FWInputField(
+                  controller: AddPlanPresenter.purposeCont,
+                  hintText: controller.hintText,
+                  enabled: controller.fieldActive,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       '식단': GetBuilder<AddPlanPresenter>(
@@ -145,12 +150,14 @@ class PurposeDietView extends StatelessWidget {
               ),
               child: FWText(
                 '식단을 관리 하시겠습니까?',
-                textStyle: Theme.of(context).textTheme.labelLarge,
+                style: Theme.of(context).textTheme.labelLarge,
               ),
             ),
             Checkbox(
               value: AddPlanPresenter.planPresenter.plan.isDiet,
               onChanged: (isDiet) => controller.dietSelected(isDiet ?? false),
+              activeColor: Theme.of(context).colorScheme.primary,
+              checkColor: Theme.of(context).colorScheme.onPrimary,
             ),
           ],
         ),
@@ -215,12 +222,13 @@ class DateSelectionButton extends StatelessWidget {
               onPressed: type == DateType.start
                   ? controller.startDateSelected
                   : controller.endDateSelected,
-              child: Text(
+              child: FWText(
                 Plan.dateToString((
                   type == DateType.start
                       ? AddPlanPresenter.planPresenter.plan.startDate
                       : AddPlanPresenter.planPresenter.plan.endDate
                 ) ?? Plan.today),
+                style: Theme.of(context).textTheme.labelLarge,
               ),
             ),
             // IconButton(
@@ -252,13 +260,15 @@ class PeriodSelectionButton extends StatelessWidget {
               icon: const Icon(Icons.arrow_back_ios),
               iconSize: 10.0,
             ),
-            NumberPicker(
+            FWNumberPicker(
+              label: '',
               itemCount: 5,
               minValue: 1,
-              maxValue: 1000,
-              value: controller.period,
+              maxValue: AddPlanPresenter.max.toDouble(),
+              value: controller.period.toDouble(),
               onChanged: controller.periodSelected,
               axis: Axis.horizontal,
+              decimalPlace: 0,
               itemWidth: 35.0,
             ),
             IconButton(
@@ -316,9 +326,9 @@ class CarouselNextButton extends StatelessWidget {
         controller.nextPressed();
         FocusScope.of(context).unfocus();
       },
+      text: '다음',
       width: 120.0,
       height: 45.0,
-      text: '다음',
     );
   }
 }

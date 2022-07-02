@@ -1,8 +1,6 @@
-// Carousel 뷰 위젯
+import 'package:fitween1/view/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-
-import '../../../widget/text.dart';
 
 // 트레이너 메인 페이지 CategoryBar
 class TraineeCategory extends StatelessWidget {
@@ -18,7 +16,7 @@ class TraineeCategory extends StatelessWidget {
           IconButton(
             onPressed: () {},
             icon: Icon(
-              Icons.chevron_left,
+              Icons.arrow_back_ios_new,
               color: Theme.of(context).colorScheme.primary,
             ),
             iconSize: 40,
@@ -28,13 +26,13 @@ class TraineeCategory extends StatelessWidget {
             width: MediaQuery.of(context).size.width - 150,
             child: FWText(
               '삼손',
-              size: 20,
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
           ),
           IconButton(
             onPressed: () {},
             icon: Icon(
-              Icons.chevron_right,
+              Icons.arrow_forward_ios,
               color: Theme.of(context).colorScheme.primary,
             ),
             iconSize: 40,
@@ -89,8 +87,8 @@ class TraineeProfileImage extends StatelessWidget {
               fit: BoxFit.cover),
         ),
       ),
-      reverse: false,
-      backgroundColor: Colors.grey.withOpacity(0),
+      reverse: true,
+      backgroundColor: Colors.transparent,
       linearGradient: const LinearGradient(
         colors: <Color>[Color(0xffB07BE6), Color(0xff5BA2E0)],
       ),
@@ -127,10 +125,10 @@ class TraineeName extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
-      child: Text(
+      child: FWText(
         name,
+        color: Theme.of(context).colorScheme.onSurface,
         style: Theme.of(context).textTheme.labelLarge,
-        overflow: TextOverflow.ellipsis,
       ),
     );
   }
@@ -146,8 +144,9 @@ class TrainerMainPageSubTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
-      child: Text(
+      child: FWText(
         subtitle,
+        color: Theme.of(context).colorScheme.onSurfaceVariant,
         style: Theme.of(context).textTheme.labelSmall,
       ),
     );
@@ -166,7 +165,7 @@ class TrainerMainPageGraph extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LinearPercentIndicator(
-      width: 224.0,
+      width: 200.0,
       lineHeight: 15,
       linearGradient: const LinearGradient(
         colors: <Color>[Color(0xffB07BE6), Color(0xff5BA2E0)],

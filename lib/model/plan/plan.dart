@@ -16,7 +16,7 @@ class Plan {
   FWUser? trainee;
   DateTime? startDate;
   DateTime? endDate;
-  bool isDiet = true;
+  bool isDiet = false;
   bool isWeight = true;
   Map<Timestamp, List<Todo>>? todos;
 

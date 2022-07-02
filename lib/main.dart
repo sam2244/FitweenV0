@@ -3,12 +3,12 @@ import 'package:fitween1/global/config/theme.dart';
 import 'package:fitween1/presenter/page/add_info.dart';
 import 'package:fitween1/presenter/page/add_plan.dart';
 import 'package:fitween1/presenter/page/chat.dart';
+import 'package:fitween1/presenter/page/my.dart';
 import 'package:fitween1/presenter/page/register.dart';
 import 'package:fitween1/presenter/model/plan.dart';
 import 'package:fitween1/presenter/model/user.dart';
 import 'package:fitween1/route.dart';
 import 'package:fitween1/view/page/developer.dart';
-import 'package:fitween1/view/page/splash/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -35,6 +35,7 @@ class Fitween extends StatelessWidget {
     Get.put(ChatPresenter());
     Get.put(AddInfoPresenter());
     Get.put(AddPlanPresenter());
+    Get.put(MyPresenter());
 
     return ScreenUtilInit(
       designSize: const Size(375, 812),
@@ -46,7 +47,8 @@ class Fitween extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             useMaterial3: true,
-            colorScheme: FWTheme.lightScheme,
+            colorScheme: FWTheme.darkScheme,
+            // colorScheme: FWTheme.lightScheme,
             textTheme: FWTheme.textTheme,
           ),
           darkTheme: ThemeData(

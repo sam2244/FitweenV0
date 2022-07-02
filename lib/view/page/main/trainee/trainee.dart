@@ -9,14 +9,11 @@ class TraineeMainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: MainAppBar(role: Role.trainee),
-      body: Center(
-          child: TraineeCarousel(
-              role: Role.trainee)
-      ),
-      floatingActionButton: TraineeFAB(),
-      bottomNavigationBar: MainBottomBar(role: Role.trainee,),
+    return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      appBar: const MainAppBar(role: Role.trainee),
+      body: const TraineeCarousel(),
+      bottomNavigationBar: const MainBottomBar(role: Role.trainee,),
     );
   }
 }
