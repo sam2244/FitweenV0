@@ -51,7 +51,7 @@ class TraineeCard extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 10.0, left: 5.0,),
+          padding: const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
           child: FWCard(
               height: 600.0,
               child: Column(
@@ -205,29 +205,6 @@ class TraineeMainPageGraph extends StatelessWidget {
       lineHeight: 15,
       linearGradient: const LinearGradient(
         colors: <Color>[Color(0xffB07BE6), Color(0xff5BA2E0)],
-          Column(
-            children: [
-              Container(
-                alignment: Alignment.topLeft,
-                padding: const EdgeInsets.only(top: 10.0, left: 5.0,),
-                child: Text(
-                  "할 일",
-                  style: TextStyle(
-                    color: FWTheme.darkScheme.onPrimary,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-              Column(
-                children: const [
-                  TraineeCheckBoxList(),
-                  TraineeCheckBoxList(),
-                  TraineeCheckBoxList(),
-                ],
-              )
-            ],
-          )
-        ],
       ),
       barRadius: const Radius.circular(10.0),
       percent: completed / total,
