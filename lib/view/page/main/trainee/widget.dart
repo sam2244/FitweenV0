@@ -1,9 +1,5 @@
 import 'package:fitween1/global/config/theme.dart';
-import 'package:fitween1/global/global.dart';
-import 'package:fitween1/model/user/user.dart';
-import 'package:fitween1/presenter/page/main.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -56,7 +52,7 @@ class TraineeCard extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.only(top: 10.0, left: 5.0,),
           child: FWCard(
               height: 600.0,
               child: Column(
@@ -68,7 +64,13 @@ class TraineeCard extends StatelessWidget {
                         TraineeProfile(),
                       ],
                     ),
-                  TraineeCheckBoxList(),
+                    Column(
+                      children: const [
+                      TraineeCheckBoxList(),
+                      TraineeCheckBoxList(),
+                      TraineeCheckBoxList(),
+                      ],
+                    )
                 ],
               )
           ),
