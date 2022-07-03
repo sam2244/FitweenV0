@@ -14,7 +14,7 @@ class FWText extends StatelessWidget {
   }) : super(key: key);
 
   final String data;
-  final TextStyle? style;
+  TextStyle? style;
   Color? color;
   final double? size;
   final FWFontWeight? weight;
@@ -22,6 +22,7 @@ class FWText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    style ??= Theme.of(context).textTheme.labelMedium;
     color ??= Theme.of(context).colorScheme.primary;
     FontWeight? fontWeight = <FWFontWeight, FontWeight>{
       FWFontWeight.thin: FontWeight.w400,

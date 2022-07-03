@@ -9,7 +9,6 @@ import 'package:fitween1/view/widget/container.dart';
 import 'package:fitween1/view/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:numberpicker/numberpicker.dart';
 
 enum DateType { start, end }
 
@@ -259,9 +258,9 @@ class PeriodSelectionButton extends StatelessWidget {
               onPressed: controller.periodDecreased,
               icon: const Icon(Icons.arrow_back_ios),
               iconSize: 10.0,
+              splashRadius: 25.0,
             ),
             FWNumberPicker(
-              label: '',
               itemCount: 5,
               minValue: 1,
               maxValue: AddPlanPresenter.max.toDouble(),
@@ -275,6 +274,7 @@ class PeriodSelectionButton extends StatelessWidget {
               onPressed: controller.periodIncreased,
               icon: const Icon(Icons.arrow_forward_ios),
               iconSize: 10.0,
+              splashRadius: 25.0,
             ),
           ],
         );
