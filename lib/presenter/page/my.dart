@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:fitween1/model/user/chart.dart';
 import 'package:fitween1/presenter/model/user.dart';
+import 'package:fitween1/presenter/page/login.dart';
 import 'package:fitween1/view/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -39,16 +40,14 @@ class MyPresenter extends GetxController {
             ),
           ],
         ),
-        actions: <Widget>[
+        actions: [
           TextButton(
             child: const Text("갤러리"),
-            onPressed: () {
-            },
+            onPressed: () {},
           ),
           TextButton(
             child: const Text("카메라"),
-            onPressed: () {
-            },
+            onPressed: () {},
           )
         ],
       ),
@@ -60,4 +59,9 @@ class MyPresenter extends GetxController {
     update();
   }
 
+  static void logoutPressed() {
+    LoginPresenter.fitweenGoogleLogout();
+    Get.offAllNamed('/login');
+  }
+  static void settingPressed() {}
 }

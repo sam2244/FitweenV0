@@ -10,10 +10,7 @@ class FWLogo extends StatelessWidget {
   static const String asset = 'assets/img/logo/fitween.svg';
 
   @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.all(50.0),
-    child: SvgPicture.asset(asset),
-  );
+  Widget build(BuildContext context) => SvgPicture.asset(asset);
 }
 
 // 원형 프로필 사진

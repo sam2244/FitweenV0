@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitween1/global/global.dart';
 import 'package:fitween1/model/user/user.dart';
 import 'package:fitween1/presenter/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class AddInfoPresenter extends GetxController {
   final userPresenter = Get.find<UserPresenter>();
@@ -26,12 +28,19 @@ class AddInfoPresenter extends GetxController {
       switch (FWUser.types[type]) {
         case DataType.number:
           additionalJson[type] = double.parse(cont.text); break;
+        case DataType.date:
+          additionalJson[type] = Timestamp.fromDate(
+            DateFormat('yyyy-MM-dd').parse(cont.text),
+          ); break;
         default:
           additionalJson[type] = cont.text;
       }
     });
 
-    await userPresenter.fromJson(additionalJson);
+    Map<String, dynamic> json = userPresenter.toJson();
+    additionalJson.forEach((key, value) => json[key] = value);
+    await userPresenter.fromJson(json);
+
     userPresenter.updateDB();
     
     Get.offAndToNamed('/main/${userPresenter.user.role.name}');

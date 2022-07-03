@@ -52,14 +52,14 @@ class TraineeCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
+        child: Container(
+          margin: const EdgeInsets.all(10.0),
           child: SizedBox(
-            height: 120,
+            height: 108.0,
             child: Row(
               children: const [
                 TraineeProfileImage(),
-                TraineeInfo(),
+                Expanded(child: TraineeInfo()),
               ],
             ),
           ),
@@ -76,21 +76,22 @@ class TraineeProfileImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircularPercentIndicator(
-      radius: 60.0,
+      radius: 50.0,
       lineWidth: 10.0,
       percent: 0.8,
       center: ClipOval(
         child: SizedBox.fromSize(
-          size: const Size.fromRadius(50), // Image radius
+          size: const Size.fromRadius(40.0), // Image radius
           child: Image.network(
-              'https://www.walkerhillstory.com/wp-content/uploads/2020/09/2-1.jpg',
-              fit: BoxFit.cover),
+            'https://www.walkerhillstory.com/wp-content/uploads/2020/09/2-1.jpg',
+            fit: BoxFit.cover,
+          ),
         ),
       ),
       reverse: true,
       backgroundColor: Colors.transparent,
       linearGradient: const LinearGradient(
-        colors: <Color>[Color(0xffB07BE6), Color(0xff5BA2E0)],
+        colors: [Color(0xffB07BE6), Color(0xff5BA2E0)],
       ),
       circularStrokeCap: CircularStrokeCap.round,
     );
@@ -103,15 +104,24 @@ class TraineeInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        TraineeName(name: '정윤석'),
-        TrainerMainPageSubTitle(subtitle: '운동'),
-        TrainerMainPageGraph(total: 5, completed: 4),
-        TrainerMainPageSubTitle(subtitle: '식단'),
-        TrainerMainPageGraph(total: 3, completed: 2),
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const TraineeName(name: '정윤석'),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: const [
+                TrainerMainPageGraph(title: '운동', total: 5, completed: 4),
+                if (true) // isDiet
+                TrainerMainPageGraph(title: '식단', total: 3, completed: 2),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }
@@ -123,55 +133,66 @@ class TraineeName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
-      child: FWText(
-        name,
-        color: Theme.of(context).colorScheme.onSurface,
-        style: Theme.of(context).textTheme.labelLarge,
-      ),
+    return FWText(
+      name,
+      color: Theme.of(context).colorScheme.onSurface,
+      style: Theme.of(context).textTheme.labelLarge,
     );
   }
 }
 
 // 트레이너 메인 페이지 CategoryBar
-class TrainerMainPageSubTitle extends StatelessWidget {
-  final String subtitle;
-  const TrainerMainPageSubTitle({Key? key, required this.subtitle})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
-      child: FWText(
-        subtitle,
-        color: Theme.of(context).colorScheme.onSurfaceVariant,
-        style: Theme.of(context).textTheme.labelSmall,
-      ),
-    );
-  }
-}
+// class TrainerMainPageSubTitle extends StatelessWidget {
+//   final String subtitle;
+//   const TrainerMainPageSubTitle({Key? key, required this.subtitle})
+//       : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       color: Colors.blue,
+//       child: FWText(
+//         subtitle,
+//         color: Theme.of(context).colorScheme.onSurfaceVariant,
+//         style: Theme.of(context).textTheme.labelSmall,
+//       ),
+//     );
+//   }
+// }
 
 // 트레이너 메인 페이지 Graph
 class TrainerMainPageGraph extends StatelessWidget {
+  final String title;
   final int total;
   final int completed;
 
-  const TrainerMainPageGraph(
-      {Key? key, required this.completed, required this.total})
-      : super(key: key);
+  const TrainerMainPageGraph({
+    Key? key,
+    required this.title,
+    required this.completed,
+    required this.total,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return LinearPercentIndicator(
-      width: 200.0,
-      lineHeight: 15,
-      linearGradient: const LinearGradient(
-        colors: <Color>[Color(0xffB07BE6), Color(0xff5BA2E0)],
-      ),
-      barRadius: const Radius.circular(10),
-      percent: completed / total,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        FWText(
+          title,
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
+          style: Theme.of(context).textTheme.labelSmall,
+        ),
+        LinearPercentIndicator(
+          padding: EdgeInsets.zero,
+          lineHeight: 12,
+          linearGradient: const LinearGradient(
+            colors: <Color>[Color(0xffB07BE6), Color(0xff5BA2E0)],
+          ),
+          barRadius: const Radius.circular(10),
+          percent: completed / total,
+        ),
+      ],
     );
   }
 }

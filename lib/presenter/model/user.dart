@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitween1/model/plan/plan.dart';
 import 'package:fitween1/model/user/user.dart';
 import 'package:fitween1/presenter/firebase/firebase.dart';
@@ -9,7 +10,8 @@ class UserPresenter extends GetxController {
   static final planPresenter = Get.find<PlanPresenter>();
   static const String defaultProfile = 'https://firebasestorage.googleapis.com/v0/b/fitween-v1.appspot.com/o/users%2Fguest.png?alt=media&token=906ce482-e8ce-47e9-814a-6da7e3d5365c';
   bool logged = false;
-  double defaultWeight = 60.0;
+  double defaultWeight = FWUser.defaultWeight;
+  double defaultHeight = FWUser.defaultHeight;
 
   FWUser user = FWUser();
 
@@ -25,9 +27,17 @@ class UserPresenter extends GetxController {
     map.addAll(json);
     map['role'] = FWUser.toRole(json['role']);
     map['sex'] = FWUser.toSex(json['sex']);
-    map['tags'] = json['tags']?.cast<String>();
+    map['height'] = json['height'] ?? defaultHeight;
+    map['weights'] = <DateTime, double>{
+      if (json['weights'] != null)
+      for (var data in json['weights'].map((data) => MapEntry<DateTime, double>(
+        data['date'].toDate(), data['weight'],
+      ))) data.key : data.value,
+    };
     map['trainerPlans'] ??= await planPresenter.loadDB(json['trainerUid']);
     map['traineePlans'] ??= await planPresenter.loadDB(json['traineeUid']);
+    map['dateOfBirth'] = json['dateOfBirth']?.toDate();
+    map['categories'] = json['categories'] ?? <String>[];
     user.fromMap(map);
     update();
   }
@@ -41,7 +51,12 @@ class UserPresenter extends GetxController {
     'role': user.role.name,
     'sex': user.sex?.name,
     'height': user.height,
-    'dateOfBirth': user.dateOfBirth,
+    'weights': user.weights?.entries.map((data) => {
+      'date': Timestamp.fromDate(data.key),
+      'weight': data.value,
+    }).toList(),
+    'dateOfBirth': user.dateOfBirth == null
+        ? null : Timestamp.fromDate(user.dateOfBirth!),
     'trainerPlanIds': Plan.toIds(user.trainerPlans),
     'traineePlanIds': Plan.toIds(user.traineePlans),
   };
@@ -53,12 +68,12 @@ class UserPresenter extends GetxController {
   void toggleRole() { user.toggleRole(); update(); }
 
   // 성별 변경
-  void toggleSex() { user.toggleSex(); update(); }
+  void setSex(Sex sex) { user.setSex(sex); update(); }
 
   // 생년월일 설정
   void setDateOfBirth(String string) {
     user.dateOfBirth = DateTime.parse(
-      '${int.parse(string.substring(2)) < 50 ? '19' : '20'}$string'
+      '${int.parse(string.substring(2)) > 50 ? '19' : '20'}$string'
     );
   }
 
@@ -71,6 +86,12 @@ class UserPresenter extends GetxController {
 
   // 본인 여부
   bool isMe(FWUser stranger) => stranger.uid == user.uid;
+
+  void setInitWeight() {
+    user.weights = {};
+    user.weights![Plan.today] = defaultWeight;
+    update();
+  }
 
   // firebase 에서 로드된 데이터 가공 후 user 객체로 반환
   Future<FWUser?> loadDB(String uid) async {

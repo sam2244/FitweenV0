@@ -1,9 +1,5 @@
 import 'package:fitween1/global/config/theme.dart';
-import 'package:fitween1/global/global.dart';
-import 'package:fitween1/model/user/user.dart';
-import 'package:fitween1/presenter/page/main.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 
@@ -142,7 +138,7 @@ class TraineeCard extends StatelessWidget {
             children: [
               Container(
                 alignment: Alignment.topLeft,
-                padding: EdgeInsets.only(top: 10.0, left: 5.0,),
+                padding: const EdgeInsets.only(top: 10.0, left: 5.0,),
                 child: Text(
                   "할 일",
                   style: TextStyle(
@@ -151,14 +147,12 @@ class TraineeCard extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
-                child: Column(
-                  children: [
-                    TraineeCheckBoxList(),
-                    TraineeCheckBoxList(),
-                    TraineeCheckBoxList(),
-                  ],
-                ),
+              Column(
+                children: const [
+                  TraineeCheckBoxList(),
+                  TraineeCheckBoxList(),
+                  TraineeCheckBoxList(),
+                ],
               )
             ],
           )
