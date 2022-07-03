@@ -13,6 +13,7 @@ class TraineeMainPage extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: const MainAppBar(role: Role.trainee),
       body: const TraineeCarousel(),
+      floatingActionButton: const TraineeFAB(),
       bottomNavigationBar: const MainBottomBar(role: Role.trainee,),
     );
   }
