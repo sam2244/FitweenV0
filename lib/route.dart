@@ -1,6 +1,8 @@
 import 'package:fitween1/view/page/add_info/add_info.dart';
 import 'package:fitween1/view/page/add_plan/add_plan.dart';
 import 'package:fitween1/view/page/chat/chat.dart';
+import 'package:fitween1/view/page/chatroom/chatroom.dart';
+import 'package:fitween1/view/page/developer.dart';
 import 'package:fitween1/view/page/login/login.dart';
 import 'package:fitween1/view/page/main/trainee/trainee.dart';
 import 'package:fitween1/view/page/main/trainer/trainer.dart';
@@ -17,10 +19,12 @@ class FWRoute {
     '/main/trainer': const TrainerMainPage(),
     '/main/trainee': const TraineeMainPage(),
     '/chat': const ChatPage(),
+    '/chatroom': const ChatroomPage(),
     '/scheduler': const SchedulerPage(),
     '/addPlan': const AddPlanPage(),
     '/addInfo': const AddInfoPage(),
     '/my': const MyPage(),
+    '/developer': const DeveloperPage(),
   };
 
   static const Transition transition = Transition.fadeIn;

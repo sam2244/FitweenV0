@@ -1,14 +1,16 @@
 import 'package:fitween1/global/config/theme.dart';
+import 'package:fitween1/presenter/global.dart';
 import 'package:fitween1/view/widget/text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:numberpicker/numberpicker.dart';
 
 class FWNumberPicker extends StatelessWidget {
   const FWNumberPicker({
     Key? key,
-    required this.label,
     required this.onChanged,
     required this.value,
+    this.label,
     this.axis = Axis.vertical,
     this.itemCount = 5,
     this.minValue = 0.0,
@@ -21,7 +23,7 @@ class FWNumberPicker extends StatelessWidget {
 
   final Axis axis;
   final int itemCount;
-  final String label;
+  final String? label;
   final Function(int) onChanged;
   final double value;
   final double minValue;
@@ -33,7 +35,49 @@ class FWNumberPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double fadeHeight = 80.0;
+    double fadeWidth = itemWidth * 4;
+    double fadeHeight = itemHeight * 4;
+
+    Map<Axis, List<Widget>> blurWidget = {
+      Axis.vertical: [
+        for (int i = 0; i < 2; i++)
+        Positioned.fill(
+          top: fadeHeight * (1 - i),
+          bottom: fadeHeight * i,
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  FWTheme.surface[1]!.withOpacity(i.toDouble()),
+                  FWTheme.surface[1]!.withOpacity((1 - i).toDouble()),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+      Axis.horizontal: [
+        for (int i = 0; i < 2; i++)
+        Positioned.fill(
+          left: fadeWidth * (1 - i),
+          right: fadeWidth * i,
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [
+                  FWTheme.surface[1]!.withOpacity(i.toDouble()),
+                  FWTheme.surface[1]!.withOpacity((1 - i).toDouble()),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    };
 
     return Stack(
       children: [
@@ -57,41 +101,10 @@ class FWNumberPicker extends StatelessWidget {
                 const TextStyle(color: FWTheme.primary, fontWeight: FontWeight.w700),
               ),
             ),
-            FWText(label, color: Theme.of(context).primaryColor),
+            FWText(label ?? '', color: Theme.of(context).primaryColor),
           ],
         ),
-        Positioned.fill(
-          top: 0.0,
-          bottom: fadeHeight,
-          child: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Theme.of(context).colorScheme.surface,
-                  Theme.of(context).colorScheme.surface.withOpacity(0),
-                ],
-              ),
-            ),
-          ),
-        ),
-        Positioned.fill(
-          top: fadeHeight,
-          bottom: 0.0,
-          child: Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Theme.of(context).colorScheme.surface.withOpacity(0),
-                    Theme.of(context).colorScheme.surface,
-                  ],
-                )
-            ),
-          ),
-        ),
+        for (int i = 0; i < 2; i++) blurWidget[axis]![i],
       ],
     );
   }
@@ -104,20 +117,26 @@ class FWCard extends StatelessWidget {
     this.title,
     required this.child,
     this.height = 115.0,
+    this.outline = false,
   }) : super(key: key);
 
   final String? title;
   final Widget child;
   final double height;
+  final bool outline;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: height,
       child: Card(
-        elevation: 0.0,
+        // elevation: 0.0,
         shape: RoundedRectangleBorder(
-          side: BorderSide(color: Theme.of(context).colorScheme.primary),
+          side: BorderSide(
+            color: outline
+                ? Theme.of(context).colorScheme.primary
+                : Colors.transparent,
+          ),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Padding(
@@ -138,6 +157,42 @@ class FWCard extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+
+// 하단 네비게이션 바
+class FWBottomBar extends StatelessWidget {
+  const FWBottomBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<Global>(
+      builder: (controller) {
+        return NavigationBar(
+          selectedIndex: controller.navIndex,
+          onDestinationSelected: controller.navigate,
+          backgroundColor: FWTheme.surface[2]!,
+          destinations: const [
+            NavigationDestination(
+              icon: Icon(Icons.home_outlined),
+              selectedIcon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.chat_outlined),
+              selectedIcon: Icon(Icons.chat),
+              label: 'Chat',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.account_circle_outlined),
+              selectedIcon: Icon(Icons.account_circle),
+              label: 'MyPage',
+            ),
+          ],
+        );
+      }
     );
   }
 }

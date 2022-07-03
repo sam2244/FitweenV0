@@ -29,7 +29,10 @@ class _SplashPageState extends State<SplashPage> {
           Positioned.fill(
             child: Container(
               color: Theme.of(context).colorScheme.onPrimary,
-              child: const FWLogo(),
+              child: const Padding(
+                padding: EdgeInsets.all(50.0),
+                child: FWLogo(),
+              ),
             ),
           ),
         ],

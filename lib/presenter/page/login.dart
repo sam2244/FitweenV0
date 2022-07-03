@@ -75,7 +75,7 @@ class LoginPresenter {
       FWUser? user = await userPresenter.loadDB(loggedUser!.uid);
 
       // firebase 에 사용자 정보가 존재하지 않는 경우
-      if (user == null) {
+      if (user?.uid == null) {
         Map<String, dynamic> map = userPresenter.user.toMap();
         Map<String, dynamic> updateMap = {
           'uid': loggedUser.uid,
@@ -84,7 +84,7 @@ class LoginPresenter {
           'imageUrl': UserPresenter.defaultProfile,
           'role': Role.trainee,
         };
-        map.updateAll((key, value) => updateMap[key]);
+        updateMap.forEach((key, value) => map[key] = value);
 
         userPresenter.user.fromMap(map);
         userPresenter.updateDB();
