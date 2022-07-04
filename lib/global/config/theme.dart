@@ -116,7 +116,7 @@ class FWTheme extends GetxController {
     0: Color(0xFF000000),
   });
 
-  // colorScheme
+    // colorScheme
   static const ColorScheme lightScheme = ColorScheme(
     brightness: Brightness.light,
     primary: Color(0xFF0059A3),
@@ -233,6 +233,8 @@ class FWTheme extends GetxController {
   static const fontFamily = 'Noto_Sans_KR';
 
   static TextTheme textTheme = const TextTheme(
+
+    //Headline
     headlineLarge: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w700,
@@ -251,17 +253,19 @@ class FWTheme extends GetxController {
       fontSize: 16.0,
       height: 32 / 16,
     ),
+
+    //Title
     titleLarge: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w500,
       fontSize: 22.0,
-      height: 32 / 22,
+      height: 28 / 22,
     ),
     titleMedium: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w500,
-      fontSize: 16.0,
-      height: 24 / 16,
+      fontSize: 18.0,
+      height: 24 / 18,
     ),
     titleSmall: TextStyle(
       fontFamily: fontFamily,
@@ -269,11 +273,13 @@ class FWTheme extends GetxController {
       fontSize: 14.0,
       height: 20 / 14,
     ),
+
+    //Label
     labelLarge: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w500,
-      fontSize: 14.0,
-      height: 20 / 14,
+      fontSize: 16.0,
+      height: 20 / 16,
     ),
     labelMedium: TextStyle(
       fontFamily: fontFamily,
@@ -287,6 +293,8 @@ class FWTheme extends GetxController {
       fontSize: 11.0,
       height: 16 / 11,
     ),
+
+    //Body
     bodyLarge: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w400,
