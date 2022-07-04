@@ -70,3 +70,27 @@ class ProfileImageCircle extends StatelessWidget {
     );
   }
 }
+
+class ProfileImageRect extends StatelessWidget {
+  const ProfileImageRect({
+    Key? key,
+    required this.user,
+    this.size = 100.0,
+  }) : super(key: key);
+
+  final FWUser user;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: Image.network(user.imageUrl),
+    );
+  }
+}
+

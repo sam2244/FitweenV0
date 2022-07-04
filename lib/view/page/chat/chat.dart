@@ -6,7 +6,6 @@ import 'package:fitween1/view/widget/container.dart';
 import 'package:fitween1/view/widget/image.dart';
 import 'package:fitween1/view/widget/text.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class ChatPage extends StatelessWidget {
   const ChatPage({Key? key}) : super(key: key);
@@ -18,6 +17,7 @@ class ChatPage extends StatelessWidget {
       'imageUrl': UserPresenter.defaultProfile,
       'role': Role.trainee,
       'height': FWUser.defaultHeight,
+      'statusMessage': 'ㄴr는 ㄱr끔 눈물을 흘린ㄷr...\n세계 최고 트레이너',
       'categories': <String>[],
     };
 
