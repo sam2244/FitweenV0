@@ -63,5 +63,7 @@ class MyPresenter extends GetxController {
     LoginPresenter.fitweenGoogleLogout();
     Get.offAllNamed('/login');
   }
-  static void settingPressed() {}
+  static void settingPressed() {
+    Get.offAllNamed('/setting');
+  }
 }
