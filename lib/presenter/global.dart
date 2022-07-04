@@ -7,6 +7,7 @@ import 'package:fitween1/presenter/page/chat.dart';
 import 'package:fitween1/presenter/page/main/trainer.dart';
 import 'package:fitween1/presenter/page/my.dart';
 import 'package:fitween1/presenter/page/register.dart';
+import 'package:fitween1/presenter/page/setting.dart';
 import 'package:get/get.dart';
 
 class Global extends GetxController {
@@ -36,6 +37,7 @@ class Global extends GetxController {
     Get.put(AddInfoPresenter());
     Get.put(AddPlanPresenter());
     Get.put(MyPresenter());
+    Get.put(SettingPresenter());
     Get.put(TrainerPresenter());
   }
 }

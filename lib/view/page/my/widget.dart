@@ -92,24 +92,18 @@ class MyWeightGraphView extends StatelessWidget {
         controller.initChart(Theme.of(context));
         return Column(
           children: [
-            SizedBox(
-              height: 50.0,
-              child: ListView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: PeriodType.values.length,
-                itemBuilder: (context, index) {
-                  return TextButton(
-                    onPressed: () => controller.typeChanged(PeriodType.values[index]),
-                    child: Text(PeriodType.values[index].name),
-                  );
-                }
-              ),
-            ),
             Container(
               padding: const EdgeInsets.fromLTRB(20.0, 0.0, 50.0, 0.0),
               child: Column(
                 children: [
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    padding: const EdgeInsets.all(15.0),
+                    child: FWText(
+                      "키",
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                  ),
                   Container(
                     alignment: Alignment.centerLeft,
                     padding: const EdgeInsets.all(15.0),
@@ -128,6 +122,20 @@ class MyWeightGraphView extends StatelessWidget {
                     ),
                   ),
                 ],
+              ),
+            ),
+            SizedBox(
+              height: 50.0,
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: PeriodType.values.length,
+                  itemBuilder: (context, index) {
+                    return TextButton(
+                      onPressed: () => controller.typeChanged(PeriodType.values[index]),
+                      child: Text(PeriodType.values[index].name),
+                    );
+                  }
               ),
             ),
           ],
