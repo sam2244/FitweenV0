@@ -8,13 +8,44 @@ import 'package:flutter/material.dart';
 class TraineeMainPage extends StatelessWidget {
   const TraineeMainPage({Key? key}) : super(key: key);
 
+  static const _actionTitles = ['Open Camera', 'Upload Photo'];
+
+  void _showAction(BuildContext context, int index) {
+    showDialog<void>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: Text(_actionTitles[index]),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('CLOSE'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: const MainAppBar(role: Role.trainee),
       body: const TraineeCarousel(),
-      floatingActionButton: const TraineeFAB(),
+      floatingActionButton: ExpandableFab(
+        distance: 80.0,
+        children: [
+          ActionButton(
+            onPressed: () => _showAction(context, 0),
+            icon: const Icon(Icons.add_a_photo_outlined),
+          ),
+          ActionButton(
+            onPressed: () => _showAction(context, 1),
+            icon: const Icon(Icons.photo_library_outlined),
+          ),
+        ],
+      ),
       bottomNavigationBar: const FWBottomBar(),
     );
   }
