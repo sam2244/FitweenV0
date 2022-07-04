@@ -19,11 +19,21 @@ class SettingAppBar extends StatelessWidget implements PreferredSizeWidget {
     return PreferredSize(
       preferredSize: const Size.fromHeight(60.0),
         child: AppBar(
+          leading: GetBuilder<SettingPresenter>(
+              builder: (controller) {
+                return IconButton(
+                  icon: Icon(
+                    Icons.arrow_back,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  onPressed: controller.backPressed,
+                );
+              }
+          ),
           title: FWText(
             "환경설정", size: 20.0,
             style: Theme.of(context).textTheme.titleLarge,
           ),
-          leadingWidth: 600.0,
           actions: [
             // 확정이 아닙니다. 편의상 놓은 로그아웃 버튼입니다!
             IconButton(

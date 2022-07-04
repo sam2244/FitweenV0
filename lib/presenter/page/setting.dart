@@ -9,6 +9,11 @@ class SettingPresenter extends GetxController {
 
   static final userPresenter = Get.find<UserPresenter>();
 
+  // 뒤로가기 버튼 클릭 트리거
+  void backPressed() {
+    Get.offAllNamed('/my');
+  }
+
   static void logoutPressed() {
     LoginPresenter.fitweenGoogleLogout();
     Get.offAllNamed('/login');
