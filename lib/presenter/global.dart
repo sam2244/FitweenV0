@@ -8,7 +8,8 @@ import 'package:fitween1/presenter/page/chat.dart';
 import 'package:fitween1/presenter/page/chatroom.dart';
 import 'package:fitween1/presenter/page/my.dart';
 import 'package:fitween1/presenter/page/register.dart';
-import 'package:fitween1/view/widget/image.dart';
+import 'package:fitween1/view/widget/popup.dart';
+import 'package:fitween1/view/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:fitween1/presenter/page/main/trainer.dart';
 import 'package:fitween1/presenter/page/setting.dart';
@@ -33,9 +34,23 @@ class GlobalPresenter extends GetxController {
 
   static void profilePressed(FWUser user) {
     Get.dialog(
-      AlertDialog(
-        title: Container(
-          child: ProfileImageCircle(user: user),
+      FWDialog(
+        rightLabel: '채팅',
+        rightPressed: () {},
+        child: Column(
+          children: [
+            Row(
+              children: [
+                // ProfileImageRect(),
+                Column(
+                  children: [
+                    FWText(user.nickname!),
+                    FWText(user.stateMessage ?? ''),
+                  ],
+                ),
+              ],
+            )
+          ],
         ),
       ),
     );

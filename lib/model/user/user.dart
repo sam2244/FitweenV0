@@ -37,6 +37,7 @@ class FWUser {
   String? email;
   String? nickname;
   String imageUrl = UserPresenter.defaultProfile;
+  String? stateMessage;
   Role role = Role.trainee;
   Sex? sex;
   double height = defaultHeight;
@@ -78,6 +79,7 @@ class FWUser {
     email = map['email'];
     nickname = map['nickname'];
     imageUrl = map['imageUrl'];
+    stateMessage = map['stateMessage'];
     role = map['role'];
     sex = map['sex'];
     height = map['height'];
@@ -94,6 +96,7 @@ class FWUser {
     'email': email,
     'nickname': nickname,
     'imageUrl': imageUrl,
+    'stateMessage': stateMessage,
     'role': role,
     'sex': sex,
     'height': height,
