@@ -15,6 +15,7 @@ class AddInfoPage extends StatelessWidget {
         builder: (controller) {
           controller.initControllers(nullData);
           return Scaffold(
+            backgroundColor: Theme.of(context).colorScheme.background,
             appBar: AppBar(title: const Text('추가정보 입력')),
             body: Container(
               color: Theme.of(context).colorScheme.onPrimary,

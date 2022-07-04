@@ -20,7 +20,7 @@ class FWTheme extends GetxController {
   static const Color white = Colors.white;
 
   // materialColor
-  static const MaterialColor primary = MaterialColor(0xFF2692FF, {
+  static const MaterialColor primary = MaterialColor(0xFF018DFF, {
     100: Color(0xFFFFFFFF),
     99: Color(0xFFFDFCFF),
     95: Color(0xFFEBF1FF),
@@ -36,7 +36,7 @@ class FWTheme extends GetxController {
     0: Color(0xFF000000),
   });
 
-  static const MaterialColor secondary = MaterialColor(0xFF009BD2, {
+  static const MaterialColor secondary = MaterialColor(0xFF01BDFF, {
     100: Color(0xFFFFFFFF),
     99: Color(0xFFFBFCFF),
     95: Color(0xFFE3F3FF),
@@ -52,7 +52,7 @@ class FWTheme extends GetxController {
     0: Color(0xFF000000),
   });
 
-  static const MaterialColor tertiary = MaterialColor(0xFF00A0B0, {
+  static const MaterialColor tertiary = MaterialColor(0xFFFFFFFF, {
     100: Color(0xFFFFFFFF),
     99: Color(0xFFF6FEFF),
     95: Color(0xFFD0F8FF),
@@ -68,7 +68,7 @@ class FWTheme extends GetxController {
     0: Color(0xFF000000),
   });
 
-  static const MaterialColor error = MaterialColor(0xFFFF5449, {
+  static const MaterialColor error = MaterialColor(0xFFBA1A1A, {
     100: Color(0xFFFFFFFF),
     99: Color(0xFFFFFBFF),
     95: Color(0xFFFFEDEA),
@@ -84,7 +84,7 @@ class FWTheme extends GetxController {
     0: Color(0xFF000000),
   });
 
-  static const MaterialColor neutral = MaterialColor(0xFF909094, {
+  static const MaterialColor neutral = MaterialColor(0xFF5D5E62, {
     100: Color(0xFFFFFFFF),
     99: Color(0xFFFDFCFF),
     95: Color(0xFFF1F0F4),
@@ -100,7 +100,7 @@ class FWTheme extends GetxController {
     0: Color(0xFF000000),
   });
 
-  static const MaterialColor neutralVariant = MaterialColor(0xFF8D9199, {
+  static const MaterialColor neutralVariant = MaterialColor(0xFF5B5E66, {
     100: Color(0xFFFFFFFF),
     99: Color(0xFFFDFCFF),
     95: Color(0xFFEEF0FA),
@@ -119,66 +119,66 @@ class FWTheme extends GetxController {
   // colorScheme
   static const ColorScheme lightScheme = ColorScheme(
     brightness: Brightness.light,
-    primary: Color(0xFF005EB4),
+    primary: Color(0xFF0059A3),
     onPrimary: Color(0xFFFFFFFF),
-    primaryContainer: Color(0xFFD6E3FF),
-    onPrimaryContainer: Color(0xFF001B3C),
-    secondary: Color(0xFF00687A),
+    primaryContainer: Color(0xFFD4E3FF),
+    onPrimaryContainer: Color(0xFF001C3A),
+    secondary: Color(0xFF005F83),
     onSecondary: Color(0xFFFFFFFF),
-    secondaryContainer: Color(0xFFACEDFF),
-    onSecondaryContainer: Color(0xFF001F26),
-    tertiary: Color(0xFF785A00),
+    secondaryContainer: Color(0xFFC4E7FF),
+    onSecondaryContainer: Color(0xFF001E2D),
+    tertiary: Color(0xFF00626E),
     onTertiary: Color(0xFFFFFFFF),
-    tertiaryContainer: Color(0xFFFFDF9C),
-    onTertiaryContainer: Color(0xFF251A00),
-    error: Color(0xFFBA1A1A),
-    errorContainer: Color(0xFFFFDAD6),
+    tertiaryContainer: Color(0xFF97F0FF),
+    onTertiaryContainer: Color(0xFF001F24),
+    error: Color(0xFFB01919),
     onError: Color(0xFFFFFFFF),
+    errorContainer: Color(0xFFFFDAD6),
     onErrorContainer: Color(0xFF410002),
-    background: Color(0xFFF6FEFF),
-    onBackground: Color(0xFF001F24),
-    surface: Color(0xFFFBFFFF),
-    onSurface: Color(0xFF001F24),
-    surfaceVariant: Color(0xFFE0E2EC),
+    background: Color(0xFFFDFCFF),
+    onBackground: Color(0xFF1A1C1E),
+    surface: Color(0xFFFDFCFF),
+    onSurface: Color(0xFF1A1C1E),
+    surfaceVariant: Color(0xFFF3F5FF),
     onSurfaceVariant: Color(0xFF43474E),
     outline: Color(0xFF74777F),
-    onInverseSurface: Color(0xFFD0F8FF),
-    inverseSurface: Color(0xFF00363D),
-    inversePrimary: Color(0xFFA8C8FF),
+    onInverseSurface: Color(0xFFF1F0F4),
+    inverseSurface: Color(0xFF2F3033),
+    inversePrimary: Color(0xFFA5C8FF),
     shadow: Color(0xFF000000),
-    surfaceTint: Color(0xFF005EB4),
+    surfaceTint: Color(0xFF005FAF),
   );
 
   static const ColorScheme darkScheme = ColorScheme(
     brightness: Brightness.dark,
-    primary: Color(0xFFA8C8FF),
-    onPrimary: Color(0xFF003062),
-    primaryContainer: Color(0xFF00468A),
-    onPrimaryContainer: Color(0xFFD6E3FF),
-    secondary: Color(0xFF00D9FD),
-    onSecondary: Color(0xFF003640),
-    secondaryContainer: Color(0xFF004E5C),
-    onSecondaryContainer: Color(0xFFACEDFF),
-    tertiary: Color(0xFFF9BD00),
-    onTertiary: Color(0xFF3F2E00),
-    tertiaryContainer: Color(0xFF5B4300),
-    onTertiaryContainer: Color(0xFFFFDF9C),
+    primary: Color(0xFFA5C8FF),
+    onPrimary: Color(0xFF00315F),
+    primaryContainer: Color(0xFF004786),
+    onPrimaryContainer: Color(0xFFD4E3FF),
+    secondary: Color(0xFF7DD0FF),
+    onSecondary: Color(0xFF00344A),
+    secondaryContainer: Color(0xFF004C69),
+    onSecondaryContainer: Color(0xFFC4E7FF),
+    tertiary: Color(0xFF4FD8EB),
+    onTertiary: Color(0xFF00363D),
+    tertiaryContainer: Color(0xFF004F58),
+    onTertiaryContainer: Color(0xFF97F0FF),
     error: Color(0xFFFFB4AB),
-    errorContainer: Color(0xFF93000A),
     onError: Color(0xFF690005),
+    errorContainer: Color(0xFF93000A),
     onErrorContainer: Color(0xFFFFDAD6),
-    background: Color(0xFF001F24),
-    onBackground: Color(0xFF97F0FF),
-    surface: Color(0xFF001F24),
-    onSurface: Color(0xFF97F0FF),
+    background: Color(0xFF1F1F1F),
+    onBackground: Color(0xFFE3E2E6),
+    surface: Color(0xFF1A1C1E),
+    onSurface: Color(0xFFE3E2E6),
     surfaceVariant: Color(0xFF43474E),
-    onSurfaceVariant: Color(0xFFC4C6CF),
-    outline: Color(0xFF8E9099),
-    onInverseSurface: Color(0xFF001F24),
-    inverseSurface: Color(0xFF97F0FF),
-    inversePrimary: Color(0xFF005EB4),
+    onSurfaceVariant: Color(0xFFC3C6CF),
+    outline: Color(0xFF8D9199),
+    onInverseSurface: Color(0xFF1A1C1E),
+    inverseSurface: Color(0xFFE3E2E6),
+    inversePrimary: Color(0xFF005FAF),
     shadow: Color(0xFF000000),
-    surfaceTint: Color(0xFFA8C8FF),
+    surfaceTint: Color(0xFFA5C8FF),
   );
 
   // surface

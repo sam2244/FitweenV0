@@ -36,6 +36,7 @@ class UserPresenter extends GetxController {
     };
     map['trainerPlans'] ??= await planPresenter.loadDB(json['trainerUid']);
     map['traineePlans'] ??= await planPresenter.loadDB(json['traineeUid']);
+    map['friends'] ??= await loadDB(json['friends']);
     map['dateOfBirth'] = json['dateOfBirth']?.toDate();
     map['categories'] = json['categories'] ?? <String>[];
     user.fromMap(map);
@@ -57,6 +58,7 @@ class UserPresenter extends GetxController {
     }).toList(),
     'dateOfBirth': user.dateOfBirth == null
         ? null : Timestamp.fromDate(user.dateOfBirth!),
+    'friends': FWUser.toUids(user.friends),
     'trainerPlanIds': Plan.toIds(user.trainerPlans),
     'traineePlanIds': Plan.toIds(user.traineePlans),
   };
@@ -94,7 +96,8 @@ class UserPresenter extends GetxController {
   }
 
   // firebase 에서 로드된 데이터 가공 후 user 객체로 반환
-  Future<FWUser?> loadDB(String uid) async {
+  Future<FWUser?> loadDB(String? uid) async {
+    if (uid == null) return null;
     var data = await FirebasePresenter.f.collection('users').doc(uid).get();
     Map<String, dynamic> json = data.data() ?? toJson();
 

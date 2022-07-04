@@ -19,36 +19,34 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PreferredSize(
-      preferredSize: const Size.fromHeight(60.0),
-      child: GetBuilder<UserPresenter>(
-        builder: (controller) {
-          return AppBar(
-            shape: role == Role.trainee ? Border(
-              bottom: BorderSide(
-                color: Theme.of(context).primaryColor,
-              ),
-            ) : const Border(),
-            leadingWidth: 600.0,
-            leading: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: GestureDetector(
-                onTap: MainPresenter.toggleRole,
-                child: const FWLogo(),
-              ),
+    return GetBuilder<UserPresenter>(
+      builder: (controller) {
+        return AppBar(
+          backgroundColor: Theme.of(context).colorScheme.background,
+          shape: role == Role.trainee ? Border(
+            bottom: BorderSide(
+              color: Theme.of(context).primaryColor,
             ),
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.calendar_month_outlined),
-                padding: const EdgeInsets.only(right: 20.0),
-                onPressed: () {
-                  print("Not ready yet!");
-                },
-              ),
-            ],
-          );
-        },
-      ),
+          ) : const Border(),
+          leadingWidth: 600.0,
+          leading: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: GestureDetector(
+              onTap: MainPresenter.toggleRole,
+              child: const FWLogo(),
+            ),
+          ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.calendar_month_outlined),
+              padding: const EdgeInsets.only(right: 20.0),
+              onPressed: () {
+                print("Not ready yet!");
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
