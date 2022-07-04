@@ -4,6 +4,7 @@ import 'package:fitween1/presenter/model/user.dart';
 import 'package:fitween1/presenter/page/add_info.dart';
 import 'package:fitween1/presenter/page/add_plan.dart';
 import 'package:fitween1/presenter/page/chat.dart';
+import 'package:fitween1/presenter/page/main/trainer.dart';
 import 'package:fitween1/presenter/page/my.dart';
 import 'package:fitween1/presenter/page/register.dart';
 import 'package:fitween1/presenter/page/setting.dart';
@@ -17,7 +18,11 @@ class Global extends GetxController {
   void navigate(int index) {
     navIndex = index;
     Get.offAllNamed(
-      ['/main/${userPresenter.user.role.name}', '/chat', '/my',][navIndex],
+      [
+        '/main/${userPresenter.user.role.name}',
+        '/chat',
+        '/my',
+      ][navIndex],
     );
     update();
   }
@@ -33,5 +38,6 @@ class Global extends GetxController {
     Get.put(AddPlanPresenter());
     Get.put(MyPresenter());
     Get.put(SettingPresenter());
+    Get.put(TrainerPresenter());
   }
 }
