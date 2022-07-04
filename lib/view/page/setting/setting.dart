@@ -18,6 +18,7 @@ class SettingPage extends StatelessWidget {
           body: Column(
             children: [
               MyProfileImageButton(),
+              LogOutButton(),
             ],
           ),
         );

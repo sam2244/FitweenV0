@@ -16,7 +16,7 @@ class MyPage extends StatelessWidget {
           backgroundColor: Theme.of(context).colorScheme.surface,
           appBar: const MyAppBar(),
           body: Column(
-            children: [
+            children: const [
               MyProfileImageButton(),
               MyWeightGraphView(title: '체중', ratio: 1.5),
               HeightInfo(),
