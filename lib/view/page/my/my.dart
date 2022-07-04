@@ -19,7 +19,6 @@ class MyPage extends StatelessWidget {
             children: [
               MyProfileImageButton(),
               MyWeightGraphView(title: '체중', ratio: 1.5),
-
               HeightInfo(),
             ],
           ),
