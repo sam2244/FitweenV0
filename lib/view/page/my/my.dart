@@ -16,30 +16,11 @@ class MyPage extends StatelessWidget {
           backgroundColor: Theme.of(context).colorScheme.surface,
           appBar: const MyAppBar(),
           body: Column(
-            children: const [
+            children: [
               MyProfileImageButton(),
               MyWeightGraphView(title: '체중', ratio: 1.5),
-              // Container(
-              //   margin: const EdgeInsets.all(20.0),
-              //   decoration: BoxDecoration(
-              //     border: Border.all(
-              //       width: 1,
-              //       color: Colors.black,
-              //     ),
-              //   ),
-              //   child: FWText(
-              //     '체중 변화 기록',
-              //     size: 20.0,
-              //     color: Colors.black,
-              //   ),
-              // ),
-              // Container(
-              //   child: FWText(
-              //     "키" + " 190 " + "cm",
-              //     size: 20.0,
-              //     color: Colors.black,
-              //   ),
-              // ),
+
+              HeightInfo(),
             ],
           ),
           bottomNavigationBar: const FWBottomBar(),
