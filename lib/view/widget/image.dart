@@ -19,7 +19,7 @@ class ProfileImageCircle extends StatelessWidget {
     Key? key,
     this.user,
     this.active = false,
-    this.size = 45.0,
+    this.size = 60.0,
     this.color,
     this.onPressed,
   }) : super(key: key);

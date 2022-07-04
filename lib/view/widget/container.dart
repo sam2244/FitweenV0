@@ -168,12 +168,11 @@ class FWBottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<Global>(
+    return GetBuilder<GlobalPresenter>(
       builder: (controller) {
         return NavigationBar(
           selectedIndex: controller.navIndex,
           onDestinationSelected: controller.navigate,
-          backgroundColor: FWTheme.surface[2]!,
           destinations: const [
             NavigationDestination(
               icon: Icon(Icons.home_outlined),

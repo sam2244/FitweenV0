@@ -23,7 +23,8 @@ class MyPresenter extends GetxController {
     );
   }
 
-  void profileImagePressed(ThemeData themeData) {
+  static void myProfilePressed() {
+    ThemeData themeData = Theme.of(Get.context!);
     Get.dialog(
       AlertDialog(
         title: FWText(

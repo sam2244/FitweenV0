@@ -24,7 +24,7 @@ class Fitween extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Global.initControllers();
+    GlobalPresenter.initControllers();
 
     return ScreenUtilInit(
       designSize: const Size(375, 812),
@@ -39,7 +39,6 @@ class Fitween extends StatelessWidget {
               themeMode: controller.mode,
               theme: ThemeData(
                 useMaterial3: true,
-                // colorScheme: FWTheme.darkScheme,
                 colorScheme: FWTheme.lightScheme,
                 textTheme: FWTheme.textTheme,
               ),

@@ -18,33 +18,31 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PreferredSize(
-      preferredSize: const Size.fromHeight(60.0),
-        child: AppBar(
-          leading: const Padding(
-            padding: EdgeInsets.all(15.0),
-            child: FWLogo(),
+    return AppBar(
+      backgroundColor: Theme.of(context).colorScheme.background,
+      leading: const Padding(
+        padding: EdgeInsets.all(15.0),
+        child: FWLogo(),
+      ),
+      leadingWidth: 600.0,
+      actions: [
+        // 확정이 아닙니다. 편의상 놓은 로그아웃 버튼입니다!
+        IconButton(
+          icon: Icon(
+            Icons.logout,
+            color: Theme.of(context).colorScheme.primary,
           ),
-          leadingWidth: 600.0,
-          actions: [
-            // 확정이 아닙니다. 편의상 놓은 로그아웃 버튼입니다!
-            IconButton(
-              icon: Icon(
-                Icons.logout,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-              onPressed: MyPresenter.logoutPressed,
-            ),
-            IconButton(
-              icon: Icon(
-                Icons.settings,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-              onPressed: MyPresenter.settingPressed,
-            ),
-          ],
-          elevation: 0.0,
-        )
+          onPressed: MyPresenter.logoutPressed,
+        ),
+        IconButton(
+          icon: Icon(
+            Icons.settings,
+            color: Theme.of(context).colorScheme.primary,
+          ),
+          onPressed: MyPresenter.settingPressed,
+        ),
+      ],
+      elevation: 0.0,
     );
   }
 }
@@ -54,22 +52,18 @@ class MyProfileImageButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<MyPresenter>(
-      builder: (controller) {
-        return Column(
-          children: [
-            ProfileImageCircle(
-              size: 70.0,
-              user: MyPresenter.userPresenter.user,
-              onPressed: () => controller.profileImagePressed(Theme.of(context)),
-            ),
-            FWText(
-              MyPresenter.userPresenter.user.nickname!, size: 20.0,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-          ],
-        );
-      }
+    return Column(
+      children: [
+        ProfileImageCircle(
+          size: 70.0,
+          user: MyPresenter.userPresenter.user,
+          onPressed: MyPresenter.myProfilePressed,
+        ),
+        FWText(
+          MyPresenter.userPresenter.user.nickname!, size: 20.0,
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+      ],
     );
   }
 }

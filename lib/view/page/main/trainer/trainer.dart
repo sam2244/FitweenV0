@@ -11,7 +11,7 @@ class TrainerMainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: const MainAppBar(role: Role.trainer),
       body: const TrainerView(),
       bottomNavigationBar: const FWBottomBar(),

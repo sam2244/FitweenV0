@@ -11,7 +11,7 @@ class TraineeMainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: const MainAppBar(role: Role.trainee),
       body: const TraineeCarousel(),
       floatingActionButton: const TraineeFAB(),
