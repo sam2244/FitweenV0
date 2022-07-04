@@ -19,6 +19,7 @@ class SettingPage extends StatelessWidget {
             children: [
               MyProfileImageButton(),
               LogOutButton(),
+              DeleteUserButton(),
             ],
           ),
         );

@@ -74,12 +74,56 @@ class LogOutButton extends StatelessWidget {
         builder: (controller) {
           return Column(
             children: [
-              IconButton(
-                icon: Icon(
-                  Icons.logout,
-                  color: Theme.of(context).colorScheme.primary,
+              Container(
+                margin: const EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 10.0),
+                width: 343,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.white,
+                    side: BorderSide(width: 1.0, color: Theme.of(context).colorScheme.outline)
+                  ),
+                  //onPressed: () => controller.AddWeight(Theme.of(context)),
+                  onPressed: SettingPresenter.logoutPressed,
+                  child: FWText(
+                    '로그아웃',
+                    size: 15.0,
+                    style: Theme.of(context).textTheme.titleMedium,
+                    color: Theme.of(context).colorScheme.inverseSurface,
+                  ),
                 ),
-                onPressed: SettingPresenter.logoutPressed,
+              ),
+            ],
+          );
+        }
+    );
+  }
+}
+
+class DeleteUserButton extends StatelessWidget {
+  const DeleteUserButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<SettingPresenter>(
+        builder: (controller) {
+          return Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 10.0),
+                width: 343,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Theme.of(context).colorScheme.error,
+                  ),
+                  //onPressed: () => controller.AddWeight(Theme.of(context)),
+                  onPressed: SettingPresenter.deletePressed,
+                  child: FWText(
+                    '계정 삭제하기',
+                    size: 15.0,
+                    style: Theme.of(context).textTheme.titleMedium,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+                ),
               ),
             ],
           );
