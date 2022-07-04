@@ -18,31 +18,25 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      leading: const Padding(
-        padding: EdgeInsets.all(15.0),
-        child: FWLogo(),
-      ),
-      leadingWidth: 600.0,
-      actions: [
-        // 확정이 아닙니다. 편의상 놓은 로그아웃 버튼입니다!
-        IconButton(
-          icon: Icon(
-            Icons.logout,
-            color: Theme.of(context).colorScheme.primary,
+    return PreferredSize(
+      preferredSize: const Size.fromHeight(60.0),
+        child: AppBar(
+          leading: const Padding(
+            padding: EdgeInsets.all(15.0),
+            child: FWLogo(),
           ),
-          onPressed: MyPresenter.logoutPressed,
-        ),
-        IconButton(
-          icon: Icon(
-            Icons.settings,
-            color: Theme.of(context).colorScheme.primary,
-          ),
-          onPressed: MyPresenter.settingPressed,
-        ),
-      ],
-      elevation: 0.0,
+          leadingWidth: 600.0,
+          actions: [
+            IconButton(
+              icon: Icon(
+                Icons.settings,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              onPressed: MyPresenter.settingPressed,
+            ),
+          ],
+          elevation: 0.0,
+        )
     );
   }
 }
@@ -52,18 +46,22 @@ class MyProfileImageButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ProfileImageCircle(
-          size: 70.0,
-          user: MyPresenter.userPresenter.user,
-          onPressed: MyPresenter.myProfilePressed,
-        ),
-        FWText(
-          MyPresenter.userPresenter.user.nickname!, size: 20.0,
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-      ],
+    return GetBuilder<MyPresenter>(
+      builder: (controller) {
+        return Column(
+          children: [
+            ProfileImageCircle(
+              size: 100.0,
+              user: MyPresenter.userPresenter.user,
+              //onPressed: () => controller.profileImagePressed(Theme.of(context)),
+            ),
+            FWText(
+              MyPresenter.userPresenter.user.nickname!, size: 20.0,
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+          ],
+        );
+      }
     );
   }
 }
@@ -94,7 +92,7 @@ class MyWeightGraphView extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     padding: const EdgeInsets.all(15.0),
                     child: FWText(
-                      "키",
+                      "신장  |  ${MyPresenter.userPresenter.user.height} cm",
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
@@ -150,22 +148,18 @@ class HeightInfo extends StatelessWidget {
             children: [
               Container(
                 margin: const EdgeInsets.all(20.0),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 1,
-                    //color: Colors.black,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                  primary: Theme.of(context).colorScheme.primary,
+                  ),
+                  onPressed: () => controller.AddWeight(Theme.of(context)),
+                  child: FWText(
+                    '체중 기록하기',
+                    size: 15.0,
+                    style: Theme.of(context).textTheme.titleMedium,
+                    color: Theme.of(context).colorScheme.onPrimary,
                   ),
                 ),
-                child: FWText(
-                  '체중 변화 기록',
-                  size: 15.0,
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-              ),
-              FWText(
-                "키 ${MyPresenter.userPresenter.user.height} cm",
-                size: 20.0,
-                style: Theme.of(context).textTheme.titleLarge,
               ),
             ],
           );

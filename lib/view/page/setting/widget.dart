@@ -34,16 +34,6 @@ class SettingAppBar extends StatelessWidget implements PreferredSizeWidget {
             "환경설정", size: 20.0,
             style: Theme.of(context).textTheme.titleLarge,
           ),
-          actions: [
-            // 확정이 아닙니다. 편의상 놓은 로그아웃 버튼입니다!
-            IconButton(
-              icon: Icon(
-                Icons.logout,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-              onPressed: SettingPresenter.logoutPressed,
-            ),
-          ],
           elevation: 0.0,
         )
     );
@@ -56,16 +46,44 @@ class MyProfileImageButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SettingPresenter>(
-      builder: (controller) {
-        return Column(
-          children: [
-            FWText(
-              SettingPresenter.userPresenter.user.nickname!, size: 20.0,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-          ],
-        );
-      }
+        builder: (controller) {
+          return Column(
+            children: [
+              ProfileImageCircle(
+                size: 100.0,
+                user: SettingPresenter.userPresenter.user,
+                onPressed: () => controller.profileImagePressed(Theme.of(context)),
+              ),
+              FWText(
+                "사진 변경", size: 20.0,
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+            ],
+          );
+        }
+    );
+  }
+}
+
+class LogOutButton extends StatelessWidget {
+  const LogOutButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<SettingPresenter>(
+        builder: (controller) {
+          return Column(
+            children: [
+              IconButton(
+                icon: Icon(
+                  Icons.logout,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                onPressed: SettingPresenter.logoutPressed,
+              ),
+            ],
+          );
+        }
     );
   }
 }
