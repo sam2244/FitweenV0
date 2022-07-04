@@ -1,17 +1,17 @@
-import 'dart:math' as math;
+//import 'dart:math' as math;
 
 import 'package:fitween1/model/user/chart.dart';
 import 'package:fitween1/presenter/model/user.dart';
 import 'package:fitween1/presenter/page/login.dart';
 import 'package:fitween1/view/widget/text.dart';
+import 'package:fitween1/view/widget/popup.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../model/user/user.dart';
-import '../../view/widget/popup.dart';
 
 // 마이 페이지 프리젠터
 class MyPresenter extends GetxController {
+  static final _weightController = TextEditingController();
   PeriodType type = PeriodType.days;
   late Chart weightChart;
 
@@ -27,6 +27,7 @@ class MyPresenter extends GetxController {
   }
 
   static void AddWeightPressed(ThemeData themeData) {
+    final _weightController = TextEditingController();
     Get.dialog(
       FWDialog(
         rightLabel: '확인',
@@ -38,9 +39,14 @@ class MyPresenter extends GetxController {
                 // ProfileImageRect(),
                 Column(
                   children: [
-                    Text(
+                    const Text(
                       "체중을 입력하세요.",
                     ),
+                    /*FWInputField(
+                      width: 200.0,
+                      controller: _weightController,
+                      hintText: "체중",
+                    ),*/
                     FWText(
                       '체중 입력 텍스트 필드',
                       //style: themeData.textTheme.titleLarge,
