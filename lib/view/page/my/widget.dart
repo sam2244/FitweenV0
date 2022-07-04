@@ -41,8 +41,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 }
 
-class MyProfileImageButton extends StatelessWidget {
-  const MyProfileImageButton({Key? key}) : super(key: key);
+class MyProfileImage extends StatelessWidget {
+  const MyProfileImage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -137,8 +137,8 @@ class MyWeightGraphView extends StatelessWidget {
   }
 }
 
-class HeightInfo extends StatelessWidget {
-  const HeightInfo({Key? key}) : super(key: key);
+class WeightInfo extends StatelessWidget {
+  const WeightInfo({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +152,8 @@ class HeightInfo extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                   primary: Theme.of(context).colorScheme.primary,
                   ),
-                  onPressed: () => controller.AddWeight(Theme.of(context)),
+                  //onPressed: () => controller.AddWeight(Theme.of(context)),
+                  onPressed: () => MyPresenter.AddWeightPressed(Theme.of(context)),
                   child: FWText(
                     '체중 기록하기',
                     size: 15.0,

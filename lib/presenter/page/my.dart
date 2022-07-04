@@ -1,14 +1,17 @@
-import 'dart:math' as math;
+//import 'dart:math' as math;
 
 import 'package:fitween1/model/user/chart.dart';
 import 'package:fitween1/presenter/model/user.dart';
 import 'package:fitween1/presenter/page/login.dart';
 import 'package:fitween1/view/widget/text.dart';
+import 'package:fitween1/view/widget/popup.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+
 // 마이 페이지 프리젠터
 class MyPresenter extends GetxController {
+  static final _weightController = TextEditingController();
   PeriodType type = PeriodType.days;
   late Chart weightChart;
 
@@ -23,33 +26,38 @@ class MyPresenter extends GetxController {
     );
   }
 
-  void AddWeight(ThemeData themeData) {
+  static void AddWeightPressed(ThemeData themeData) {
+    final _weightController = TextEditingController();
     Get.dialog(
-      AlertDialog(
-        title: FWText(
-          '체중을 입력하세요',
-          style: themeData.textTheme.titleLarge,
-          color: themeData.colorScheme.primary,
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: const <Widget>[
-            Text(
-              "체중 입력 텍스트 필드",
-            ),
+      FWDialog(
+        rightLabel: '확인',
+        rightPressed: () {},
+        child: Column(
+          children: [
+            Row(
+              children: [
+                // ProfileImageRect(),
+                Column(
+                  children: [
+                    const Text(
+                      "체중을 입력하세요.",
+                    ),
+                    /*FWInputField(
+                      width: 200.0,
+                      controller: _weightController,
+                      hintText: "체중",
+                    ),*/
+                    FWText(
+                      '체중 입력 텍스트 필드',
+                      //style: themeData.textTheme.titleLarge,
+                      //color: themeData.colorScheme.primary,
+                    ),
+                  ],
+                ),
+              ],
+            )
           ],
         ),
-        actions: [
-          TextButton(
-            child: const Text("취소"),
-            onPressed: () {},
-          ),
-          TextButton(
-            child: const Text("확인"),
-            onPressed: () {},
-          )
-        ],
       ),
     );
   }
