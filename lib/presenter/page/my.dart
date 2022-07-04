@@ -23,12 +23,11 @@ class MyPresenter extends GetxController {
     );
   }
 
-  static void myProfilePressed() {
-    ThemeData themeData = Theme.of(Get.context!);
+  void AddWeight(ThemeData themeData) {
     Get.dialog(
       AlertDialog(
         title: FWText(
-          '이미지 선택',
+          '체중을 입력하세요',
           style: themeData.textTheme.titleLarge,
           color: themeData.colorScheme.primary,
         ),
@@ -37,17 +36,17 @@ class MyPresenter extends GetxController {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const <Widget>[
             Text(
-              "이미지를 가져올 곳을 선택해주세요.",
+              "체중 입력 텍스트 필드",
             ),
           ],
         ),
         actions: [
           TextButton(
-            child: const Text("갤러리"),
+            child: const Text("취소"),
             onPressed: () {},
           ),
           TextButton(
-            child: const Text("카메라"),
+            child: const Text("확인"),
             onPressed: () {},
           )
         ],
