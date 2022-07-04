@@ -1,22 +1,30 @@
 // Carousel 뷰 위젯
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:fitween1/presenter/page/main/trainer.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 import '../../../widget/text.dart';
 
 // 트레이너 메인 페이지 CategoryBar
 class TraineeCategory extends StatelessWidget {
-  const TraineeCategory({Key? key}) : super(key: key);
+  final String category;
+  const TraineeCategory({Key? key, required this.category}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<TrainerPresenter>();
+
     return Padding(
       padding: const EdgeInsets.only(top: 20.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              controller.backPressed();
+            },
             icon: Icon(
               Icons.chevron_left,
               color: Theme.of(context).colorScheme.primary,
@@ -27,12 +35,14 @@ class TraineeCategory extends StatelessWidget {
             alignment: Alignment.center,
             width: MediaQuery.of(context).size.width - 150,
             child: FWText(
-              '삼손',
+              category,
               size: 20,
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              controller.nextPressed();
+            },
             icon: Icon(
               Icons.chevron_right,
               color: Theme.of(context).colorScheme.primary,
@@ -47,26 +57,32 @@ class TraineeCategory extends StatelessWidget {
 
 // 트레이너 메인 페이지 Card
 class TraineeCard extends StatelessWidget {
-  const TraineeCard({Key? key}) : super(key: key);
+  final Iterable<Trainee> trainees;
+  const TraineeCard({Key? key, required this.trainees}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: SizedBox(
-            height: 120,
-            child: Row(
-              children: const [
-                TraineeProfileImage(),
-                TraineeInfo(),
-              ],
+    return Column(
+      children: [
+        for (var trainee in trainees)
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: SizedBox(
+                  height: 120,
+                  child: Row(
+                    children: [
+                      const TraineeProfileImage(),
+                      TraineeInfo(trainee: trainee),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ),
-        ),
-      ),
+      ],
     );
   }
 }
@@ -101,18 +117,21 @@ class TraineeProfileImage extends StatelessWidget {
 
 // 트레이너 메인 페이지 Trainee Information
 class TraineeInfo extends StatelessWidget {
-  const TraineeInfo({Key? key}) : super(key: key);
+  final Trainee trainee;
+  const TraineeInfo({Key? key, required this.trainee}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        TraineeName(name: '정윤석'),
-        TrainerMainPageSubTitle(subtitle: '운동'),
-        TrainerMainPageGraph(total: 5, completed: 4),
-        TrainerMainPageSubTitle(subtitle: '식단'),
-        TrainerMainPageGraph(total: 3, completed: 2),
+      children: [
+        TraineeName(name: trainee.name),
+        const TrainerMainPageSubTitle(subtitle: '운동'),
+        TrainerMainPageGraph(
+            total: trainee.total, completed: trainee.completed),
+        const TrainerMainPageSubTitle(subtitle: '식단'),
+        TrainerMainPageGraph(
+            total: trainee.total, completed: trainee.completed),
       ],
     );
   }
@@ -165,6 +184,8 @@ class TrainerMainPageGraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double percent = completed / total == 0 ? 0.05 : completed / total;
+
     return LinearPercentIndicator(
       width: 224.0,
       lineHeight: 15,
@@ -172,7 +193,7 @@ class TrainerMainPageGraph extends StatelessWidget {
         colors: <Color>[Color(0xffB07BE6), Color(0xff5BA2E0)],
       ),
       barRadius: const Radius.circular(10),
-      percent: completed / total,
+      percent: percent,
     );
   }
 }
@@ -180,108 +201,74 @@ class TrainerMainPageGraph extends StatelessWidget {
 class TrainerView extends StatelessWidget {
   const TrainerView({Key? key}) : super(key: key);
 
-  // // 회원가입 페이지 carousel 리스트
-  // static List<Widget> carouselWidgets() => const [
-  //   NicknameInputField(),
-  //   RoleSelectionButtonView(),
-  //   UserInfoView(),
-  // ];
-  // static int widgetCount = carouselWidgets().length;
+  static List<String> categories() => ['삼손', '암스트롱', '청풍'];
+
+  static List<Trainee> trainees() => const [
+        Trainee(category: '삼손', name: '정윤석', total: 5, completed: 4),
+        Trainee(category: '삼손', name: '정윤석', total: 5, completed: 2),
+        Trainee(category: '삼손', name: '정윤석', total: 5, completed: 5),
+        Trainee(category: '암스트롱', name: '정윤석', total: 5, completed: 4),
+        Trainee(category: '암스트롱', name: '정윤석', total: 5, completed: 3),
+        Trainee(category: '암스트롱', name: '정윤석', total: 5, completed: 0),
+        Trainee(category: '암스트롱', name: '정윤석', total: 5, completed: 2),
+        Trainee(category: '청풍', name: '정윤석', total: 5, completed: 4),
+        Trainee(category: '청풍', name: '정윤석', total: 5, completed: 5),
+      ];
+  static int widgetCount = categories().length;
 
   @override
   Widget build(BuildContext context) {
     // Size screenSize = MediaQuery.of(context).size;
     // bool keyboardDisabled = WidgetsBinding.instance.window.viewInsets.bottom < 100.0;
-    List<PlanCate> planCates = [
-      const PlanCate(
-        category: '삼손',
-        trainees: [
-          Trainee(
-            name: '정윤석',
-            total: 5,
-            completed: 4,
-          ),
-          Trainee(
-            name: '정윤석',
-            total: 5,
-            completed: 4,
-          ),
-          Trainee(
-            name: '정윤석',
-            total: 5,
-            completed: 4,
-          ),
-        ],
-      ),
-      const PlanCate(
-        category: '암스트롱',
-        trainees: [
-          Trainee(
-            name: '정윤석',
-            total: 5,
-            completed: 4,
-          ),
-          Trainee(
-            name: '정윤석',
-            total: 5,
-            completed: 4,
-          ),
-        ],
-      ),
-      const PlanCate(
-        category: '청풍',
-        trainees: [
-          Trainee(
-            name: '정윤석',
-            total: 5,
-            completed: 4,
-          ),
-          Trainee(
-            name: '정윤석',
-            total: 5,
-            completed: 4,
-          ),
-          Trainee(
-            name: '정윤석',
-            total: 5,
-            completed: 4,
-          ),
-          Trainee(
-            name: '정윤석',
-            total: 5,
-            completed: 4,
-          ),
-        ],
-      ),
-    ];
+    Size screenSize = MediaQuery.of(context).size;
 
-    return SingleChildScrollView(
-      child: Column(
-        children: const [
-          TraineeCategory(),
-          TraineeCard(),
-        ],
+    List<Widget> items = categories()
+        .map((category) => SingleChildScrollView(
+              child: Column(
+                children: [
+                  TraineeCategory(category: category),
+                  TraineeCard(
+                      trainees: trainees()
+                          .where((element) => element.category == category)),
+                ],
+              ),
+            ))
+        .toList();
+
+    items.insert(
+        0,
+        SingleChildScrollView(
+          child: Column(
+            children: [
+              const TraineeCategory(category: '전체보기'),
+              TraineeCard(trainees: trainees()),
+            ],
+          ),
+        ));
+
+    return Container(
+      alignment: Alignment.topCenter,
+      constraints: BoxConstraints(minWidth: screenSize.width),
+      child: CarouselSlider(
+        items: items,
+        options: CarouselOptions(
+          height: double.infinity,
+          viewportFraction: 1.0,
+          // scrollPhysics: const NeverScrollableScrollPhysics(),
+        ),
       ),
     );
   }
 }
 
-class PlanCate {
-  final String category;
-  final List<Trainee> trainees;
-
-  const PlanCate({
-    required this.category,
-    required this.trainees,
-  });
-}
-
 class Trainee {
+  final String category;
   final String name;
   final int total;
   final int completed;
 
   const Trainee({
+    required this.category,
     required this.name,
     required this.total,
     required this.completed,
