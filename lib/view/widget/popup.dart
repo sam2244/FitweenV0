@@ -11,6 +11,8 @@ class FWDialog extends StatelessWidget {
     this.rightLabel = '확인',
     this.leftPressed,
     required this.rightPressed,
+    this.fixWidth = 300.0,
+    this.fixHeight = 100.0,
   }) : super(key: key);
 
   final Widget child;
@@ -18,6 +20,8 @@ class FWDialog extends StatelessWidget {
   final String rightLabel;
   VoidCallback? leftPressed;
   final VoidCallback rightPressed;
+  final double fixWidth;
+  final double fixHeight;
 
   @override
   Widget build(BuildContext context) {
@@ -32,15 +36,17 @@ class FWDialog extends StatelessWidget {
 
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
-      contentPadding: EdgeInsets.zero,
-      buttonPadding: EdgeInsets.zero,
-      insetPadding: EdgeInsets.zero,
-      actionsPadding: EdgeInsets.zero,
       title: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(25.0),
-            child: child,
+            padding: const EdgeInsets.all(15.0),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: fixWidth,
+                maxHeight: fixHeight,
+              ),
+              child: child,
+            ),
           ),
           Row(
             children: [

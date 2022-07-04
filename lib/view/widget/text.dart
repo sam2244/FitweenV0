@@ -11,6 +11,7 @@ class FWText extends StatelessWidget {
     this.size,
     this.weight,
     this.family,
+    this.overflow = false,
   }) : super(key: key);
 
   final String data;
@@ -19,6 +20,7 @@ class FWText extends StatelessWidget {
   final double? size;
   final FWFontWeight? weight;
   final String? family;
+  final bool overflow;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,9 @@ class FWText extends StatelessWidget {
     }[weight];
 
     TextStyle textStyle = TextStyle(
-      overflow: TextOverflow.ellipsis,
+      overflow: overflow
+          ? TextOverflow.ellipsis
+          : TextOverflow.visible,
       fontSize: size,
       color: color,
       fontWeight: fontWeight,
@@ -40,6 +44,7 @@ class FWText extends StatelessWidget {
 
     return Text(
       data,
+      maxLines: 2,
       style: style?.merge(textStyle)
           ?? textStyle.merge(style),
     );
