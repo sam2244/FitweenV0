@@ -17,9 +17,9 @@ class MyPage extends StatelessWidget {
           appBar: const MyAppBar(),
           body: Column(
             children: const [
-              MyProfileImageButton(),
+              MyProfileImage(),
               MyWeightGraphView(title: '체중', ratio: 1.5),
-              HeightInfo(),
+              WeightInfo(),
             ],
           ),
           bottomNavigationBar: const FWBottomBar(),

@@ -41,8 +41,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 }
 
-class MyProfileImageButton extends StatelessWidget {
-  const MyProfileImageButton({Key? key}) : super(key: key);
+class MyProfileImage extends StatelessWidget {
+  const MyProfileImage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -137,8 +137,8 @@ class MyWeightGraphView extends StatelessWidget {
   }
 }
 
-class HeightInfo extends StatelessWidget {
-  const HeightInfo({Key? key}) : super(key: key);
+class WeightInfo extends StatelessWidget {
+  const WeightInfo({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
