@@ -6,38 +6,42 @@ enum FWFontWeight { bold, normal, thin }
 class FWText extends StatelessWidget {
   FWText(this.data, {
     Key? key,
+    this.style,
     this.color,
-    this.size = 14.0,
-    this.weight = FWFontWeight.normal,
-    this.textStyle,
-  }) : assert(color == null || textStyle == null), super(key: key);
+    this.size,
+    this.weight,
+    this.family,
+  }) : super(key: key);
 
   final String data;
+  TextStyle? style;
   Color? color;
-  double size;
-  FWFontWeight weight;
-  final TextStyle? textStyle;
+  final double? size;
+  final FWFontWeight? weight;
+  final String? family;
 
   @override
   Widget build(BuildContext context) {
-    FontWeight fontWeight = FontWeight.w600;
+    style ??= Theme.of(context).textTheme.labelMedium;
     color ??= Theme.of(context).colorScheme.primary;
+    FontWeight? fontWeight = <FWFontWeight, FontWeight>{
+      FWFontWeight.thin: FontWeight.w400,
+      FWFontWeight.normal: FontWeight.w600,
+      FWFontWeight.bold: FontWeight.w800,
+    }[weight];
 
-    if (weight != FWFontWeight.normal) {
-      fontWeight = weight == FWFontWeight.bold
-          ? FontWeight.w800
-          : FontWeight.w400;
-    }
+    TextStyle textStyle = TextStyle(
+      overflow: TextOverflow.ellipsis,
+      fontSize: size,
+      color: color,
+      fontWeight: fontWeight,
+      fontFamily: family,
+    );
 
     return Text(
       data,
-      style: textStyle ?? TextStyle(
-        overflow: TextOverflow.ellipsis,
-        fontSize: size,
-        color: color,
-        fontFamily: 'Noto_Sans_KR',
-        fontWeight: fontWeight,
-      ),
+      style: style?.merge(textStyle)
+          ?? textStyle.merge(style),
     );
   }
 }
@@ -75,19 +79,14 @@ class FWInputField extends StatelessWidget {
         controller: controller,
         onFieldSubmitted: onSubmitted ?? (_) {},
         onChanged: onChanged ?? (_) {},
-        cursorColor: Theme.of(context).primaryColor,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.symmetric(horizontal: 15.0),
           border: const OutlineInputBorder(),
           hintText: hintText,
-          hintStyle: TextStyle(
-            color: hintTextColor,
-          )
+          hintStyle: TextStyle(color: hintTextColor),
         ),
         enabled: enabled,
-        style: TextStyle(
-          color: Theme.of(context).colorScheme.primary,
-        ),
+        style: Theme.of(context).textTheme.labelLarge,
       ),
     );
   }

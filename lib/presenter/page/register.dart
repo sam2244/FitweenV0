@@ -58,14 +58,13 @@ class RegisterPresenter extends GetxController {
     }
     else if (pageIndex == 2) {
       if (userPresenter.user.sex == null) { validate(0); return; }
-
-      try { int.parse(dateOfBirthCont.text); }
-      catch (e) { validate(1); return; }
+      if (int.tryParse(dateOfBirthCont.text) == null) { validate(1); return; }
       if (dateOfBirthCont.text.length != 6) { validate(1); return; }
 
       userPresenter.setDateOfBirth(dateOfBirthCont.text);
     }
     else if (pageIndex == CarouselView.widgetCount - 1) {
+      userPresenter.setInitWeight();
       Get.offAllNamed('/main/${userPresenter.user.role.name}');
       userPresenter.updateDB();
       return;
@@ -96,22 +95,25 @@ class RegisterPresenter extends GetxController {
     if (role != userPresenter.user.role) userPresenter.toggleRole();
     update();
   }
-  //
+
+  // 성별 선택 버튼 트리거
   void sexSelected(Sex sex) {
-    if (sex != userPresenter.user.sex) userPresenter.toggleSex();
-    update();
+    userPresenter.setSex(sex); update();
   }
 
+  // 생년월일 변경 트리거
   void dateOfBirthChanged(DateTime dateOfBirth) {
     userPresenter.user.dateOfBirth = dateOfBirth;
     update();
   }
 
+  // 체중 변경 트리거
   void weightChanged(double weight) {
     userPresenter.defaultWeight = weight;
     update();
   }
 
+  // 신장 변경 트리거
   void heightChanged(double height) {
     userPresenter.user.height = height;
     update();

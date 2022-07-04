@@ -52,7 +52,7 @@ class FWButton extends StatelessWidget {
           color: fill
               ? Theme.of(context).colorScheme.onPrimary
               : Theme.of(context).colorScheme.primary,
-          size: fontSize,
+          style: Theme.of(context).textTheme.labelLarge,
         ),
       ),
     );

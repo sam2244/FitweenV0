@@ -33,8 +33,10 @@ class RegisterAppBar extends StatelessWidget implements PreferredSizeWidget {
           onPressed: controller.backPressed,
         );
       }),
-      title: FWText('기본 정보', size: 20.0),
-      backgroundColor: Theme.of(context).colorScheme.onPrimary,
+      title: FWText(
+        '기본 정보',
+        style: Theme.of(context).textTheme.headlineMedium,
+      ),
       elevation: 0.0,
     );
   }
@@ -116,7 +118,10 @@ class NicknameInputView extends StatelessWidget {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          FWText('별명을 입력하세요.', size: 15.0),
+          FWText(
+            '별명을 입력하세요.',
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
           const SizedBox(height: 8.0),
           ShakeWidget(
             autoPlay: controller.invalids[0],
@@ -154,15 +159,13 @@ class RoleView extends StatelessWidget {
                   constraints: const BoxConstraints(maxWidth: 100.0),
                   child: FWText(
                     '${controller.user.nickname}',
-                    size: 15.0,
-                    color: Theme.of(context).colorScheme.primary,
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
                 ),
               ),
               FWText(
                 ' 님은 무엇을 하고 싶으신가요?',
-                size: 15.0,
-                weight: FWFontWeight.thin,
+                style: Theme.of(context).textTheme.headlineSmall,
               ),
             ],
           ),
@@ -175,9 +178,8 @@ class RoleView extends StatelessWidget {
             alignment: Alignment.center,
             child: FWText(
               'TIP: 역할은 언제든지 바꿀 수 있어요!',
-              size: 12.0,
-              weight: FWFontWeight.thin,
               color: Theme.of(context).primaryColor,
+              style: Theme.of(context).textTheme.bodySmall,
             ),
           ),
         ],
@@ -343,7 +345,7 @@ class WeightHeightView extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: contents.length,
       itemBuilder: (context, index) => FWCard(
-        height: 150.0,
+        height: 170.0,
         title: contents.keys.toList()[index],
         child: contents[contents.keys.toList()[index]]!,
       ),

@@ -14,13 +14,22 @@ class TrainerPresenter extends GetxController {
 
   // 현재 페이지 인덱스 증가
   void pageIndexIncrease() {
-    if (pageIndex < TrainerView.widgetCount) pageIndex++;
+    print(TrainerView.widgetCount);
+    if (pageIndex < TrainerView.widgetCount) {
+      pageIndex++;
+    } else {
+      pageIndex = 0;
+    }
     update();
   }
 
   // 현재 페이지 인덱스 감소
   void pageIndexDecrease() {
-    if (pageIndex > 0) pageIndex--;
+    if (pageIndex > 0) {
+      pageIndex--;
+    } else {
+      pageIndex = TrainerView.widgetCount;
+    }
     update();
   }
 
