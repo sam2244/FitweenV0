@@ -7,6 +7,9 @@ import 'package:fitween1/view/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../model/user/user.dart';
+import '../../view/widget/popup.dart';
+
 // 마이 페이지 프리젠터
 class MyPresenter extends GetxController {
   PeriodType type = PeriodType.days;
@@ -23,33 +26,32 @@ class MyPresenter extends GetxController {
     );
   }
 
-  void AddWeight(ThemeData themeData) {
+  static void AddWeightPressed(ThemeData themeData) {
     Get.dialog(
-      AlertDialog(
-        title: FWText(
-          '체중을 입력하세요',
-          style: themeData.textTheme.titleLarge,
-          color: themeData.colorScheme.primary,
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: const <Widget>[
-            Text(
-              "체중 입력 텍스트 필드",
-            ),
+      FWDialog(
+        rightLabel: '확인',
+        rightPressed: () {},
+        child: Column(
+          children: [
+            Row(
+              children: [
+                // ProfileImageRect(),
+                Column(
+                  children: [
+                    Text(
+                      "체중을 입력하세요.",
+                    ),
+                    FWText(
+                      '체중 입력 텍스트 필드',
+                      //style: themeData.textTheme.titleLarge,
+                      //color: themeData.colorScheme.primary,
+                    ),
+                  ],
+                ),
+              ],
+            )
           ],
         ),
-        actions: [
-          TextButton(
-            child: const Text("취소"),
-            onPressed: () {},
-          ),
-          TextButton(
-            child: const Text("확인"),
-            onPressed: () {},
-          )
-        ],
       ),
     );
   }

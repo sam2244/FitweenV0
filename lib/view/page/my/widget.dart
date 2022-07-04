@@ -152,7 +152,8 @@ class HeightInfo extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                   primary: Theme.of(context).colorScheme.primary,
                   ),
-                  onPressed: () => controller.AddWeight(Theme.of(context)),
+                  //onPressed: () => controller.AddWeight(Theme.of(context)),
+                  onPressed: () => MyPresenter.AddWeightPressed(Theme.of(context)),
                   child: FWText(
                     '체중 기록하기',
                     size: 15.0,
