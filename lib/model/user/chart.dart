@@ -61,7 +61,7 @@ class Chart {
   // 체중의 최대 최소 및 범위 (slicedData 를 사용하여 화면에 표시되는 데이터에 맞게 y 축 범위 지정 가능)
   double get minWeight => slicedData.values.reduce(math.min);
   double get maxWeight => slicedData.values.reduce(math.max);
-  WeightRange get weightRange => WeightRange(start: minWeight, end: maxWeight);
+  DoubleRange get weightRange => DoubleRange(start: minWeight, end: maxWeight);
 
 
   /// axis

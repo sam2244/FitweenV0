@@ -22,9 +22,9 @@ class DateRange extends Range<DateTime> {
   double getValue(DateTime date) => date.difference(start).inDays.toDouble();
 }
 
-// 체중 범위 모델
-class WeightRange extends Range<double> {
-  WeightRange({required super.start, double? end, int? range}) {
+// 숫자 범위 모델
+class DoubleRange extends Range<double> {
+  DoubleRange({required super.start, double? end, int? range}) {
   assert(end == null || range == null);
     if (range == null) { super.end = end ?? start; }
     else { super.end = start - range + 1; }
