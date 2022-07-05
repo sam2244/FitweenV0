@@ -189,7 +189,7 @@ class LogOutButton extends StatelessWidget {
           return Column(
             children: [
               Container(
-                margin: const EdgeInsets.fromLTRB(0.0, 170.0, 0.0, 10.0),
+                margin: const EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 10.0),
                 width: 343,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -223,7 +223,7 @@ class DeleteUserButton extends StatelessWidget {
           return Column(
             children: [
               Container(
-                margin: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+                margin: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 20.0),
                 width: 343,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(

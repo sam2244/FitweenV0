@@ -21,6 +21,7 @@ class SettingPage extends StatelessWidget {
                 MyProfileImageButton(),
                 NameTextField(),
                 HeightTextField(),
+                Expanded(child: SizedBox()),
                 LogOutButton(),
                 DeleteUserButton(),
               ],
