@@ -1,23 +1,23 @@
-import 'package:fitween1/presenter/page/my/editheight.dart';
-import 'package:fitween1/view/page/editHeight/widget.dart';
+import 'package:fitween1/presenter/page/my/editname.dart';
+import 'package:fitween1/view/page/my/editName/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-// 신장 수정 페이지
-class EditHeightPage extends StatelessWidget {
-  const EditHeightPage({Key? key}) : super(key: key);
+// 이름 수정 페이지
+class EditNamePage extends StatelessWidget {
+  const EditNamePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<EditHeightPresenter>(
+    return GetBuilder<EditNamePresenter>(
       builder: (controller) {
         return Scaffold(
           backgroundColor: Theme.of(context).colorScheme.surface,
-          appBar: const EditHeightAppBar(),
+          appBar: const EditNameAppBar(),
           body: Center(
             child: Column(
               children: const [
-                HeightTextField(),
+                NameTextField(),
               ],
             ),
           ),
