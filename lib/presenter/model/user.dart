@@ -10,8 +10,8 @@ class UserPresenter extends GetxController {
   static final planPresenter = Get.find<PlanPresenter>();
   static const String defaultProfile = 'https://firebasestorage.googleapis.com/v0/b/fitween-v1.appspot.com/o/users%2Fguest.png?alt=media&token=906ce482-e8ce-47e9-814a-6da7e3d5365c';
   bool logged = false;
-  double defaultWeight = FWUser.defaultWeight;
-  double defaultHeight = FWUser.defaultHeight;
+  double currentWeight = FWUser.defaultWeight;
+  double currentHeight = FWUser.defaultHeight;
 
   FWUser user = FWUser();
 
@@ -27,7 +27,7 @@ class UserPresenter extends GetxController {
     map.addAll(json);
     map['role'] = FWUser.toRole(json['role']);
     map['sex'] = FWUser.toSex(json['sex']);
-    map['height'] = json['height'] ?? defaultHeight;
+    map['height'] = json['height'] ?? currentHeight;
     map['weights'] = <DateTime, double>{
       if (json['weights'] != null)
       for (var data in json['weights'].map((data) => MapEntry<DateTime, double>(
@@ -91,7 +91,7 @@ class UserPresenter extends GetxController {
 
   void setInitWeight() {
     user.weights = {};
-    user.weights![Plan.today] = defaultWeight;
+    user.weights![Plan.today] = currentWeight;
     update();
   }
 

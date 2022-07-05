@@ -6,11 +6,10 @@ import 'package:get/get.dart';
 import 'package:numberpicker/numberpicker.dart';
 
 class FWNumberPicker extends StatelessWidget {
-  const FWNumberPicker({
+  FWNumberPicker({
     Key? key,
     required this.onChanged,
     required this.value,
-    this.label,
     this.axis = Axis.vertical,
     this.itemCount = 5,
     this.minValue = 0.0,
@@ -19,11 +18,11 @@ class FWNumberPicker extends StatelessWidget {
     this.decimalPlace = 1,
     this.itemWidth = 50.0,
     this.itemHeight = 20.0,
+    this.surfaceColor,
   }) : super(key: key);
 
   final Axis axis;
   final int itemCount;
-  final String? label;
   final Function(int) onChanged;
   final double value;
   final double minValue;
@@ -32,11 +31,13 @@ class FWNumberPicker extends StatelessWidget {
   final int decimalPlace;
   final double itemWidth;
   final double itemHeight;
+  Color? surfaceColor;
 
   @override
   Widget build(BuildContext context) {
-    double fadeWidth = itemWidth * 4;
-    double fadeHeight = itemHeight * 4;
+    double fadeWidth = itemWidth * 3;
+    double fadeHeight = itemHeight * 3;
+    surfaceColor ??= Theme.of(context).colorScheme.background;
 
     Map<Axis, List<Widget>> blurWidget = {
       Axis.vertical: [
@@ -50,8 +51,8 @@ class FWNumberPicker extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  FWTheme.surface[1]!.withOpacity(i.toDouble()),
-                  FWTheme.surface[1]!.withOpacity((1 - i).toDouble()),
+                  surfaceColor!.withOpacity(i.toDouble()),
+                  surfaceColor!.withOpacity((1 - i).toDouble()),
                 ],
               ),
             ),
@@ -69,8 +70,8 @@ class FWNumberPicker extends StatelessWidget {
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
                 colors: [
-                  FWTheme.surface[1]!.withOpacity(i.toDouble()),
-                  FWTheme.surface[1]!.withOpacity((1 - i).toDouble()),
+                  surfaceColor!.withOpacity(i.toDouble()),
+                  surfaceColor!.withOpacity((1 - i).toDouble()),
                 ],
               ),
             ),
@@ -79,11 +80,11 @@ class FWNumberPicker extends StatelessWidget {
       ],
     };
 
-    return Stack(
-      children: [
-        Row(
-          children: [
-            NumberPicker(
+    return Center(
+      child: Stack(
+        children: [
+          Positioned(
+            child: NumberPicker(
               axis: axis,
               itemCount: itemCount,
               haptics: true,
@@ -94,18 +95,16 @@ class FWNumberPicker extends StatelessWidget {
               step: 1,
               itemWidth: itemWidth,
               itemHeight: itemHeight,
-              textMapper: (value) => (int.parse(value) * step)
-                  .toStringAsFixed(decimalPlace),
+              textMapper: (value) => (int.parse(value) * step).toStringAsFixed(decimalPlace),
               textStyle: Theme.of(context).textTheme.labelLarge,
               selectedTextStyle: Theme.of(context).textTheme.labelLarge?.merge(
                 const TextStyle(color: FWTheme.primary, fontWeight: FontWeight.w700),
               ),
             ),
-            FWText(label ?? '', color: Theme.of(context).primaryColor),
-          ],
-        ),
-        for (int i = 0; i < 2; i++) blurWidget[axis]![i],
-      ],
+          ),
+          for (int i = 0; i < 2; i++) blurWidget[axis]![i],
+        ],
+      ),
     );
   }
 }
@@ -130,7 +129,6 @@ class FWCard extends StatelessWidget {
     return SizedBox(
       height: height,
       child: Card(
-        // elevation: 0.0,
         shape: RoundedRectangleBorder(
           side: BorderSide(
             color: outline

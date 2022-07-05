@@ -81,7 +81,7 @@ class MyWeightGraphView extends StatelessWidget {
 
     return GetBuilder<MyPresenter>(
       builder: (controller) {
-        controller.initChart(Theme.of(context));
+        controller.initChart();
         return Column(
           children: [
             Container(
@@ -152,8 +152,7 @@ class WeightInfo extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                   primary: Theme.of(context).colorScheme.primary,
                   ),
-                  //onPressed: () => controller.AddWeight(Theme.of(context)),
-                  onPressed: () => MyPresenter.AddWeightPressed(Theme.of(context)),
+                  onPressed: controller.addWeightPressed,
                   child: FWText(
                     '체중 기록하기',
                     size: 15.0,

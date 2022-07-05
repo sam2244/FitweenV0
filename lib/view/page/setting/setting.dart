@@ -1,6 +1,5 @@
 import 'package:fitween1/presenter/page/my.dart';
 import 'package:fitween1/view/page/setting/widget.dart';
-import 'package:fitween1/view/widget/container.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,7 +15,7 @@ class SettingPage extends StatelessWidget {
           backgroundColor: Theme.of(context).colorScheme.surface,
           appBar: const SettingAppBar(),
           body: Column(
-            children: [
+            children: const [
               MyProfileImageButton(),
               LogOutButton(),
               DeleteUserButton(),

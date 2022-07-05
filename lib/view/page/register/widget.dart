@@ -312,31 +312,47 @@ class WeightHeightView extends StatelessWidget {
       '체중': Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          GetBuilder<RegisterPresenter>(builder: (controller) {
-            return FWNumberPicker(
-              label: 'kg',
-              onChanged: (value) => controller.weightChanged(value * 0.1),
-              value: RegisterPresenter.userPresenter.defaultWeight,
-              minValue: 20.0,
-              maxValue: 200.0,
-              step: 0.1,
-            );
-          }),
+          GetBuilder<RegisterPresenter>(
+            builder: (controller) {
+              return FWNumberPicker(
+                itemCount: 5,
+                onChanged: (value) => controller.weightChanged(value * .1),
+                value: RegisterPresenter.userPresenter.currentWeight,
+                minValue: FWUser.weightRange.start,
+                maxValue: FWUser.weightRange.end,
+                step: .1,
+                surfaceColor: FWTheme.surface[1],
+              );
+            },
+          ),
+          FWText(
+            'kg',
+            style: Theme.of(context).textTheme.labelLarge,
+            color: FWTheme.primary,
+          ),
         ],
       ),
       '신장': Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          GetBuilder<RegisterPresenter>(builder: (controller) {
-            return FWNumberPicker(
-              label: 'cm',
-              onChanged: (value) => controller.heightChanged(value * 0.1),
-              value: RegisterPresenter.userPresenter.user.height,
-              minValue: 100.0,
-              maxValue: 220.0,
-              step: 0.1,
-            );
-          }),
+          GetBuilder<RegisterPresenter>(
+            builder: (controller) {
+              return FWNumberPicker(
+                itemCount: 5,
+                onChanged: (value) => controller.heightChanged(value * .1),
+                value: RegisterPresenter.userPresenter.user.height,
+                minValue: FWUser.heightRange.start,
+                maxValue: FWUser.heightRange.end,
+                step: .1,
+                surfaceColor: FWTheme.surface[1],
+              );
+            },
+          ),
+          FWText(
+            'cm',
+            style: Theme.of(context).textTheme.labelLarge,
+            color: FWTheme.primary,
+          ),
         ],
       ),
     };
@@ -345,7 +361,7 @@ class WeightHeightView extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: contents.length,
       itemBuilder: (context, index) => FWCard(
-        height: 170.0,
+        height: 160.0,
         title: contents.keys.toList()[index],
         child: contents[contents.keys.toList()[index]]!,
       ),
