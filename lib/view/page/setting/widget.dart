@@ -30,10 +30,6 @@ class SettingAppBar extends StatelessWidget implements PreferredSizeWidget {
                 );
               }
           ),
-          title: FWText(
-            "환경설정", size: 20.0,
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
           elevation: 0.0,
         )
     );
@@ -52,7 +48,8 @@ class MyProfileImageButton extends StatelessWidget {
               ProfileImageCircle(
                 size: 100.0,
                 user: SettingPresenter.userPresenter.user,
-                onPressed: () => controller.profileImagePressed(Theme.of(context)),
+                //onPressed: () => controller.profileImagePressed(Theme.of(context)),
+                onPressed: () => controller.profileImageChange(context,Theme.of(context)),
               ),
               FWText(
                 "사진 변경", size: 20.0,

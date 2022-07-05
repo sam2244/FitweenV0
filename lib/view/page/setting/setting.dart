@@ -16,12 +16,15 @@ class SettingPage extends StatelessWidget {
           backgroundColor: Theme.of(context).colorScheme.surface,
           appBar: const SettingAppBar(),
           body: Column(
-            children: [
-              MyProfileImageButton(),
+            children: const [
+              Expanded(
+                  child: MyProfileImageButton(),
+              ),
               LogOutButton(),
               DeleteUserButton(),
             ],
           ),
+          bottomNavigationBar: const FWBottomBar(),
         );
       }
     );
