@@ -1,4 +1,4 @@
-import 'package:fitween1/presenter/page/my/my.dart';
+import 'package:fitween1/presenter/page/my/setting.dart';
 import 'package:fitween1/view/page/setting/widget.dart';
 import 'package:fitween1/view/widget/container.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +10,7 @@ class SettingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<MyPresenter>(
+    return GetBuilder<SettingPresenter>(
       builder: (controller) {
         return Scaffold(
           backgroundColor: Theme.of(context).colorScheme.surface,
@@ -20,7 +20,9 @@ class SettingPage extends StatelessWidget {
               children: const [
                 MyProfileImageButton(),
                 NameTextField(),
+                NameEditButton(),
                 HeightTextField(),
+                HeightEditButton(),
                 Expanded(child: SizedBox()),
                 LogOutButton(),
                 DeleteUserButton(),

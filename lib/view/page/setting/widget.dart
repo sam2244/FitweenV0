@@ -62,6 +62,38 @@ class MyProfileImageButton extends StatelessWidget {
   }
 }
 
+class NameEditButton extends StatelessWidget {
+  const NameEditButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<SettingPresenter>(
+        builder: (controller) {
+          return OutlinedButton(
+            onPressed: controller.editNamePressed,
+            child: const Text('이름'),
+          );
+        }
+    );
+  }
+}
+
+class HeightEditButton extends StatelessWidget {
+  const HeightEditButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<SettingPresenter>(
+        builder: (controller) {
+          return OutlinedButton(
+            onPressed: controller.editHeightPressed,
+            child: const Text('신장'),
+          );
+        }
+    );
+  }
+}
+
 class NameTextField extends StatelessWidget {
   static final _nameController = TextEditingController();
   const NameTextField({Key? key}) : super(key: key);

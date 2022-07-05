@@ -115,6 +115,14 @@ class SettingPresenter extends GetxController {
     Get.offAllNamed('/my');
   }
 
+  void editNamePressed() {
+    Get.toNamed('/editName');
+  }
+
+  void editHeightPressed() {
+    Get.toNamed('/editHeight');
+  }
+
   static void logoutPressed() {
     LoginPresenter.fitweenGoogleLogout();
     Get.offAllNamed('/login');
