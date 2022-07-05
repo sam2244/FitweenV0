@@ -1,4 +1,5 @@
 import 'package:fitween1/global/config/theme.dart';
+import 'package:fitween1/presenter/page/main/trainee.dart';
 import 'package:fitween1/view/widget/button.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -58,7 +59,7 @@ class TraineeAddPlanButton extends StatelessWidget {
           FWButton(
             width: 193.0,
             height: 52.0,
-            onPressed: Trainee,
+            onPressed: TraineePresenter.addPlanButtonPressed,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
