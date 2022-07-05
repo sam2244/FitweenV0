@@ -15,14 +15,17 @@ class SettingPage extends StatelessWidget {
         return Scaffold(
           backgroundColor: Theme.of(context).colorScheme.surface,
           appBar: const SettingAppBar(),
-          body: Column(
-            children: const [
-              Expanded(
-                  child: MyProfileImageButton(),
-              ),
-              LogOutButton(),
-              DeleteUserButton(),
-            ],
+          body: Center(
+            child: Column(
+              children: const [
+                MyProfileImageButton(),
+                NameTextField(),
+                HeightTextField(),
+                Expanded(child: SizedBox()),
+                LogOutButton(),
+                DeleteUserButton(),
+              ],
+            ),
           ),
           bottomNavigationBar: const FWBottomBar(),
         );

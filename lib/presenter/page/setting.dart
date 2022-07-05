@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 
 // 설정 페이지 프리젠터
 class SettingPresenter extends GetxController {
-
   static final userPresenter = Get.find<UserPresenter>();
 
   /*void profileImagePressed(ThemeData themeData) {
