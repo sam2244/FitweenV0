@@ -1,18 +1,20 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitween1/model/user/user.dart';
 import 'package:fitween1/presenter/firebase/firebase.dart';
+import 'package:fitween1/presenter/global.dart';
 import 'package:fitween1/presenter/page/register.dart';
 import 'package:fitween1/presenter/model/user.dart';
 import 'package:fitween1/view/page/login/widget.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 // 로그인 페이지 프리젠터
 class LoginPresenter {
   static final a = FirebasePresenter.a;
   static final userPresenter = Get.find<UserPresenter>();
   static final registerPresenter = Get.find<RegisterPresenter>();
+  static final globalPresenter = Get.find<GlobalPresenter>();
 
   // 로그인 버튼 클릭 트리거
   static VoidCallback loginButtonPressed(LoginType type) {
@@ -89,7 +91,6 @@ class LoginPresenter {
         userPresenter.user.fromMap(map);
         userPresenter.updateDB();
       }
-
       userPresenter.login();
     }
   }
@@ -98,6 +99,12 @@ class LoginPresenter {
   static void fitweenGoogleLogout() {
     signOutWithGoogle();
     userPresenter.user = FWUser();
+    globalPresenter.navIndex = 0;
   }
 
+  // 구글 로그인 유저 삭제
+  static void fitweenUserDelete() {
+    userPresenter.deleteDB();
+    fitweenGoogleLogout();
+  }
 }

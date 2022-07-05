@@ -108,4 +108,6 @@ class UserPresenter extends GetxController {
 
   // 로컬 데이터로 firebase 최신화
   void updateDB() => FirebasePresenter.f.collection('users').doc(user.uid).set(toJson());
+
+  void deleteDB() => FirebasePresenter.f.collection('users').doc(user.uid).delete();
 }

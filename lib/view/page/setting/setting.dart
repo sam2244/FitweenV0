@@ -1,5 +1,6 @@
 import 'package:fitween1/presenter/page/my.dart';
 import 'package:fitween1/view/page/setting/widget.dart';
+import 'package:fitween1/view/widget/container.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,13 +15,19 @@ class SettingPage extends StatelessWidget {
         return Scaffold(
           backgroundColor: Theme.of(context).colorScheme.surface,
           appBar: const SettingAppBar(),
-          body: Column(
-            children: const [
-              MyProfileImageButton(),
-              LogOutButton(),
-              DeleteUserButton(),
-            ],
+          body: Center(
+            child: Column(
+              children: const [
+                MyProfileImageButton(),
+                NameTextField(),
+                HeightTextField(),
+                Expanded(child: SizedBox()),
+                LogOutButton(),
+                DeleteUserButton(),
+              ],
+            ),
           ),
+          bottomNavigationBar: const FWBottomBar(),
         );
       }
     );

@@ -30,10 +30,6 @@ class SettingAppBar extends StatelessWidget implements PreferredSizeWidget {
                 );
               }
           ),
-          title: FWText(
-            "환경설정", size: 20.0,
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
           elevation: 0.0,
         )
     );
@@ -52,11 +48,129 @@ class MyProfileImageButton extends StatelessWidget {
               ProfileImageCircle(
                 size: 100.0,
                 user: SettingPresenter.userPresenter.user,
-                onPressed: () => controller.profileImagePressed(Theme.of(context)),
+                //onPressed: () => controller.profileImagePressed(Theme.of(context)),
+                onPressed: () => controller.profileImageChange(context,Theme.of(context)),
               ),
               FWText(
                 "사진 변경", size: 20.0,
-                style: Theme.of(context).textTheme.titleLarge,
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
+            ],
+          );
+        }
+    );
+  }
+}
+
+class NameTextField extends StatelessWidget {
+  static final _nameController = TextEditingController();
+  const NameTextField({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<SettingPresenter>(
+        builder: (controller) {
+          return Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+                child: Column(
+                  children: [
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 8.0),
+                      child: FWText(
+                        "이름",
+                        style: Theme.of(context).textTheme.headlineSmall,
+                        color: Theme.of(context).colorScheme.onBackground,
+                      ),
+                    ),
+                    /*TextFormField(
+                      controller: _nameController,
+                      decoration: InputDecoration(
+                        labelText: '이름을 입력하세요',
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4.0),
+                          borderSide: BorderSide(),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return '이름을 입력하세요';
+                        }
+                        return null;
+                      },
+                    ),*/
+                    TextFormField(
+                      controller: _nameController,
+                      decoration: InputDecoration(
+                        fillColor: Colors.white,
+                        hintText: '이름을 입력하세요',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4.0),
+                          borderSide: const BorderSide(),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return '이름을 입력하세요';
+                        }
+                        return null;
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        }
+    );
+  }
+}
+
+class HeightTextField extends StatelessWidget {
+  static final _heightController = TextEditingController();
+  const HeightTextField({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<SettingPresenter>(
+        builder: (controller) {
+          return Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+                child: Column(
+                  children: [
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 8.0),
+                      child: FWText(
+                        "신장",
+                        style: Theme.of(context).textTheme.headlineSmall,
+                        color: Theme.of(context).colorScheme.onBackground,
+                      ),
+                    ),
+                    TextFormField(
+                      controller: _heightController,
+                      decoration: InputDecoration(
+                        fillColor: Colors.white,
+                        hintText: '신장을 입력하세요',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4.0),
+                          borderSide: const BorderSide(),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return '신장을 입력하세요';
+                        }
+                        return null;
+                      },
+                    ),
+                  ],
+                ),
               ),
             ],
           );
@@ -75,7 +189,7 @@ class LogOutButton extends StatelessWidget {
           return Column(
             children: [
               Container(
-                margin: const EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 10.0),
+                margin: const EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 10.0),
                 width: 343,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -109,14 +223,14 @@ class DeleteUserButton extends StatelessWidget {
           return Column(
             children: [
               Container(
-                margin: const EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 10.0),
+                margin: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 20.0),
                 width: 343,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     primary: Theme.of(context).colorScheme.error,
                   ),
                   //onPressed: () => controller.AddWeight(Theme.of(context)),
-                  onPressed: SettingPresenter.deletePressed,
+                  onPressed: () => SettingPresenter.AskDelete(Theme.of(context)),
                   child: FWText(
                     '계정 삭제하기',
                     size: 15.0,
