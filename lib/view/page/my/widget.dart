@@ -1,6 +1,6 @@
 import 'package:fitween1/global/global.dart';
 import 'package:fitween1/model/user/chart.dart';
-import 'package:fitween1/presenter/page/my.dart';
+import 'package:fitween1/presenter/page/my/my.dart';
 import 'package:fitween1/view/widget/image.dart';
 import 'package:fitween1/view/widget/text.dart';
 import 'package:fl_chart/fl_chart.dart';
