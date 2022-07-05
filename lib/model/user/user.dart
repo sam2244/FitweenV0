@@ -1,5 +1,6 @@
 import 'package:fitween1/global/global.dart';
 import 'package:fitween1/model/plan/plan.dart';
+import 'package:fitween1/model/user/range.dart';
 import 'package:fitween1/presenter/model/user.dart';
 import 'package:get/get.dart';
 
@@ -30,6 +31,8 @@ enum Sex {
 
 // 사용자 모델
 class FWUser {
+  static Range weightRange = DoubleRange(start: 20, end: 220);
+  static Range heightRange = DoubleRange(start: 100, end: 220);
   static const double defaultWeight = 60.0;
   static const double defaultHeight = 175.0;
 

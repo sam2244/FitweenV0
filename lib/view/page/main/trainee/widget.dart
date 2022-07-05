@@ -51,18 +51,14 @@ class TraineeAddPlanButton extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(4.0),
             child: FWText("현재 진행중인 플랜이 없습니다.",
-                style: Theme.of(context).textTheme.bodyMedium,
-                color: Theme.of(context).colorScheme.outline,),
+              style: Theme.of(context).textTheme.bodyMedium,
+              color: Theme.of(context).colorScheme.outline,
+            ),
           ),
           FWButton(
             width: 193.0,
             height: 52.0,
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const AddPlanPage()),
-              );
-            },
+            onPressed: Trainee,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,

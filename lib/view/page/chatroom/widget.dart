@@ -1,6 +1,6 @@
 import 'package:fitween1/global/global.dart';
 import 'package:fitween1/model/chat/chat.dart';
-import 'package:fitween1/presenter/page/chatroom.dart';
+import 'package:fitween1/presenter/page/chat/chatroom.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
