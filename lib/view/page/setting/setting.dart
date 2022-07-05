@@ -17,9 +17,9 @@ class SettingPage extends StatelessWidget {
           appBar: const SettingAppBar(),
           body: Column(
             children: const [
-              Expanded(
-                  child: MyProfileImageButton(),
-              ),
+              MyProfileImageButton(),
+              NameTextField(),
+              HeightTextField(),
               LogOutButton(),
               DeleteUserButton(),
             ],

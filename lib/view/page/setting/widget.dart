@@ -53,7 +53,73 @@ class MyProfileImageButton extends StatelessWidget {
               ),
               FWText(
                 "사진 변경", size: 20.0,
-                style: Theme.of(context).textTheme.titleLarge,
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
+            ],
+          );
+        }
+    );
+  }
+}
+
+class NameTextField extends StatelessWidget {
+  static final _nameController = TextEditingController();
+  const NameTextField({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<SettingPresenter>(
+        builder: (controller) {
+          return Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.fromLTRB(20.0, 0.0, 50.0, 0.0),
+                child: Column(
+                  children: [
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.all(15.0),
+                      child: FWText(
+                        "이름",
+                        style: Theme.of(context).textTheme.headlineSmall,
+                        color: Theme.of(context).colorScheme.onBackground,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        }
+    );
+  }
+}
+
+class HeightTextField extends StatelessWidget {
+  static final _heightController = TextEditingController();
+  const HeightTextField({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<SettingPresenter>(
+        builder: (controller) {
+          return Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.fromLTRB(20.0, 0.0, 50.0, 0.0),
+                child: Column(
+                  children: [
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.all(15.0),
+                      child: FWText(
+                        "신장",
+                        style: Theme.of(context).textTheme.headlineSmall,
+                        color: Theme.of(context).colorScheme.onBackground,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           );
