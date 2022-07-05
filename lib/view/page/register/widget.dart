@@ -48,11 +48,11 @@ class CarouselView extends StatelessWidget {
 
   // 회원가입 페이지 carousel 리스트
   static List<Widget> carouselWidgets() => const [
-        NicknameInputView(),
-        RoleView(),
-        SexDateOfBirthView(),
-        WeightHeightView(),
-      ];
+    NicknameInputView(),
+    RoleView(),
+    SexDateOfBirthView(),
+    WeightHeightView(),
+  ];
   static int widgetCount = carouselWidgets().length;
 
   @override
@@ -73,9 +73,9 @@ class CarouselView extends StatelessWidget {
                 carouselController: RegisterPresenter.carouselCont,
                 items: carouselWidgets()
                     .map((widget) => Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                          child: widget,
-                        ))
+                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  child: widget,
+                ))
                     .toList(),
                 options: CarouselOptions(
                   height: double.infinity,

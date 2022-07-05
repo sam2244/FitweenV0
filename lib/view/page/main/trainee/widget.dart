@@ -1,4 +1,5 @@
 import 'package:fitween1/global/config/theme.dart';
+import 'package:fitween1/view/widget/button.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
@@ -8,6 +9,8 @@ import '../../../widget/container.dart';
 import '../../../widget/text.dart';
 import 'dart:math' as math;
 
+import '../../add_plan/add_plan.dart';
+
 //트레이니 페이지의 위젯 모음
 
 //트레이니 페이지 Body CarouselSlider Widget
@@ -16,10 +19,7 @@ class TraineeCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> cardList = [
-      const TraineeCard(),
-      const TraineeCard(),
-    ];
+    final List<Widget> cardList = [const TraineeAddPlanButton()];
 
     final double height = MediaQuery.of(context).size.height;
     return CarouselSlider(
@@ -30,8 +30,67 @@ class TraineeCarousel extends StatelessWidget {
         enlargeCenterPage: false,
         // autoPlay: false,
       ),
-      items:
-          cardList.map((item) => const Center(child: TraineeCard())).toList(),
+      items: cardList
+          .map((item) => const Center(child: TraineeAddPlanButton()))
+          .toList(),
+    );
+  }
+}
+
+//트레이니 플랜 추가 버튼
+class TraineeAddPlanButton extends StatelessWidget {
+  const TraineeAddPlanButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: FWText("현재 진행중인 플랜이 없습니다.",
+                style: Theme.of(context).textTheme.bodyMedium,
+                color: Theme.of(context).colorScheme.outline,),
+          ),
+          FWButton(
+            width: 193.0,
+            height: 52.0,
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const AddPlanPage()),
+              );
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                  child: Row(
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(right: 5.0),
+                        child: Icon(Icons.add),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 5.0),
+                        child: FWText(
+                          '새 플랜 추가',
+                          style: Theme.of(context).textTheme.labelLarge,
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -59,8 +118,7 @@ class TraineeCard extends StatelessWidget {
                   ),
                   const TraineeToDo(),
                 ],
-              )
-          ),
+              )),
         ),
       ],
     );
@@ -172,8 +230,7 @@ class TraineeToDo extends StatelessWidget {
         color: Theme.of(context).colorScheme.onSecondary,
         shape: RoundedRectangleBorder(
           side: BorderSide(
-            color:
-            Theme.of(context).colorScheme.onSecondary,
+            color: Theme.of(context).colorScheme.onSecondary,
           ),
           borderRadius: BorderRadius.circular(10),
         ),
@@ -184,8 +241,10 @@ class TraineeToDo extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const  ToDoCardTitle(title: '운동',),
-                const  Divider(
+                const ToDoCardTitle(
+                  title: '운동',
+                ),
+                const Divider(
                   color: Colors.black,
                   indent: 15.0,
                   endIndent: 15.0,
@@ -193,7 +252,9 @@ class TraineeToDo extends StatelessWidget {
                 const TraineeCheckBoxList(),
                 const TraineeCheckBoxList(),
                 const TraineeCheckBoxList(),
-                const ToDoCardTitle(title: '식단',),
+                const ToDoCardTitle(
+                  title: '식단',
+                ),
                 const Divider(
                   color: Colors.black,
                   indent: 15.0,
@@ -213,13 +274,11 @@ class TraineeToDo extends StatelessWidget {
   }
 }
 
-
 // 트레이니 메인 페이지 D-Day
 class TraineeMainPageDDay extends StatelessWidget {
   final String dDay;
 
-  const TraineeMainPageDDay({Key? key, required this.dDay})
-      : super(key: key);
+  const TraineeMainPageDDay({Key? key, required this.dDay}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -266,7 +325,10 @@ class ToDoCardTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 15.0, left: 15.0,),
+      padding: const EdgeInsets.only(
+        top: 15.0,
+        left: 15.0,
+      ),
       child: FWText(
         title,
         color: Theme.of(context).colorScheme.onSurface,
@@ -276,8 +338,6 @@ class ToDoCardTitle extends StatelessWidget {
     );
   }
 }
-
-
 
 //트레이니 FAB
 /*class ExpandableTraineeFAB extends StatelessWidget {
@@ -405,8 +465,8 @@ class _ExpandableFabState extends State<ExpandableFab>
     final count = widget.children.length;
     final step = 90.0 / (count - 1);
     for (var i = 0, angleInDegrees = 33.0;
-    i < count;
-    i++, angleInDegrees += step) {
+        i < count;
+        i++, angleInDegrees += step) {
       children.add(
         _ExpandingActionButton(
           directionInDegrees: angleInDegrees,
@@ -439,8 +499,7 @@ class _ExpandableFabState extends State<ExpandableFab>
             foregroundColor: Theme.of(context).colorScheme.onSecondary,
             backgroundColor: FWTheme.primary[40],
             onPressed: _toggle,
-            child: const Icon(
-                Icons.add),
+            child: const Icon(Icons.add),
           ),
         ),
       ),
@@ -487,7 +546,6 @@ class _ExpandingActionButton extends StatelessWidget {
     );
   }
 }
-
 
 @immutable
 class ActionButton extends StatelessWidget {
@@ -552,23 +610,22 @@ class TraineePagePhotoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.only(left: 15.0,),
-      color: Theme.of(context).colorScheme.onSecondary,
-      shape: RoundedRectangleBorder(
-        side: const BorderSide(
-          color: FWTheme.grey,
+        margin: const EdgeInsets.only(
+          left: 15.0,
         ),
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      child: const Padding(
-        padding: EdgeInsets.all(28.5),
-        child: Icon(
-          Icons.camera_alt_outlined,
-          color: FWTheme.grey,
+        color: Theme.of(context).colorScheme.onSecondary,
+        shape: RoundedRectangleBorder(
+          side: const BorderSide(
+            color: FWTheme.grey,
+          ),
+          borderRadius: BorderRadius.circular(10.0),
         ),
-      )
-    );
+        child: const Padding(
+          padding: EdgeInsets.all(28.5),
+          child: Icon(
+            Icons.camera_alt_outlined,
+            color: FWTheme.grey,
+          ),
+        ));
   }
 }
-
-
