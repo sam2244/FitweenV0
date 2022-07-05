@@ -73,17 +73,51 @@ class NameTextField extends StatelessWidget {
           return Column(
             children: [
               Container(
-                padding: const EdgeInsets.fromLTRB(20.0, 0.0, 50.0, 0.0),
+                padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
                 child: Column(
                   children: [
                     Container(
                       alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.all(15.0),
+                      padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 8.0),
                       child: FWText(
                         "이름",
                         style: Theme.of(context).textTheme.headlineSmall,
                         color: Theme.of(context).colorScheme.onBackground,
                       ),
+                    ),
+                    /*TextFormField(
+                      controller: _nameController,
+                      decoration: InputDecoration(
+                        labelText: '이름을 입력하세요',
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4.0),
+                          borderSide: BorderSide(),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return '이름을 입력하세요';
+                        }
+                        return null;
+                      },
+                    ),*/
+                    TextFormField(
+                      controller: _nameController,
+                      decoration: InputDecoration(
+                        fillColor: Colors.white,
+                        hintText: '이름을 입력하세요',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4.0),
+                          borderSide: const BorderSide(),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return '이름을 입력하세요';
+                        }
+                        return null;
+                      },
                     ),
                   ],
                 ),
@@ -106,17 +140,34 @@ class HeightTextField extends StatelessWidget {
           return Column(
             children: [
               Container(
-                padding: const EdgeInsets.fromLTRB(20.0, 0.0, 50.0, 0.0),
+                padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
                 child: Column(
                   children: [
                     Container(
                       alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.all(15.0),
+                      padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 8.0),
                       child: FWText(
                         "신장",
                         style: Theme.of(context).textTheme.headlineSmall,
                         color: Theme.of(context).colorScheme.onBackground,
                       ),
+                    ),
+                    TextFormField(
+                      controller: _heightController,
+                      decoration: InputDecoration(
+                        fillColor: Colors.white,
+                        hintText: '신장을 입력하세요',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4.0),
+                          borderSide: const BorderSide(),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return '신장을 입력하세요';
+                        }
+                        return null;
+                      },
                     ),
                   ],
                 ),
@@ -138,7 +189,7 @@ class LogOutButton extends StatelessWidget {
           return Column(
             children: [
               Container(
-                margin: const EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 10.0),
+                margin: const EdgeInsets.fromLTRB(0.0, 170.0, 0.0, 10.0),
                 width: 343,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -172,7 +223,7 @@ class DeleteUserButton extends StatelessWidget {
           return Column(
             children: [
               Container(
-                margin: const EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 10.0),
+                margin: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                 width: 343,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
