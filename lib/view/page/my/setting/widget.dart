@@ -96,7 +96,7 @@ class NameTextField extends StatelessWidget {
                           Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                "이름",
+                                "이름 변경",
                               )
                           )
                         ],
@@ -146,7 +146,7 @@ class HeightTextField extends StatelessWidget {
                           Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                "신장",
+                                "신장 변경",
                               )
                           )
                         ],

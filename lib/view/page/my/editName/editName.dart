@@ -1,4 +1,4 @@
-import 'package:fitween1/presenter/page/my/editname.dart';
+import 'package:fitween1/presenter/page/my/setting.dart';
 import 'package:fitween1/view/page/my/editName/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,7 +9,7 @@ class EditNamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<EditNamePresenter>(
+    return GetBuilder<SettingPresenter>(
       builder: (controller) {
         return Scaffold(
           backgroundColor: Theme.of(context).colorScheme.surface,

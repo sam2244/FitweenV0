@@ -1,5 +1,5 @@
 import 'package:fitween1/global/global.dart';
-import 'package:fitween1/presenter/page/my/editHeight.dart';
+import 'package:fitween1/presenter/page/my/setting.dart';
 import 'package:fitween1/view/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,7 +18,7 @@ class EditHeightAppBar extends StatelessWidget implements PreferredSizeWidget {
     return PreferredSize(
       preferredSize: const Size.fromHeight(60.0),
         child: AppBar(
-          leading: GetBuilder<EditHeightPresenter>(
+          leading: GetBuilder<SettingPresenter>(
               builder: (controller) {
                 return IconButton(
                   icon: Icon(
@@ -29,6 +29,19 @@ class EditHeightAppBar extends StatelessWidget implements PreferredSizeWidget {
                 );
               }
           ),
+          actions: [
+            GetBuilder<SettingPresenter>(
+                builder: (controller) {
+                  return IconButton(
+                    icon: Icon(
+                      Icons.check,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    onPressed: controller.backPressed,
+                  );
+                }
+            ),
+          ],
           elevation: 0.0,
         )
     );
@@ -36,12 +49,12 @@ class EditHeightAppBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 class HeightTextField extends StatelessWidget {
-  static final _heightController = TextEditingController();
   const HeightTextField({Key? key}) : super(key: key);
+  static final _heightController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<EditHeightPresenter>(
+    return GetBuilder<SettingPresenter>(
         builder: (controller) {
           return Column(
             children: [
