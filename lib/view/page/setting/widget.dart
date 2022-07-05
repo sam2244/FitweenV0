@@ -85,7 +85,8 @@ class NameTextField extends StatelessWidget {
                       ),
                     ),
                     OutlinedButton(
-                      onPressed: () => null,
+                      //onPressed: () => null,
+                      onPressed: SettingPresenter.editNamePressed,
                       child: Stack(
                         children: const <Widget>[
                           Align(
@@ -112,7 +113,6 @@ class NameTextField extends StatelessWidget {
 }
 
 class HeightTextField extends StatelessWidget {
-  static final _heightController = TextEditingController();
   const HeightTextField({Key? key}) : super(key: key);
 
   @override
@@ -135,7 +135,8 @@ class HeightTextField extends StatelessWidget {
                       ),
                     ),
                     OutlinedButton(
-                      onPressed: () => null,
+                      //onPressed: () => null,
+                      onPressed: SettingPresenter.editHeightPressed,
                       child: Stack(
                         children: const <Widget>[
                           Align(

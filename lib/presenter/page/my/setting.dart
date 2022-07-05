@@ -115,11 +115,11 @@ class SettingPresenter extends GetxController {
     Get.offAllNamed('/my');
   }
 
-  void editNamePressed() {
+  static void editNamePressed() {
     Get.toNamed('/editName');
   }
 
-  void editHeightPressed() {
+  static void editHeightPressed() {
     Get.toNamed('/editHeight');
   }
 
