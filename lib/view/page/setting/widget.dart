@@ -113,7 +113,7 @@ class DeleteUserButton extends StatelessWidget {
                     primary: Theme.of(context).colorScheme.error,
                   ),
                   //onPressed: () => controller.AddWeight(Theme.of(context)),
-                  onPressed: SettingPresenter.deletePressed,
+                  onPressed: () => SettingPresenter.AskDelete(Theme.of(context)),
                   child: FWText(
                     '계정 삭제하기',
                     size: 15.0,

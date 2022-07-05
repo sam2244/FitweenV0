@@ -1,7 +1,7 @@
 import 'package:fitween1/presenter/model/user.dart';
 import 'package:fitween1/presenter/page/login.dart';
 import 'package:fitween1/view/widget/text.dart';
-import 'package:fitween1/model/user/user.dart';
+import 'package:fitween1/view/widget/popup.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -124,5 +124,19 @@ class SettingPresenter extends GetxController {
   static void deletePressed() {
     LoginPresenter.fitweenUserDelete();
     Get.offAllNamed('/login');
+  }
+
+  static void AskDelete(ThemeData themeData) {
+    Get.dialog(
+      FWDialog(
+        rightLabel: '삭제',
+        rightPressed: () {
+          deletePressed();
+        },
+        child: const Text(
+          "계정을 정말 삭제하시겠습니까?",
+        ),
+      ),
+    );
   }
 }
