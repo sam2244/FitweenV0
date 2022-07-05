@@ -62,40 +62,7 @@ class MyProfileImageButton extends StatelessWidget {
   }
 }
 
-class NameEditButton extends StatelessWidget {
-  const NameEditButton({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GetBuilder<SettingPresenter>(
-        builder: (controller) {
-          return OutlinedButton(
-            onPressed: controller.editNamePressed,
-            child: const Text('이름'),
-          );
-        }
-    );
-  }
-}
-
-class HeightEditButton extends StatelessWidget {
-  const HeightEditButton({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GetBuilder<SettingPresenter>(
-        builder: (controller) {
-          return OutlinedButton(
-            onPressed: controller.editHeightPressed,
-            child: const Text('신장'),
-          );
-        }
-    );
-  }
-}
-
 class NameTextField extends StatelessWidget {
-  static final _nameController = TextEditingController();
   const NameTextField({Key? key}) : super(key: key);
 
   @override
@@ -117,39 +84,22 @@ class NameTextField extends StatelessWidget {
                         color: Theme.of(context).colorScheme.onBackground,
                       ),
                     ),
-                    /*TextFormField(
-                      controller: _nameController,
-                      decoration: InputDecoration(
-                        labelText: '이름을 입력하세요',
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide: BorderSide(),
-                        ),
+                    OutlinedButton(
+                      onPressed: () => null,
+                      child: Stack(
+                        children: const <Widget>[
+                          Align(
+                              alignment: Alignment.centerRight,
+                              child: Icon(Icons.keyboard_arrow_right_outlined)
+                          ),
+                          Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "이름",
+                              )
+                          )
+                        ],
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return '이름을 입력하세요';
-                        }
-                        return null;
-                      },
-                    ),*/
-                    TextFormField(
-                      controller: _nameController,
-                      decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        hintText: '이름을 입력하세요',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide: const BorderSide(),
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return '이름을 입력하세요';
-                        }
-                        return null;
-                      },
                     ),
                   ],
                 ),
@@ -184,22 +134,22 @@ class HeightTextField extends StatelessWidget {
                         color: Theme.of(context).colorScheme.onBackground,
                       ),
                     ),
-                    TextFormField(
-                      controller: _heightController,
-                      decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        hintText: '신장을 입력하세요',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide: const BorderSide(),
-                        ),
+                    OutlinedButton(
+                      onPressed: () => null,
+                      child: Stack(
+                        children: const <Widget>[
+                          Align(
+                              alignment: Alignment.centerRight,
+                              child: Icon(Icons.keyboard_arrow_right_outlined)
+                          ),
+                          Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "신장",
+                              )
+                          )
+                        ],
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return '신장을 입력하세요';
-                        }
-                        return null;
-                      },
                     ),
                   ],
                 ),
