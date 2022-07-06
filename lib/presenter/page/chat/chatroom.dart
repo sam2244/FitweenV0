@@ -12,7 +12,7 @@ class ChatroomPresenter extends GetxController {
   bool isMe(Chat chat) => userPresenter.isMe(chat.user);
 
   void addChat() {
-    if (textCont.text != ''){
+    if(textCont.text != '') {
       chats.add(Chat(
         user: userPresenter.user,
         text: textCont.text,
