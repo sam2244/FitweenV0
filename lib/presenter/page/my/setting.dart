@@ -1,6 +1,7 @@
 import 'package:fitween1/presenter/model/user.dart';
 import 'package:fitween1/presenter/page/login.dart';
 import 'package:fitween1/view/widget/text.dart';
+import 'package:fitween1/view/widget/container.dart';
 import 'package:fitween1/view/widget/popup.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,6 +9,14 @@ import 'package:get/get.dart';
 // 설정 페이지 프리젠터
 class SettingPresenter extends GetxController {
   static final userPresenter = Get.find<UserPresenter>();
+
+  static final nameCont = TextEditingController();
+  double defaultHeight = userPresenter.user.height;
+
+  void heightSelected(double height) {
+    defaultHeight = height;
+    update();
+  }
 
   /*void profileImagePressed(ThemeData themeData) {
     Get.dialog(
@@ -115,8 +124,22 @@ class SettingPresenter extends GetxController {
     Get.back();
   }
 
+  Future editHeightDone() async {
+    userPresenter.user.height = double.parse(defaultHeight.toStringAsFixed(2));
+    Get.back();
+    update();
+  }
+
+  Future editNameDone(String name) async {
+    userPresenter.nickname = nameCont.text;
+    nameCont.clear();
+    Get.back();
+    update();
+  }
+
   static void editNamePressed() {
     Get.toNamed('/editName');
+    nameCont.clear();
   }
 
   static void editHeightPressed() {
