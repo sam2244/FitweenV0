@@ -58,8 +58,7 @@ class TraineeCard extends StatelessWidget {
                   ),
                   const TraineeToDoCard(),
                 ],
-              )
-          ),
+              )),
         ),
       ],
     );
@@ -171,8 +170,7 @@ class TraineeToDoCard extends StatelessWidget {
         color: Theme.of(context).colorScheme.onSecondary,
         shape: RoundedRectangleBorder(
           side: BorderSide(
-            color:
-            Theme.of(context).colorScheme.onSecondary,
+            color: Theme.of(context).colorScheme.onSecondary,
           ),
           borderRadius: BorderRadius.circular(10),
         ),
@@ -183,8 +181,10 @@ class TraineeToDoCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const  ToDoCardTitle(title: '운동',),
-                const  Divider(
+                const ToDoCardTitle(
+                  title: '운동',
+                ),
+                const Divider(
                   color: Colors.black,
                   indent: 15.0,
                   endIndent: 15.0,
@@ -192,7 +192,9 @@ class TraineeToDoCard extends StatelessWidget {
                 const TraineeCheckBoxList(),
                 const TraineeCheckBoxList(),
                 const TraineeCheckBoxList(),
-                const ToDoCardTitle(title: '식단',),
+                const ToDoCardTitle(
+                  title: '식단',
+                ),
                 const Divider(
                   color: Colors.black,
                   indent: 15.0,
@@ -212,13 +214,11 @@ class TraineeToDoCard extends StatelessWidget {
   }
 }
 
-
 // 트레이니 메인 페이지 D-Day
 class TraineeMainPageDDay extends StatelessWidget {
   final String dDay;
 
-  const TraineeMainPageDDay({Key? key, required this.dDay})
-      : super(key: key);
+  const TraineeMainPageDDay({Key? key, required this.dDay}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -265,7 +265,10 @@ class ToDoCardTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 15.0, left: 15.0,),
+      padding: const EdgeInsets.only(
+        top: 15.0,
+        left: 15.0,
+      ),
       child: FWText(
         title,
         color: Theme.of(context).colorScheme.onSurface,
@@ -275,8 +278,6 @@ class ToDoCardTitle extends StatelessWidget {
     );
   }
 }
-
-
 
 //트레이니 FAB
 class TraineeFAB extends StatelessWidget {
@@ -332,23 +333,22 @@ class TraineePagePhotoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.only(left: 15.0,),
-      color: Theme.of(context).colorScheme.onSecondary,
-      shape: RoundedRectangleBorder(
-        side: const BorderSide(
-          color: FWTheme.grey,
+        margin: const EdgeInsets.only(
+          left: 15.0,
         ),
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      child: const Padding(
-        padding: EdgeInsets.all(28.5),
-        child: Icon(
-          Icons.camera_alt_outlined,
-          color: FWTheme.grey,
+        color: Theme.of(context).colorScheme.onSecondary,
+        shape: RoundedRectangleBorder(
+          side: const BorderSide(
+            color: FWTheme.grey,
+          ),
+          borderRadius: BorderRadius.circular(10.0),
         ),
-      )
-    );
+        child: const Padding(
+          padding: EdgeInsets.all(28.5),
+          child: Icon(
+            Icons.camera_alt_outlined,
+            color: FWTheme.grey,
+          ),
+        ));
   }
 }
-
-

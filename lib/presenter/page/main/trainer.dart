@@ -50,4 +50,10 @@ class TrainerPresenter extends GetxController {
     );
     pageIndexIncrease();
   }
+
+  // 다음 버튼 클릭 트리거
+  void indexChanged(int index) {
+    pageIndex = index;
+    update();
+  }
 }

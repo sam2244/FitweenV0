@@ -35,6 +35,10 @@ dependencies:
   numberpicker: ^2.1.1
   fl_chart: ^0.55.0
   percent_indicator: ^4.2.2
+  weekly_date_picker:
+    git:
+      url: https://github.com/YS-Jeong-99/Weekly-Date-Picker.git
+      ref: main
 
 dev_dependencies:
   flutter_test:
