@@ -1,4 +1,3 @@
-import 'package:fitween1/global/config/theme.dart';
 import 'package:fitween1/presenter/global.dart';
 import 'package:fitween1/view/widget/text.dart';
 import 'package:flutter/material.dart';
@@ -35,8 +34,8 @@ class FWNumberPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double fadeWidth = itemWidth * 3;
-    double fadeHeight = itemHeight * 3;
+    double fadeWidth = itemWidth * 4;
+    double fadeHeight = itemHeight * 4;
     surfaceColor ??= Theme.of(context).colorScheme.background;
 
     Map<Axis, List<Widget>> blurWidget = {
@@ -98,7 +97,10 @@ class FWNumberPicker extends StatelessWidget {
               textMapper: (value) => (int.parse(value) * step).toStringAsFixed(decimalPlace),
               textStyle: Theme.of(context).textTheme.labelLarge,
               selectedTextStyle: Theme.of(context).textTheme.labelLarge?.merge(
-                const TextStyle(color: FWTheme.primary, fontWeight: FontWeight.w700),
+                TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
           ),
@@ -129,6 +131,7 @@ class FWCard extends StatelessWidget {
     return SizedBox(
       height: height,
       child: Card(
+        elevation: 3.0,
         shape: RoundedRectangleBorder(
           side: BorderSide(
             color: outline

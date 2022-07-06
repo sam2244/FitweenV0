@@ -10,8 +10,6 @@ import '../../../widget/container.dart';
 import '../../../widget/text.dart';
 import 'dart:math' as math;
 
-import '../../add_plan/add_plan.dart';
-
 //트레이니 페이지의 위젯 모음
 
 //트레이니 페이지 Body CarouselSlider Widget

@@ -11,8 +11,12 @@ class AddPlanPresenter extends GetxController {
   String hintText = Plan.purposes.first;
   bool fieldActive = false;
   int period = 1;
+  Map<Weekday, bool> selectedDays = Map.fromEntries(
+    Weekday.values.map((field) => MapEntry(field, false)),
+  );
 
   static const int max = 999;
+  static const List<String> titles = ['플랜추가', '기간설정', '주간루틴'];
 
   static const Duration shakeDuration = Duration(milliseconds: 500);
 
@@ -23,6 +27,7 @@ class AddPlanPresenter extends GetxController {
   static final carouselCont = CarouselController();
 
   static final planPresenter = Get.find<PlanPresenter>();
+  Plan plan = planPresenter.plan;
 
   // 현재 페이지 인덱스 증가
   void pageIndexIncrease() {
@@ -193,5 +198,27 @@ class AddPlanPresenter extends GetxController {
 
   void periodIncreased() { if (period < max) period++; update(); }
   void periodDecreased() { if (period > 1) period--; update(); }
+
+  void allDeselectDays() {
+    selectedDays = Map.fromEntries(Weekday.values.map((field) => MapEntry(field, false)));
+    update();
+  }
+
+  String selectedDaysToString() {
+    List<String> avails = [];
+    for (Weekday day in Weekday.values) {
+      if (selectedDays[day]!) avails.add('${day.kr}');
+    }
+    if (selectedDays.values.contains(true)) {
+      if (!selectedDays.values.contains(false)) { return '매일'; }
+      else { return '매 주 ${avails.join(',')}'; }
+    }
+    return '';
+  }
+
+  void weekdayToggled(Weekday day) {
+    selectedDays[day] = !selectedDays[day]!;
+    update();
+  }
 
 }

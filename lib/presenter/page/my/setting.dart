@@ -125,16 +125,13 @@ class SettingPresenter extends GetxController {
     Get.offAllNamed('/login');
   }
 
-  static void AskDelete(ThemeData themeData) {
+  static void askDelete(ThemeData themeData) {
     Get.dialog(
       FWDialog(
+        type: DialogType.warning,
         rightLabel: '삭제',
-        rightPressed: () {
-          deletePressed();
-        },
-        child: const Text(
-          "계정을 정말 삭제하시겠습니까?",
-        ),
+        rightPressed: deletePressed,
+        child: const Text("계정을 정말 삭제하시겠습니까?"),
       ),
     );
   }
