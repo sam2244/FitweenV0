@@ -121,6 +121,7 @@ class BottomUserInputField extends StatelessWidget {
             children: [
               Expanded(
                 child: TextFormField(
+                  //key: _formKey,
                   controller: ChatroomPresenter.textCont,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.fromLTRB(24.0, 6.0, 10.0, 0.0),
