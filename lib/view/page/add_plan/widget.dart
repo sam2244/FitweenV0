@@ -1,8 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:fitween1/global/config/theme.dart';
 import 'package:fitween1/global/global.dart';
 import 'package:fitween1/model/plan/plan.dart';
+import 'package:fitween1/presenter/model/plan.dart';
 import 'package:fitween1/presenter/page/add_plan.dart';
 import 'package:fitween1/view/widget/button.dart';
 import 'package:fitween1/view/widget/container.dart';
@@ -20,23 +22,23 @@ class AddPlanAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      leading: GetBuilder<AddPlanPresenter>(
-        builder: (controller) {
-          return IconButton(
+    return GetBuilder<AddPlanPresenter>(
+      builder: (controller) {
+        return AppBar(
+          leading: IconButton(
             icon: Icon(
               Icons.arrow_back,
               color: Theme.of(context).colorScheme.primary,
             ),
             onPressed: controller.backPressed,
-          );
-        }
-      ),
-      title: FWText(
-        '플랜 추가',
-        style: Theme.of(context).textTheme.headlineMedium,
-      ),
-      elevation: 0.0,
+          ),
+          title: FWText(
+            AddPlanPresenter.titles[controller.pageIndex],
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
+          elevation: 0.0,
+        );
+      }
     );
   }
 }
@@ -51,6 +53,7 @@ class CarouselView extends StatelessWidget {
   static List<Widget> carouselWidgets() => [
     const PurposeDietView(),
     const PTPeriodView(),
+    const RoutineSelectionView(),
   ];
   static int widgetCount = carouselWidgets().length;
 
@@ -109,67 +112,101 @@ class PurposeDietView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Map<String, Widget> contents = {
-      '목적': GetBuilder<AddPlanPresenter>(
-        builder: (controller) => Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Row(
-            children: [
-              SizedBox(
-                width: 80.0,
-                child: DropdownButton<String>(
-                  value: AddPlanPresenter.planPresenter.plan.purpose,
-                  style: Theme.of(context).textTheme.labelLarge,
-                  items: Plan.purposes.map((purpose) => DropdownMenuItem<String>(
-                    value: purpose,
-                    child: Center(child: FWText(purpose)),
-                  )).toList(),
-                  onChanged: (purpose) => controller.purposeSelected(purpose ?? ''),
+    List<Widget> contents = [
+      FWCard(
+        height: 190.0,
+        title: '트레이닝의 목적이 무엇인가요?',
+        child: GetBuilder<AddPlanPresenter>(
+          builder: (controller) => Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              children: [
+                DropdownSearch<String>(
+                  items: Plan.purposes,
+                  onChanged: (value) => controller.purposeSelected(value ?? ''),
+                  dropdownDecoratorProps: DropDownDecoratorProps(
+                    dropdownSearchDecoration: InputDecoration(
+                      contentPadding: const EdgeInsets.only(left: 10.0),
+                      border: const OutlineInputBorder(),
+                      labelText: '목적',
+                      suffixIcon: const Icon(Icons.arrow_drop_down),
+                      hintStyle: Theme.of(context).textTheme.labelLarge,
+                    ),
+                  ),
+                  dropdownBuilder: (context, purpose) => FWText(
+                    purpose ?? '목적 선택',
+                    style: Theme.of(context).textTheme.labelLarge,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
+                  popupProps: PopupProps.menu(
+                    fit: FlexFit.loose,
+                    listViewProps: const ListViewProps(itemExtent: 48.0),
+                    menuProps: MenuProps(
+                      elevation: 3.0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                      ),
+                      animationDuration: Duration.zero,
+                      textStyle: Theme.of(context).textTheme.labelLarge,
+                      shadowColor: Theme.of(context).colorScheme.shadow,
+                    ),
+                    itemBuilder: (context, purpose, _) {
+                      return ListTile(
+                        contentPadding: const EdgeInsets.only(left: 15.0),
+                        selected: purpose == AddPlanPresenter.planPresenter.plan.purpose,
+                        tileColor: FWTheme.surface[2],
+                        selectedTileColor: Color.alphaBlend(
+                          Theme.of(context).colorScheme.onSurface.withOpacity(.12),
+                          FWTheme.surface[2]!,
+                        ),
+                        title: FWText(
+                          purpose,
+                          style: Theme.of(context).textTheme.labelLarge,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
+                      );
+                    },
+                  ),
                 ),
-              ),
-              const SizedBox(width: 15.0),
-              Expanded(
-                child: FWInputField(
+                const SizedBox(height: 12.0),
+                FWInputField(
                   controller: AddPlanPresenter.purposeCont,
                   hintText: controller.hintText,
                   enabled: controller.fieldActive,
                 ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      FWCard(
+        height: 116.0,
+        title: '피트위너의 식단을 관리하시겠습니까?',
+        child: GetBuilder<AddPlanPresenter>(
+          builder: (controller) => Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              FWButton(
+                text: '예',
+                fill: AddPlanPresenter.planPresenter.plan.isDiet,
+                width: 132.0,
+                onPressed: () => controller.dietSelected(true),
+              ),
+              FWButton(
+                text: '아니오',
+                width: 132.0,
+                fill: !AddPlanPresenter.planPresenter.plan.isDiet,
+                onPressed: () => controller.dietSelected(false),
               ),
             ],
           ),
         ),
       ),
-      '식단': GetBuilder<AddPlanPresenter>(
-        builder: (controller) => Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            GestureDetector(
-              onTap: () => controller.dietSelected(
-                !AddPlanPresenter.planPresenter.plan.isDiet,
-              ),
-              child: FWText(
-                '식단을 관리 하시겠습니까?',
-                style: Theme.of(context).textTheme.labelLarge,
-              ),
-            ),
-            Checkbox(
-              value: AddPlanPresenter.planPresenter.plan.isDiet,
-              onChanged: (isDiet) => controller.dietSelected(isDiet ?? false),
-              activeColor: Theme.of(context).colorScheme.primary,
-              checkColor: Theme.of(context).colorScheme.onPrimary,
-            ),
-          ],
-        ),
-      ),
-    };
+    ];
 
     return ListView.separated(
       itemCount: contents.length,
-      itemBuilder: (context, index) => FWCard(
-        height: 140.0,
-        title: contents.keys.toList()[index],
-        child: contents[contents.keys.toList()[index]]!,
-      ),
+      itemBuilder: (context, index) => contents[index],
       separatorBuilder: (context, index) => const SizedBox(height: 10.0),
     );
   }
@@ -180,20 +217,24 @@ class PTPeriodView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Map<String, Widget> contents = {
-      'PT 시작일': const DateSelectionButton(type: DateType.start),
-      'PT 종료일': const DateSelectionButton(type: DateType.end),
-      'PT 기간': const PeriodSelectionButton(),
-    };
-
-    return ListView.separated(
-      itemCount: contents.length,
-      itemBuilder: (context, index) => FWCard(
-        height: 130.0,
-        title: contents.keys.toList()[index],
-        child: Center(child: contents[contents.keys.toList()[index]]!),
-      ),
-      separatorBuilder: (context, index) => const SizedBox(height: 10.0),
+    return Column(
+      children: [
+        FWCard(
+          title: '트레이닝 기간을 선택해주세요.',
+          height: 310.0,
+          child: Column(
+            children: [
+              const DateSelectionButton(type: DateType.start),
+              const DateSelectionButton(type: DateType.end),
+              Divider(
+                height: 30.0,
+                color: Theme.of(context).colorScheme.outline,
+              ),
+              const PeriodSelectionButton(),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
@@ -207,36 +248,60 @@ class DateSelectionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<AddPlanPresenter>(
       builder: (controller) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // IconButton(
-            //   onPressed: type == DateType.start
-            //       ? controller.startDateDecreased
-            //       : controller.endDateDecreased,
-            //   icon: const Icon(Icons.arrow_back_ios),
-            //   iconSize: 10.0,
-            // ),
-            TextButton(
-              onPressed: type == DateType.start
-                  ? controller.startDateSelected
-                  : controller.endDateSelected,
-              child: FWText(
-                Plan.dateToString((
-                  type == DateType.start
-                      ? AddPlanPresenter.planPresenter.plan.startDate
-                      : AddPlanPresenter.planPresenter.plan.endDate
-                ) ?? Plan.today),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: FWText({
+                  DateType.start: '시작일', DateType.end: '종료일',
+                }[type]!,
                 style: Theme.of(context).textTheme.labelLarge,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
             ),
-            // IconButton(
-            //   onPressed: type == DateType.start
-            //       ? controller.startDateIncreased
-            //       : controller.endDateIncreased,
-            //   icon: const Icon(Icons.arrow_forward_ios),
-            //   iconSize: 10.0,
-            // ),
+            Row(
+              children: [
+                Expanded(
+                  child: InkWell(
+                    onTap: {
+                      DateType.start: controller.startDateSelected,
+                      DateType.end: controller.endDateSelected,
+                    }[type]!,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4.0),
+                        border: Border.all(
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                      child: Stack(
+                        children: [
+                          const Positioned(
+                            right: 8.0,
+                            child: Icon(Icons.calendar_month),
+                          ),
+                          Positioned(
+                            child: Center(
+                              child: FWText(
+                                Plan.dateToString((
+                                    type == DateType.start
+                                        ? AddPlanPresenter.planPresenter.plan.startDate
+                                        : AddPlanPresenter.planPresenter.plan.endDate
+                                ) ?? Plan.today),
+                                style: Theme.of(context).textTheme.labelLarge,
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ],
         );
       }
@@ -251,31 +316,40 @@ class PeriodSelectionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<AddPlanPresenter>(
       builder: (controller) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            IconButton(
-              onPressed: controller.periodDecreased,
-              icon: const Icon(Icons.arrow_back_ios),
-              iconSize: 10.0,
-              splashRadius: 25.0,
+            FWText(
+              '총 기간',
+              style: Theme.of(context).textTheme.labelLarge,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
-            FWNumberPicker(
-              itemCount: 5,
-              minValue: 1,
-              maxValue: AddPlanPresenter.max.toDouble(),
-              value: controller.period.toDouble(),
-              onChanged: controller.periodSelected,
-              axis: Axis.horizontal,
-              decimalPlace: 0,
-              itemWidth: 35.0,
-              surfaceColor: FWTheme.surface[1],
-            ),
-            IconButton(
-              onPressed: controller.periodIncreased,
-              icon: const Icon(Icons.arrow_forward_ios),
-              iconSize: 10.0,
-              splashRadius: 25.0,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  onPressed: controller.periodDecreased,
+                  icon: const Icon(Icons.arrow_back_ios),
+                  iconSize: 10.0,
+                  splashRadius: 25.0,
+                ),
+                FWNumberPicker(
+                  itemCount: 5,
+                  minValue: 1,
+                  maxValue: AddPlanPresenter.max.toDouble(),
+                  value: controller.period.toDouble(),
+                  onChanged: controller.periodSelected,
+                  axis: Axis.horizontal,
+                  decimalPlace: 0,
+                  itemWidth: 35.0,
+                ),
+                IconButton(
+                  onPressed: controller.periodIncreased,
+                  icon: const Icon(Icons.arrow_forward_ios),
+                  iconSize: 10.0,
+                  splashRadius: 25.0,
+                ),
+              ],
             ),
           ],
         );
@@ -283,6 +357,120 @@ class PeriodSelectionButton extends StatelessWidget {
     );
   }
 }
+
+
+class RoutineSelectionView extends StatelessWidget {
+  const RoutineSelectionView({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<AddPlanPresenter>(
+      builder: (controller) {
+        return Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: Weekday.values.map((day) => WeekdayButton(day: day)).toList(),
+            ),
+            FWCard(
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const InitializeSelectionButton(),
+                      FWText(
+                        controller.selectedDaysToString(),
+                        style: Theme.of(context).textTheme.labelMedium,
+                        color: Theme.of(context).colorScheme.outline,
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    height: 40.0,
+                    thickness: 5.0,
+                    color: Theme.of(context).colorScheme.surfaceVariant,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      }
+    );
+  }
+}
+
+class InitializeSelectionButton extends StatelessWidget {
+  const InitializeSelectionButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<AddPlanPresenter>(
+      builder: (controller) {
+        return InkWell(
+          onTap: controller.allDeselectDays,
+          borderRadius: BorderRadius.circular(10.0),
+          child: Row(
+            children: [
+              FWText(
+                '선택 초기화',
+                style: Theme.of(context).textTheme.labelSmall,
+                color: Theme.of(context).colorScheme.outline,
+              ),
+              Icon(
+                Icons.restart_alt,
+                size: 12.0,
+                color: Theme.of(context).colorScheme.outline,
+              ),
+            ],
+          ),
+        );
+      }
+    );
+  }
+}
+
+class WeekdayButton extends StatelessWidget {
+  const WeekdayButton({
+    Key? key,
+    required this.day,
+  }) : super(key: key);
+
+  final Weekday day;
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<AddPlanPresenter>(
+      builder: (controller) {
+        return Material(
+          color: controller.selectedDays[day]!
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).colorScheme.onPrimary,
+          borderRadius: BorderRadius.circular(50.0),
+          child: InkWell(
+            onTap: () => controller.weekdayToggled(day),
+            borderRadius: BorderRadius.circular(50.0),
+            child: SizedBox(
+              width: 40.0,
+              height: 40.0,
+              child: Center(
+                child: FWText(
+                  day.kr,
+                  style: Theme.of(context).textTheme.titleLarge,
+                  color: controller.selectedDays[day]!
+                      ? Theme.of(context).colorScheme.onPrimary
+                      : Theme.of(context).colorScheme.primary,
+                ),
+              ),
+            ),
+          ),
+        );
+      }
+    );
+  }
+}
+
 
 
 // Carousel 인디케이터 위젯

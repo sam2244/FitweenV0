@@ -9,7 +9,10 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import '../../../widget/container.dart';
 import '../../../widget/text.dart';
 import 'dart:math' as math;
+<<<<<<< HEAD
+=======
 import '../trainer/trainer.dart';
+>>>>>>> upstream/main
 
 //트레이니 페이지의 위젯 모음
 
