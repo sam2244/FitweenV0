@@ -66,6 +66,9 @@ class UserPresenter extends GetxController {
   // 닉네임 설정
   set nickname(String nickname) { user.nickname = nickname; update(); }
 
+  // 신장 설정
+  set height(double height) { user.height = height; update(); }
+
   // 역할 변경
   void toggleRole() { user.toggleRole(); update(); }
 

@@ -1,5 +1,5 @@
-import 'package:fitween1/global/global.dart';
 import 'package:fitween1/presenter/page/my/setting.dart';
+import 'package:fitween1/global/global.dart';
 import 'package:fitween1/view/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -37,7 +37,7 @@ class EditNameAppBar extends StatelessWidget implements PreferredSizeWidget {
                       Icons.check,
                       color: Theme.of(context).colorScheme.primary,
                     ),
-                    onPressed: controller.backPressed,
+                    onPressed: () => controller.editNameDone(SettingPresenter.nameCont.text),
                   );
                 }
             ),
@@ -50,7 +50,7 @@ class EditNameAppBar extends StatelessWidget implements PreferredSizeWidget {
 
 class NameTextField extends StatelessWidget {
   const NameTextField({Key? key}) : super(key: key);
-  static final _nameController = TextEditingController();
+  //static final _nameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +72,7 @@ class NameTextField extends StatelessWidget {
                       ),
                     ),
                     TextFormField(
-                      controller: _nameController,
+                      controller: SettingPresenter.nameCont,
                       decoration: InputDecoration(
                         fillColor: Colors.white,
                         hintText: '이름을 입력하세요',
@@ -83,7 +83,7 @@ class NameTextField extends StatelessWidget {
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return '신장을 입력하세요';
+                          return '이름을 입력하세요';
                         }
                         return null;
                       },

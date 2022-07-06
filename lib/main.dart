@@ -26,12 +26,11 @@ class Fitween extends StatelessWidget {
     GlobalPresenter.initControllers();
 
     return ScreenUtilInit(
-      designSize: const Size(375, 812),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (context, child) {
-        return GetBuilder<FWTheme>(
-          builder: (controller) {
+        designSize: const Size(375, 812),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        builder: (context, child) {
+          return GetBuilder<FWTheme>(builder: (controller) {
             return GetMaterialApp(
               title: 'Fitween',
               debugShowCheckedModeBanner: false,
@@ -50,9 +49,7 @@ class Fitween extends StatelessWidget {
               // home: const DeveloperPage(),
               getPages: FWRoute.getPages,
             );
-          }
-        );
-      }
-    );
+          });
+        });
   }
 }

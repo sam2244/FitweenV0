@@ -1,5 +1,7 @@
 import 'package:fitween1/global/global.dart';
+import 'package:fitween1/model/user/user.dart';
 import 'package:fitween1/presenter/page/my/setting.dart';
+import 'package:fitween1/view/widget/container.dart';
 import 'package:fitween1/view/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -37,7 +39,7 @@ class EditHeightAppBar extends StatelessWidget implements PreferredSizeWidget {
                       Icons.check,
                       color: Theme.of(context).colorScheme.primary,
                     ),
-                    onPressed: controller.backPressed,
+                    onPressed: controller.editHeightDone,
                   );
                 }
             ),
@@ -50,50 +52,30 @@ class EditHeightAppBar extends StatelessWidget implements PreferredSizeWidget {
 
 class HeightTextField extends StatelessWidget {
   const HeightTextField({Key? key}) : super(key: key);
-  static final _heightController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SettingPresenter>(
         builder: (controller) {
-          return Column(
-            children: [
-              Container(
-                padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
-                child: Column(
-                  children: [
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 8.0),
-                      child: FWText(
-                        "신장",
-                        style: Theme.of(context).textTheme.headlineSmall,
-                        color: Theme.of(context).colorScheme.onBackground,
-                      ),
-                    ),
-                    TextFormField(
-                      controller: _heightController,
-                      decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        hintText: '신장을 입력하세요',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide: const BorderSide(),
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return '신장을 입력하세요';
-                        }
-                        return null;
-                      },
-                    ),
-                  ],
+          return FWCard(
+            title: '식단',
+            height: 156.0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FWNumberPicker(
+                  onChanged: (value) => controller.heightSelected(value * .1),
+                  value: controller.defaultHeight,
+                  step: .1,
+                  minValue: FWUser.weightRange.start,
+                  maxValue: FWUser.weightRange.end,
                 ),
-              ),
-            ],
+                const SizedBox(width: 5.0),
+                FWText('cm', style: Theme.of(context).textTheme.labelLarge),
+              ],
+            ),
           );
-        }
+        },
     );
   }
 }

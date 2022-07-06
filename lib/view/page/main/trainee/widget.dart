@@ -9,8 +9,6 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import '../../../widget/container.dart';
 import '../../../widget/text.dart';
 import 'dart:math' as math;
-
-import '../../add_plan/add_plan.dart';
 import '../trainer/trainer.dart';
 
 //트레이니 페이지의 위젯 모음
@@ -58,7 +56,8 @@ class TraineeAddPlanButton extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(4.0),
-            child: FWText("현재 진행중인 플랜이 없습니다.",
+            child: FWText(
+              "현재 진행중인 플랜이 없습니다.",
               style: Theme.of(context).textTheme.bodyMedium,
               color: Theme.of(context).colorScheme.outline,
             ),
@@ -147,7 +146,6 @@ class TraineeProfile extends StatelessWidget {
     );
   }
 }
-
 
 //트레이니 메인 페이지 트레이니 Image 위젯
 class TraineeProfileImage extends StatelessWidget {
@@ -245,7 +243,6 @@ class TraineeToDoCard extends StatelessWidget {
                   const TraineeProfile(),
                 ],
               ),
-
               const Divider(
                 color: Colors.black,
                 indent: 15.0,
@@ -303,12 +300,12 @@ class TraineeDietCard extends StatelessWidget {
           elevation: 1.0,
            */
           child: Column(
-            children: const [
-              DietCardTitle(
-                title: '식단',
-              ),
-            ],
-          )),
+        children: const [
+          DietCardTitle(
+            title: '식단',
+          ),
+        ],
+      )),
     );
   }
 }

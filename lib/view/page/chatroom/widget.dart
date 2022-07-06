@@ -16,7 +16,16 @@ class ChatroomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      title: Text(ChatroomPresenter.userPresenter.user.nickname!),
       backgroundColor: Theme.of(context).colorScheme.background,
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back),
+        iconSize: 36.0,
+        color: Theme.of(context).colorScheme.primary,
+        onPressed: () {
+          Get.back();
+        },
+      ),
     );
   }
 }
@@ -55,14 +64,11 @@ class DateTimeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Colors.black,
-      child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Text(
-          DateFormat.yMMMd().format(chat.date),
-          style: const TextStyle(color: Colors.white),
-        ),
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: Text(
+        DateFormat('yyyy.MM.dd E', 'ko_KR').format(chat.date),
+        style: const TextStyle(color: Colors.black),
       ),
     );
   }
@@ -109,23 +115,51 @@ class BottomUserInputField extends StatelessWidget {
     return GetBuilder<ChatroomPresenter>(
       builder: (controller) {
         return Container(
-          color: Theme.of(context).primaryColor,
+          padding: const EdgeInsets.fromLTRB(24.0, 6.0, 10.0, 14.0),
+          color: Theme.of(context).colorScheme.onPrimary,
           child: Row(
             children: [
               Expanded(
                 child: TextFormField(
                   controller: ChatroomPresenter.textCont,
-                  decoration: const InputDecoration(
-                    contentPadding: EdgeInsets.all(12.0),
-                    hintText: 'Type your message here...',
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.fromLTRB(24.0, 6.0, 10.0, 0.0),
+                    hintText: '메세지 보내기...',
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(48.0),
+                      borderSide: BorderSide(
+                        color: Theme.of(context).colorScheme.primary,
+                        width: 1.5,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(48.0),
+                      borderSide: BorderSide(
+                        color: Theme.of(context).colorScheme.primary,
+                        width: 1.5,
+                      ),
+                    ),
                   ),
                   onFieldSubmitted: (_) => controller.addChat,
                 ),
               ),
-              IconButton(
-                onPressed: controller.addChat,
-                icon: const Icon(Icons.send),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(10.0, 0.0, 24.0, 0.0),
+                child: Container(
+                  width: 44.0,
+                  padding: const EdgeInsets.all(5.0),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary,
+                    shape: BoxShape.circle,
+                  ),
+                  child: IconButton(
+                    icon: const Icon(Icons.send),
+                    color: Theme.of(context).colorScheme.onPrimary,
+                    onPressed: controller.addChat,
+                  ),
+                ),
               ),
+
             ],
           ),
         );
