@@ -55,6 +55,11 @@ flutter:
     - assets/img/logo/apple.svg
     - assets/img/logo/fitween.svg
     - assets/img/logo/google.svg
+    - assets/img/onboarding1.svg
+    - assets/img/onboarding2.svg
+    - assets/img/onboarding3.svg
+    - assets/img/onboarding4.svg
+    - assets/img/onboarding5.svg
 
 fonts:
   - family: Noto_Sans_KR
