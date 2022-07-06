@@ -10,8 +10,8 @@ class UserPresenter extends GetxController {
   static final planPresenter = Get.find<PlanPresenter>();
   static const String defaultProfile = 'https://firebasestorage.googleapis.com/v0/b/fitween-v1.appspot.com/o/users%2Fguest.png?alt=media&token=906ce482-e8ce-47e9-814a-6da7e3d5365c';
   bool logged = false;
-  double defaultWeight = FWUser.defaultWeight;
-  double defaultHeight = FWUser.defaultHeight;
+  double currentWeight = FWUser.defaultWeight;
+  double currentHeight = FWUser.defaultHeight;
 
   FWUser user = FWUser();
 
@@ -27,7 +27,7 @@ class UserPresenter extends GetxController {
     map.addAll(json);
     map['role'] = FWUser.toRole(json['role']);
     map['sex'] = FWUser.toSex(json['sex']);
-    map['height'] = json['height'] ?? defaultHeight;
+    map['height'] = json['height'] ?? currentHeight;
     map['weights'] = <DateTime, double>{
       if (json['weights'] != null)
       for (var data in json['weights'].map((data) => MapEntry<DateTime, double>(
@@ -36,6 +36,7 @@ class UserPresenter extends GetxController {
     };
     map['trainerPlans'] ??= await planPresenter.loadDB(json['trainerUid']);
     map['traineePlans'] ??= await planPresenter.loadDB(json['traineeUid']);
+    map['friends'] ??= await loadDB(json['friends']);
     map['dateOfBirth'] = json['dateOfBirth']?.toDate();
     map['categories'] = json['categories'] ?? <String>[];
     user.fromMap(map);
@@ -57,12 +58,16 @@ class UserPresenter extends GetxController {
     }).toList(),
     'dateOfBirth': user.dateOfBirth == null
         ? null : Timestamp.fromDate(user.dateOfBirth!),
+    'friends': FWUser.toUids(user.friends),
     'trainerPlanIds': Plan.toIds(user.trainerPlans),
     'traineePlanIds': Plan.toIds(user.traineePlans),
   };
 
   // 닉네임 설정
   set nickname(String nickname) { user.nickname = nickname; update(); }
+
+  // 신장 설정
+  set height(double height) { user.height = height; update(); }
 
   // 역할 변경
   void toggleRole() { user.toggleRole(); update(); }
@@ -89,12 +94,13 @@ class UserPresenter extends GetxController {
 
   void setInitWeight() {
     user.weights = {};
-    user.weights![Plan.today] = defaultWeight;
+    user.weights![Plan.today] = currentWeight;
     update();
   }
 
   // firebase 에서 로드된 데이터 가공 후 user 객체로 반환
-  Future<FWUser?> loadDB(String uid) async {
+  Future<FWUser?> loadDB(String? uid) async {
+    if (uid == null) return null;
     var data = await FirebasePresenter.f.collection('users').doc(uid).get();
     Map<String, dynamic> json = data.data() ?? toJson();
 
@@ -105,4 +111,6 @@ class UserPresenter extends GetxController {
 
   // 로컬 데이터로 firebase 최신화
   void updateDB() => FirebasePresenter.f.collection('users').doc(user.uid).set(toJson());
+
+  void deleteDB() => FirebasePresenter.f.collection('users').doc(user.uid).delete();
 }

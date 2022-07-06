@@ -18,8 +18,6 @@ dependencies:
   firebase_storage:
   google_sign_in:
   get:
-  image_picker:
-
   cupertino_icons: ^1.0.2
   flutter_svg: ^1.1.0
   carousel_slider: ^4.1.1
@@ -35,10 +33,14 @@ dependencies:
   numberpicker: ^2.1.1
   fl_chart: ^0.55.0
   percent_indicator: ^4.2.2
+<<<<<<< HEAD
   weekly_date_picker:
     git:
       url: https://github.com/YS-Jeong-99/Weekly-Date-Picker.git
       ref: main
+=======
+  image_picker: ^0.8.5+3
+>>>>>>> b8afb7b27842bfa0df12eef8076d9dacc63c2e71
 
 dev_dependencies:
   flutter_test:

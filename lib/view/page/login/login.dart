@@ -1,9 +1,6 @@
-import 'package:fitween1/global/config/theme.dart';
 import 'package:fitween1/view/page/login/widget.dart';
 import 'package:fitween1/view/widget/image.dart';
-import 'package:fitween1/view/widget/text.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 // 로그인 페이지
 class LoginPage extends StatelessWidget {
@@ -12,29 +9,9 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: Theme.of(context).colorScheme.background,
       // 임시 AppBar
-      appBar: AppBar(
-        leading: GetBuilder<FWTheme>(
-          builder: (controller) {
-            return IconButton(
-              icon: Icon(
-                controller.mode == ThemeMode.light
-                    ? Icons.dark_mode
-                    : Icons.light_mode,
-              ),
-              color: Theme.of(context).colorScheme.primary,
-              onPressed: controller.toggleMode,
-            );
-          }
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Get.toNamed('/developer'),
-            child: Align(child: FWText('개발')),
-          ),
-        ],
-      ),
+      appBar: const LoginAppBar(),
       body: Stack(
         children: [
           // 중앙에 로고 배치

@@ -99,12 +99,12 @@ class TraineeProfileImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircularPercentIndicator(
-      radius: 50.0,
-      lineWidth: 10.0,
+      radius: 40.0,
+      lineWidth: 8.0,
       percent: 0.8,
       center: ClipOval(
         child: SizedBox.fromSize(
-          size: const Size.fromRadius(40.0), // Image radius
+          size: const Size.fromRadius(30.0), // Image radius
           child: Image.network(
             'https://www.walkerhillstory.com/wp-content/uploads/2020/09/2-1.jpg',
             fit: BoxFit.cover,
@@ -217,7 +217,7 @@ class TrainerMainPageGraph extends StatelessWidget {
         ),
         LinearPercentIndicator(
           padding: EdgeInsets.zero,
-          lineHeight: 12,
+          lineHeight: 8,
           linearGradient: const LinearGradient(
             colors: <Color>[Color(0xffB07BE6), Color(0xff5BA2E0)],
           ),

@@ -1,5 +1,6 @@
 import 'package:fitween1/global/global.dart';
 import 'package:fitween1/model/plan/plan.dart';
+import 'package:fitween1/model/user/range.dart';
 import 'package:fitween1/presenter/model/user.dart';
 import 'package:get/get.dart';
 
@@ -30,6 +31,8 @@ enum Sex {
 
 // 사용자 모델
 class FWUser {
+  static Range weightRange = DoubleRange(start: 20, end: 220);
+  static Range heightRange = DoubleRange(start: 100, end: 220);
   static const double defaultWeight = 60.0;
   static const double defaultHeight = 175.0;
 
@@ -37,6 +40,7 @@ class FWUser {
   String? email;
   String? nickname;
   String imageUrl = UserPresenter.defaultProfile;
+  String? statusMessage;
   Role role = Role.trainee;
   Sex? sex;
   double height = defaultHeight;
@@ -78,6 +82,7 @@ class FWUser {
     email = map['email'];
     nickname = map['nickname'];
     imageUrl = map['imageUrl'];
+    statusMessage = map['statusMessage'];
     role = map['role'];
     sex = map['sex'];
     height = map['height'];
@@ -94,6 +99,7 @@ class FWUser {
     'email': email,
     'nickname': nickname,
     'imageUrl': imageUrl,
+    'statusMessage': statusMessage,
     'role': role,
     'sex': sex,
     'height': height,

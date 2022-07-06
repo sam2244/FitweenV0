@@ -3,7 +3,7 @@ import 'package:fitween1/presenter/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ChatPresenter extends GetxController {
+class ChatroomPresenter extends GetxController {
   List<Chat> chats = [];
 
   static final userPresenter = Get.find<UserPresenter>();

@@ -65,6 +65,8 @@ class RegisterPresenter extends GetxController {
     }
     else if (pageIndex == CarouselView.widgetCount - 1) {
       userPresenter.setInitWeight();
+      nicknameCont.clear();
+      dateOfBirthCont.clear();
       Get.offAllNamed('/main/${userPresenter.user.role.name}');
       userPresenter.updateDB();
       return;
@@ -109,7 +111,7 @@ class RegisterPresenter extends GetxController {
 
   // 체중 변경 트리거
   void weightChanged(double weight) {
-    userPresenter.defaultWeight = weight;
+    userPresenter.currentWeight = weight;
     update();
   }
 

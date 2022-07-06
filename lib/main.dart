@@ -2,7 +2,6 @@ import 'package:fitween1/firebase_options.dart';
 import 'package:fitween1/global/config/theme.dart';
 import 'package:fitween1/presenter/global.dart';
 import 'package:fitween1/route.dart';
-import 'package:fitween1/view/page/developer.dart';
 import 'package:fitween1/view/page/splash/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -24,7 +23,7 @@ class Fitween extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Global.initControllers();
+    GlobalPresenter.initControllers();
 
     return ScreenUtilInit(
       designSize: const Size(375, 812),
@@ -39,7 +38,6 @@ class Fitween extends StatelessWidget {
               themeMode: controller.mode,
               theme: ThemeData(
                 useMaterial3: true,
-                // colorScheme: FWTheme.darkScheme,
                 colorScheme: FWTheme.lightScheme,
                 textTheme: FWTheme.textTheme,
               ),

@@ -1,31 +1,33 @@
 import 'package:fitween1/global/global.dart';
 import 'package:fitween1/model/chat/chat.dart';
-import 'package:fitween1/presenter/page/chat.dart';
+import 'package:fitween1/presenter/page/chat/chatroom.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 
 // 채팅 페이지 AppBar
-class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const ChatAppBar({Key? key}) : super(key: key);
+class ChatroomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const ChatroomAppBar({Key? key}) : super(key: key);
 
   @override
   Size get preferredSize => const Size.fromHeight(appbarHeight);
 
   @override
   Widget build(BuildContext context) {
-    return AppBar();
+    return AppBar(
+      backgroundColor: Theme.of(context).colorScheme.background,
+    );
   }
 }
 
 // 채팅창 뷰 위젯
-class ChatView extends StatelessWidget {
-  const ChatView({Key? key}) : super(key: key);
+class ChatroomView extends StatelessWidget {
+  const ChatroomView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ChatPresenter>(
+    return GetBuilder<ChatroomPresenter>(
       builder: (controller) {
         return Expanded(
           child: GroupedListView<Chat, DateTime>(
@@ -74,7 +76,7 @@ class ChatBubbleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ChatPresenter>(
+    return GetBuilder<ChatroomPresenter>(
       builder: (controller) {
         return Row(
           mainAxisAlignment: controller.isMe(chat)
@@ -104,7 +106,7 @@ class BottomUserInputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ChatPresenter>(
+    return GetBuilder<ChatroomPresenter>(
       builder: (controller) {
         return Container(
           color: Theme.of(context).primaryColor,
@@ -112,7 +114,7 @@ class BottomUserInputField extends StatelessWidget {
             children: [
               Expanded(
                 child: TextFormField(
-                  controller: ChatPresenter.textCont,
+                  controller: ChatroomPresenter.textCont,
                   decoration: const InputDecoration(
                     contentPadding: EdgeInsets.all(12.0),
                     hintText: 'Type your message here...',

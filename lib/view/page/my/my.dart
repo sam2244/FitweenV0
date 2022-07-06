@@ -1,4 +1,4 @@
-import 'package:fitween1/presenter/page/my.dart';
+import 'package:fitween1/presenter/page/my/my.dart';
 import 'package:fitween1/view/page/my/widget.dart';
 import 'package:fitween1/view/widget/container.dart';
 import 'package:flutter/material.dart';
@@ -16,10 +16,10 @@ class MyPage extends StatelessWidget {
           backgroundColor: Theme.of(context).colorScheme.surface,
           appBar: const MyAppBar(),
           body: Column(
-            children: [
-              MyProfileImageButton(),
+            children: const [
+              MyProfileImage(),
               MyWeightGraphView(title: '체중', ratio: 1.5),
-              HeightInfo(),
+              WeightInfo(),
             ],
           ),
           bottomNavigationBar: const FWBottomBar(),

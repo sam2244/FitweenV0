@@ -26,7 +26,7 @@ class _ChatroomPageState extends State<ChatroomPage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: const [
-          ChatView(),
+          ChatroomView(),
           BottomUserInputField(),
         ],
       ),
