@@ -1,10 +1,10 @@
 import 'package:fitween1/presenter/page/detail.dart';
+import 'package:fitween1/view/page/main/trainer/widget.dart';
 import 'package:fitween1/view/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:weekly_date_picker/weekly_date_picker.dart';
-import '../main/trainer/widget.dart';
 
 class TraineeInfo extends StatelessWidget {
   final Trainee trainee;
