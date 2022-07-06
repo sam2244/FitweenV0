@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 class TraineeMainPage extends StatelessWidget {
   const TraineeMainPage({Key? key}) : super(key: key);
 
+  //Expanded FAB를 위한 function
   static const _actionTitles = ['Open Camera', 'Upload Photo'];
 
   void _showAction(BuildContext context, int index) {
@@ -27,6 +28,7 @@ class TraineeMainPage extends StatelessWidget {
     );
   }
 
+  //Trainee Main Page View
   @override
   Widget build(BuildContext context) {
     return Scaffold(
