@@ -49,6 +49,7 @@ class FWButton extends StatelessWidget {
         ),
         child: child ?? FWText(
           text!,
+          size: fontSize,
           color: fill
               ? Theme.of(context).colorScheme.onPrimary
               : Theme.of(context).colorScheme.primary,

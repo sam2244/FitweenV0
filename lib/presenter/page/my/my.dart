@@ -76,6 +76,6 @@ class MyPresenter extends GetxController {
     Get.offAllNamed('/login');
   }
   static void settingPressed() {
-    Get.offAllNamed('/setting');
+    Get.toNamed('/setting');
   }
 }

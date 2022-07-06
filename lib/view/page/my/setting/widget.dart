@@ -52,7 +52,7 @@ class MyProfileImageButton extends StatelessWidget {
                 onPressed: () => controller.profileImageChange(context,Theme.of(context)),
               ),
               FWText(
-                "사진 변경", size: 20.0,
+                '사진 변경', size: 20.0,
                 style: Theme.of(context).textTheme.labelLarge,
               ),
             ],
@@ -63,7 +63,6 @@ class MyProfileImageButton extends StatelessWidget {
 }
 
 class NameTextField extends StatelessWidget {
-  static final _nameController = TextEditingController();
   const NameTextField({Key? key}) : super(key: key);
 
   @override
@@ -85,39 +84,25 @@ class NameTextField extends StatelessWidget {
                         color: Theme.of(context).colorScheme.onBackground,
                       ),
                     ),
-                    /*TextFormField(
-                      controller: _nameController,
-                      decoration: InputDecoration(
-                        labelText: '이름을 입력하세요',
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide: BorderSide(),
-                        ),
+                    OutlinedButton(
+                      //onPressed: () => null,
+                      onPressed: SettingPresenter.editNamePressed,
+                      child: Stack(
+                        children: <Widget>[
+                          const Align(
+                              alignment: Alignment.centerRight,
+                              child: Icon(Icons.keyboard_arrow_right_outlined)
+                          ),
+                          Align(
+                              alignment: Alignment.centerLeft,
+                              child: FWText(
+                                SettingPresenter.userPresenter.user.nickname!, size: 20.0,
+                                style: Theme.of(context).textTheme.labelLarge,
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
+                          )
+                        ],
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return '이름을 입력하세요';
-                        }
-                        return null;
-                      },
-                    ),*/
-                    TextFormField(
-                      controller: _nameController,
-                      decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        hintText: '이름을 입력하세요',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide: const BorderSide(),
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return '이름을 입력하세요';
-                        }
-                        return null;
-                      },
                     ),
                   ],
                 ),
@@ -130,7 +115,6 @@ class NameTextField extends StatelessWidget {
 }
 
 class HeightTextField extends StatelessWidget {
-  static final _heightController = TextEditingController();
   const HeightTextField({Key? key}) : super(key: key);
 
   @override
@@ -152,22 +136,25 @@ class HeightTextField extends StatelessWidget {
                         color: Theme.of(context).colorScheme.onBackground,
                       ),
                     ),
-                    TextFormField(
-                      controller: _heightController,
-                      decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        hintText: '신장을 입력하세요',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide: const BorderSide(),
-                        ),
+                    OutlinedButton(
+                      //onPressed: () => null,
+                      onPressed: SettingPresenter.editHeightPressed,
+                      child: Stack(
+                        children: <Widget>[
+                          const Align(
+                              alignment: Alignment.centerRight,
+                              child: Icon(Icons.keyboard_arrow_right_outlined)
+                          ),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: FWText(
+                              "${SettingPresenter.userPresenter.user.height} cm", size: 20.0,
+                              style: Theme.of(context).textTheme.labelLarge,
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
+                          )
+                        ],
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return '신장을 입력하세요';
-                        }
-                        return null;
-                      },
                     ),
                   ],
                 ),

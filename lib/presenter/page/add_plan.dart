@@ -2,8 +2,11 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:fitween1/model/plan/plan.dart';
 import 'package:fitween1/presenter/model/plan.dart';
 import 'package:fitween1/view/page/add_plan/widget.dart';
+import 'package:fitween1/view/page/main/trainee/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../view/page/main/trainee/trainee.dart';
 
 class AddPlanPresenter extends GetxController {
   int pageIndex = 0;
@@ -28,6 +31,7 @@ class AddPlanPresenter extends GetxController {
 
   static final planPresenter = Get.find<PlanPresenter>();
   Plan plan = planPresenter.plan;
+
 
   // 현재 페이지 인덱스 증가
   void pageIndexIncrease() {
@@ -56,11 +60,11 @@ class AddPlanPresenter extends GetxController {
 
   // 다음 버튼 클릭 트리거
   void nextPressed() {
-    carouselCont.nextPage(
-      curve: transitionCurve,
-      duration: transitionDuration,
-    );
-    pageIndexIncrease();
+      carouselCont.nextPage(
+        curve: transitionCurve,
+        duration: transitionDuration,
+      );
+      pageIndexIncrease();
   }
 
   void purposeSelected(String purpose) {

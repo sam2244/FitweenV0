@@ -4,16 +4,17 @@ import 'package:fitween1/presenter/model/plan.dart';
 import 'package:fitween1/presenter/model/user.dart';
 import 'package:fitween1/presenter/page/add_info.dart';
 import 'package:fitween1/presenter/page/add_plan.dart';
+import 'package:fitween1/presenter/page/detail.dart';
+import 'package:fitween1/presenter/page/main/trainer.dart';
 import 'package:fitween1/presenter/page/chat/chat.dart';
 import 'package:fitween1/presenter/page/chat/chatroom.dart';
 import 'package:fitween1/presenter/page/my/my.dart';
 import 'package:fitween1/presenter/page/register.dart';
+import 'package:fitween1/presenter/page/my/setting.dart';
 import 'package:fitween1/view/widget/image.dart';
 import 'package:fitween1/view/widget/popup.dart';
 import 'package:fitween1/view/widget/text.dart';
 import 'package:flutter/material.dart';
-import 'package:fitween1/presenter/page/main/trainer.dart';
-import 'package:fitween1/presenter/page/my/setting.dart';
 import 'package:get/get.dart';
 
 class GlobalPresenter extends GetxController {
@@ -39,7 +40,10 @@ class GlobalPresenter extends GetxController {
     Get.dialog(
       FWDialog(
         rightLabel: '채팅',
-        rightPressed: () {},
+        rightPressed: () {
+          Get.back();
+          Get.toNamed('/chatroom');
+        },
         child: Row(
           children: [
             ProfileImageRect(user: user),
@@ -83,5 +87,6 @@ class GlobalPresenter extends GetxController {
     Get.put(MyPresenter());
     Get.put(SettingPresenter());
     Get.put(TrainerPresenter());
+    Get.put(TrainerDetailPresenter());
   }
 }

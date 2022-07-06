@@ -50,10 +50,13 @@ class MyProfileImage extends StatelessWidget {
       builder: (controller) {
         return Column(
           children: [
-            ProfileImageCircle(
-              size: 100.0,
-              user: MyPresenter.userPresenter.user,
-              //onPressed: () => controller.profileImagePressed(Theme.of(context)),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ProfileImageCircle(
+                size: 100.0,
+                user: MyPresenter.userPresenter.user,
+                //onPressed: () => controller.profileImagePressed(Theme.of(context)),
+              ),
             ),
             FWText(
               MyPresenter.userPresenter.user.nickname!, size: 20.0,
@@ -93,7 +96,8 @@ class MyWeightGraphView extends StatelessWidget {
                     padding: const EdgeInsets.all(15.0),
                     child: FWText(
                       "신장  |  ${MyPresenter.userPresenter.user.height} cm",
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: Theme.of(context).textTheme.headlineSmall,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                   Container(
@@ -101,7 +105,8 @@ class MyWeightGraphView extends StatelessWidget {
                     padding: const EdgeInsets.all(15.0),
                     child: FWText(
                       title,
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: Theme.of(context).textTheme.headlineSmall,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                   AspectRatio(
