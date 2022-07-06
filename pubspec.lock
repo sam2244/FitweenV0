@@ -616,6 +616,22 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
+  week_of_year:
+    dependency: transitive
+    description:
+      name: week_of_year
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
+  weekly_date_picker:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: main
+      resolved-ref: bb794bada49f654bee34259706624ffaf576cce8
+      url: "https://github.com/YS-Jeong-99/Weekly-Date-Picker.git"
+    source: git
+    version: "1.3.0"
   win32:
     dependency: transitive
     description:
