@@ -194,9 +194,11 @@ class TraineeInfo extends StatelessWidget {
 
 //트레이니 이름 텍스트 스타일
 class TraineeName extends StatelessWidget {
-  final String name;
+
 
   const TraineeName({Key? key, required this.name}) : super(key: key);
+
+  final String name;
 
   @override
   Widget build(BuildContext context) {
