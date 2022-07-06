@@ -112,7 +112,7 @@ class SettingPresenter extends GetxController {
 
   // 뒤로가기 버튼 클릭 트리거
   void backPressed() {
-    Get.offAllNamed('/my');
+    Get.back();
   }
 
   static void editNamePressed() {

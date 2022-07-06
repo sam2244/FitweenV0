@@ -52,7 +52,7 @@ class MyProfileImageButton extends StatelessWidget {
                 onPressed: () => controller.profileImageChange(context,Theme.of(context)),
               ),
               FWText(
-                "사진 변경", size: 20.0,
+                '사진 변경', size: 20.0,
                 style: Theme.of(context).textTheme.labelLarge,
               ),
             ],
@@ -88,16 +88,18 @@ class NameTextField extends StatelessWidget {
                       //onPressed: () => null,
                       onPressed: SettingPresenter.editNamePressed,
                       child: Stack(
-                        children: const <Widget>[
-                          Align(
+                        children: <Widget>[
+                          const Align(
                               alignment: Alignment.centerRight,
                               child: Icon(Icons.keyboard_arrow_right_outlined)
                           ),
                           Align(
                               alignment: Alignment.centerLeft,
-                              child: Text(
-                                "이름 변경",
-                              )
+                              child: FWText(
+                                SettingPresenter.userPresenter.user.nickname!, size: 20.0,
+                                style: Theme.of(context).textTheme.labelLarge,
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
                           )
                         ],
                       ),
@@ -138,16 +140,18 @@ class HeightTextField extends StatelessWidget {
                       //onPressed: () => null,
                       onPressed: SettingPresenter.editHeightPressed,
                       child: Stack(
-                        children: const <Widget>[
-                          Align(
+                        children: <Widget>[
+                          const Align(
                               alignment: Alignment.centerRight,
                               child: Icon(Icons.keyboard_arrow_right_outlined)
                           ),
                           Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                "신장 변경",
-                              )
+                            alignment: Alignment.centerLeft,
+                            child: FWText(
+                              "${SettingPresenter.userPresenter.user.height} cm", size: 20.0,
+                              style: Theme.of(context).textTheme.labelLarge,
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
                           )
                         ],
                       ),
