@@ -1,7 +1,7 @@
 import 'package:fitween1/global/global.dart';
 import 'package:fitween1/model/user/user.dart';
 import 'package:fitween1/presenter/model/user.dart';
-import 'package:fitween1/presenter/page/main.dart';
+import 'package:fitween1/presenter/page/main/main.dart';
 import 'package:fitween1/view/widget/image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

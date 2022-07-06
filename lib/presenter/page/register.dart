@@ -111,7 +111,7 @@ class RegisterPresenter extends GetxController {
 
   // 체중 변경 트리거
   void weightChanged(double weight) {
-    userPresenter.defaultWeight = weight;
+    userPresenter.currentWeight = weight;
     update();
   }
 

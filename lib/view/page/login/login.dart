@@ -11,7 +11,7 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       // 임시 AppBar
-      appBar: LoginAppBar(),
+      appBar: const LoginAppBar(),
       body: Stack(
         children: [
           // 중앙에 로고 배치

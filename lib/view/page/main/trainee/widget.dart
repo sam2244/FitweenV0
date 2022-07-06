@@ -1,4 +1,5 @@
 import 'package:fitween1/global/config/theme.dart';
+import 'package:fitween1/presenter/page/main/trainee.dart';
 import 'package:fitween1/view/widget/button.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -57,8 +58,7 @@ class TraineeAddPlanButton extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(4.0),
-            child: FWText(
-              "새 플랜을 추가하시겠습니까?",
+            child: FWText("현재 진행중인 플랜이 없습니다.",
               style: Theme.of(context).textTheme.bodyMedium,
               color: Theme.of(context).colorScheme.outline,
             ),
@@ -66,12 +66,7 @@ class TraineeAddPlanButton extends StatelessWidget {
           FWButton(
             width: 193.0,
             height: 52.0,
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const AddPlanPage()),
-              );
-            },
+            onPressed: TraineePresenter.addPlanButtonPressed,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,

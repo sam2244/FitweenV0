@@ -1,5 +1,5 @@
 import 'package:fitween1/global/global.dart';
-import 'package:fitween1/presenter/page/setting.dart';
+import 'package:fitween1/presenter/page/my/setting.dart';
 import 'package:fitween1/view/widget/image.dart';
 import 'package:fitween1/view/widget/text.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +63,6 @@ class MyProfileImageButton extends StatelessWidget {
 }
 
 class NameTextField extends StatelessWidget {
-  static final _nameController = TextEditingController();
   const NameTextField({Key? key}) : super(key: key);
 
   @override
@@ -85,39 +84,23 @@ class NameTextField extends StatelessWidget {
                         color: Theme.of(context).colorScheme.onBackground,
                       ),
                     ),
-                    /*TextFormField(
-                      controller: _nameController,
-                      decoration: InputDecoration(
-                        labelText: '이름을 입력하세요',
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide: BorderSide(),
-                        ),
+                    OutlinedButton(
+                      //onPressed: () => null,
+                      onPressed: SettingPresenter.editNamePressed,
+                      child: Stack(
+                        children: const <Widget>[
+                          Align(
+                              alignment: Alignment.centerRight,
+                              child: Icon(Icons.keyboard_arrow_right_outlined)
+                          ),
+                          Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "이름 변경",
+                              )
+                          )
+                        ],
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return '이름을 입력하세요';
-                        }
-                        return null;
-                      },
-                    ),*/
-                    TextFormField(
-                      controller: _nameController,
-                      decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        hintText: '이름을 입력하세요',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide: const BorderSide(),
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return '이름을 입력하세요';
-                        }
-                        return null;
-                      },
                     ),
                   ],
                 ),
@@ -130,7 +113,6 @@ class NameTextField extends StatelessWidget {
 }
 
 class HeightTextField extends StatelessWidget {
-  static final _heightController = TextEditingController();
   const HeightTextField({Key? key}) : super(key: key);
 
   @override
@@ -152,22 +134,23 @@ class HeightTextField extends StatelessWidget {
                         color: Theme.of(context).colorScheme.onBackground,
                       ),
                     ),
-                    TextFormField(
-                      controller: _heightController,
-                      decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        hintText: '신장을 입력하세요',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide: const BorderSide(),
-                        ),
+                    OutlinedButton(
+                      //onPressed: () => null,
+                      onPressed: SettingPresenter.editHeightPressed,
+                      child: Stack(
+                        children: const <Widget>[
+                          Align(
+                              alignment: Alignment.centerRight,
+                              child: Icon(Icons.keyboard_arrow_right_outlined)
+                          ),
+                          Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "신장 변경",
+                              )
+                          )
+                        ],
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return '신장을 입력하세요';
-                        }
-                        return null;
-                      },
                     ),
                   ],
                 ),

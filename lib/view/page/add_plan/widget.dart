@@ -183,7 +183,7 @@ class PTPeriodView extends StatelessWidget {
     Map<String, Widget> contents = {
       'PT 시작일': const DateSelectionButton(type: DateType.start),
       'PT 종료일': const DateSelectionButton(type: DateType.end),
-      '기간': const PeriodSelectionButton(),
+      'PT 기간': const PeriodSelectionButton(),
     };
 
     return ListView.separated(
@@ -269,6 +269,7 @@ class PeriodSelectionButton extends StatelessWidget {
               axis: Axis.horizontal,
               decimalPlace: 0,
               itemWidth: 35.0,
+              surfaceColor: FWTheme.surface[1],
             ),
             IconButton(
               onPressed: controller.periodIncreased,

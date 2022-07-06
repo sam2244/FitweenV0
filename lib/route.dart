@@ -9,7 +9,9 @@ import 'package:fitween1/view/page/main/trainer/trainer.dart';
 import 'package:fitween1/view/page/my/my.dart';
 import 'package:fitween1/view/page/register/register.dart';
 import 'package:fitween1/view/page/scheduler/scheduler.dart';
-import 'package:fitween1/view/page/setting/setting.dart';
+import 'package:fitween1/view/page/my/setting/setting.dart';
+import 'package:fitween1/view/page/my/editName/editName.dart';
+import 'package:fitween1/view/page/my/editHeight/editHeight.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -27,6 +29,8 @@ class FWRoute {
     '/my': const MyPage(),
     '/developer': const DeveloperPage(),
     '/setting': const SettingPage(),
+    '/editHeight': const EditHeightPage(),
+    '/editName': const EditNamePage(),
   };
 
   static const Transition transition = Transition.fadeIn;
