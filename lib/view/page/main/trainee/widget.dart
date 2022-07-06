@@ -9,8 +9,6 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import '../../../widget/container.dart';
 import '../../../widget/text.dart';
 import 'dart:math' as math;
-
-import '../../add_plan/add_plan.dart';
 import '../trainer/trainer.dart';
 
 //트레이니 페이지의 위젯 모음
@@ -58,7 +56,8 @@ class TraineeAddPlanButton extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(4.0),
-            child: FWText("현재 진행중인 플랜이 없습니다.",
+            child: FWText(
+              "현재 진행중인 플랜이 없습니다.",
               style: Theme.of(context).textTheme.bodyMedium,
               color: Theme.of(context).colorScheme.outline,
             ),
@@ -105,28 +104,6 @@ class TraineeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
-          child: FWCard(
-              height: 600.0,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: const [
-                      TraineeProfile(),
-                    ],
-                  ),
-                  const TraineeToDoCard(),
-                ],
-              )),
-        ),
-      ],
-=======
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Column(
@@ -137,7 +114,6 @@ class TraineeCard extends StatelessWidget {
           TraineeDietCard(),
         ],
       ),
->>>>>>> b8afb7b27842bfa0df12eef8076d9dacc63c2e71
     );
   }
 }
@@ -170,7 +146,6 @@ class TraineeProfile extends StatelessWidget {
     );
   }
 }
-
 
 //트레이니 메인 페이지 트레이니 Image 위젯
 class TraineeProfileImage extends StatelessWidget {
@@ -242,53 +217,6 @@ class TraineeToDoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
-    return SizedBox(
-      height: 430.0,
-      child: Card(
-        color: Theme.of(context).colorScheme.onSecondary,
-        shape: RoundedRectangleBorder(
-          side: BorderSide(
-            color: Theme.of(context).colorScheme.onSecondary,
-          ),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        elevation: 1.0,
-        child: Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const ToDoCardTitle(
-                  title: '운동',
-                ),
-                const Divider(
-                  color: Colors.black,
-                  indent: 15.0,
-                  endIndent: 15.0,
-                ),
-                const TraineeCheckBoxList(),
-                const TraineeCheckBoxList(),
-                const TraineeCheckBoxList(),
-                const ToDoCardTitle(
-                  title: '식단',
-                ),
-                const Divider(
-                  color: Colors.black,
-                  indent: 15.0,
-                  endIndent: 15.0,
-                ),
-                Row(
-                  children: const [
-                    TraineePagePhotoWidget(),
-                    TraineePagePhotoWidget(),
-                    TraineePagePhotoWidget(),
-                  ],
-                ),
-              ],
-            )),
-=======
     return Expanded(
       child: FWCard(
         child: Padding(
@@ -313,7 +241,6 @@ class TraineeToDoCard extends StatelessWidget {
                   const TraineeProfile(),
                 ],
               ),
-
               const Divider(
                 color: Colors.black,
                 indent: 15.0,
@@ -323,14 +250,11 @@ class TraineeToDoCard extends StatelessWidget {
             ],
           ),
         ),
->>>>>>> b8afb7b27842bfa0df12eef8076d9dacc63c2e71
       ),
     );
   }
 }
 
-<<<<<<< HEAD
-=======
 //트페이니 프로필 버튼
 class TraineeProfileButton extends StatelessWidget {
   const TraineeProfileButton({Key? key}) : super(key: key);
@@ -374,17 +298,16 @@ class TraineeDietCard extends StatelessWidget {
           elevation: 1.0,
            */
           child: Column(
-            children: const [
-              DietCardTitle(
-                title: '식단',
-              ),
-            ],
-          )),
+        children: const [
+          DietCardTitle(
+            title: '식단',
+          ),
+        ],
+      )),
     );
   }
 }
 
->>>>>>> b8afb7b27842bfa0df12eef8076d9dacc63c2e71
 // 트레이니 메인 페이지 D-Day
 class TraineeMainPageDDay extends StatelessWidget {
   final String dDay;
@@ -473,8 +396,6 @@ class ToDoCardSubTitle extends StatelessWidget {
   }
 }
 
-<<<<<<< HEAD
-=======
 // 트레이니 메인 페이지 -> 식단 카드 위젯 subtitle
 class DietCardTitle extends StatelessWidget {
   final String title;
@@ -497,7 +418,6 @@ class DietCardTitle extends StatelessWidget {
     );
   }
 }
->>>>>>> b8afb7b27842bfa0df12eef8076d9dacc63c2e71
 //트레이니 FAB
 /*class ExpandableTraineeFAB extends StatelessWidget {
   const ExpandableTraineeFAB({Key? key}) : super(key: key);

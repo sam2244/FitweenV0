@@ -18,7 +18,6 @@ import 'package:get/get.dart';
 
 class FWRoute {
   static Map<String, Widget> get pages => {
-<<<<<<< HEAD
         '/login': const LoginPage(),
         '/register': const RegisterPage(),
         '/main/trainer': const TrainerMainPage(),
@@ -31,25 +30,10 @@ class FWRoute {
         '/my': const MyPage(),
         '/developer': const DeveloperPage(),
         '/setting': const SettingPage(),
+        '/editHeight': const EditHeightPage(),
+        '/editName': const EditNamePage(),
         '/detail/trainer': const TrainerDetailPage(),
       };
-=======
-    '/login': const LoginPage(),
-    '/register': const RegisterPage(),
-    '/main/trainer': const TrainerMainPage(),
-    '/main/trainee': const TraineeMainPage(),
-    '/chat': const ChatPage(),
-    '/chatroom': const ChatroomPage(),
-    '/scheduler': const SchedulerPage(),
-    '/addPlan': const AddPlanPage(),
-    '/addInfo': const AddInfoPage(),
-    '/my': const MyPage(),
-    '/developer': const DeveloperPage(),
-    '/setting': const SettingPage(),
-    '/editHeight': const EditHeightPage(),
-    '/editName': const EditNamePage(),
-  };
->>>>>>> b8afb7b27842bfa0df12eef8076d9dacc63c2e71
 
   static const Transition transition = Transition.fadeIn;
   static const Duration duration = Duration.zero;
