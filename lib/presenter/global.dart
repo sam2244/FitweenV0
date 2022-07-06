@@ -4,22 +4,16 @@ import 'package:fitween1/presenter/model/plan.dart';
 import 'package:fitween1/presenter/model/user.dart';
 import 'package:fitween1/presenter/page/add_info.dart';
 import 'package:fitween1/presenter/page/add_plan.dart';
-<<<<<<< HEAD
-import 'package:fitween1/presenter/page/chat.dart';
 import 'package:fitween1/presenter/page/detail.dart';
 import 'package:fitween1/presenter/page/main/trainer.dart';
-import 'package:fitween1/presenter/page/my.dart';
-=======
 import 'package:fitween1/presenter/page/chat/chat.dart';
 import 'package:fitween1/presenter/page/chat/chatroom.dart';
 import 'package:fitween1/presenter/page/my/my.dart';
->>>>>>> b8afb7b27842bfa0df12eef8076d9dacc63c2e71
 import 'package:fitween1/presenter/page/register.dart';
 import 'package:fitween1/view/widget/image.dart';
 import 'package:fitween1/view/widget/popup.dart';
 import 'package:fitween1/view/widget/text.dart';
 import 'package:flutter/material.dart';
-import 'package:fitween1/presenter/page/main/trainer.dart';
 import 'package:fitween1/presenter/page/my/setting.dart';
 import 'package:get/get.dart';
 
