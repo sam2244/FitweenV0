@@ -74,6 +74,18 @@ class DeveloperPage extends StatelessWidget {
                   const Text('MyPage()'),
                 ],
               ),
+              const SizedBox(height: 10.0),
+              Row(
+                children: [
+                  FWButton(
+                    onPressed: () => Get.toNamed('/onboarding'),
+                    text: 'Onboarding',
+                    width: 100.0,
+                  ),
+                  const SizedBox(width: 20.0),
+                  const Text('Onboarding()'),
+                ],
+              ),
             ],
           ),
         ),
