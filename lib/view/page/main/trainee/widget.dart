@@ -1,9 +1,9 @@
 import 'dart:math' as math;
-import 'package:fitween1/view/widget/text.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
-
+import 'package:fitween1/view/widget/text.dart';
 import 'package:fitween1/global/config/theme.dart';
 import 'package:fitween1/presenter/page/main/trainee.dart';
+import 'package:fitween1/presenter/global.dart';
 import 'package:fitween1/view/widget/button.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -113,7 +113,7 @@ class TraineeCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: const [
-          TraineeWelcomeMessage( nickname: '최복원',),
+          TraineeWelcomeMessage(),
           TraineeToDoCard(),
           TraineeDietCardView(),
         ],
@@ -123,12 +123,7 @@ class TraineeCard extends StatelessWidget {
 }
 
 class TraineeWelcomeMessage extends StatelessWidget {
-  const TraineeWelcomeMessage({Key? key,
-    required this.nickname
-  }
-  ) : super(key: key);
-
-  final String nickname;
+  const TraineeWelcomeMessage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +138,7 @@ class TraineeWelcomeMessage extends StatelessWidget {
             ),
           children: <TextSpan>[
             TextSpan(
-              text: ' $nickname',
+              text: TraineePresenter.userPresenter.user.nickname!,
               style: TextStyle(
                 color: FWTheme.primary[60],
               ),
@@ -394,7 +389,7 @@ class TraineeDietCard extends StatelessWidget {
                       shape: const CircleBorder(),
                     ),
                     child: IconButton(
-                      onPressed: () { },
+                        onPressed: () => GlobalPresenter.imageUpload(context,Theme.of(context)),
                       icon: const Icon(
                         Icons.add,
                       ),
