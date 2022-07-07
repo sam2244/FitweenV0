@@ -68,7 +68,7 @@ class NameTextField extends StatelessWidget {
                       child: FWText(
                         "이름",
                         style: Theme.of(context).textTheme.headlineSmall,
-                        color: Theme.of(context).colorScheme.onBackground,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                     TextFormField(
