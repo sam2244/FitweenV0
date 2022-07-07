@@ -71,7 +71,6 @@ class HeightTextField extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(10.0),
                 child: FWCard(
-                  //title: '식단',
                   height: 156.0,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
