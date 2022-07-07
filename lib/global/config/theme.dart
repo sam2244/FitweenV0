@@ -56,7 +56,7 @@ class FWTheme extends GetxController {
     100: Color(0xFFFFFFFF),
     99: Color(0xFFFFFBFF),
     95: Color(0xFFF1EFFF),
-    90: Color(0xFFE0E0FF),
+    90: Color(0xFFE0E0FF),
     80: Color(0xFFBEC2FF),
     70: Color(0xFF9DA4FF),
     60: Color(0xFF7F87EE),
