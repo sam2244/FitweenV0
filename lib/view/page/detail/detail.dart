@@ -14,7 +14,7 @@ class TrainerDetailPage extends StatelessWidget {
       appBar: AppBar(),
       body: Column(
         children: [
-          TraineeInfo(trainee: Get.arguments),
+          TraineeDetailPage(trainee: Get.arguments),
         ],
       ),
     );
