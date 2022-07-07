@@ -178,20 +178,3 @@ class MyWeightGraphView extends StatelessWidget {
     );
   }
 }
-
-class WeightInfo extends StatelessWidget {
-  const WeightInfo({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GetBuilder<MyPresenter>(
-        builder: (controller) {
-          return Column(
-            children: [
-
-            ],
-          );
-        }
-    );
-  }
-}
