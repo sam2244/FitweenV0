@@ -92,6 +92,18 @@ class SettingPresenter extends GetxController {
     Get.back();
   }
 
+  // 뒤로가기 버튼 클릭 트리거
+  void backPressedEditName() {
+    Get.back();
+    nameCont.clear();
+  }
+
+  // 뒤로가기 버튼 클릭 트리거
+  void backPressedEditHeight() {
+    Get.back();
+    defaultHeight = userPresenter.user.height;
+  }
+
   Future editHeightDone() async {
     userPresenter.user.height = double.parse(defaultHeight.toStringAsFixed(2));
     Get.back();
@@ -99,15 +111,16 @@ class SettingPresenter extends GetxController {
   }
 
   Future editNameDone(String name) async {
-    userPresenter.nickname = nameCont.text;
-    nameCont.clear();
-    Get.back();
-    update();
+    if(nameCont.text != '') {
+      userPresenter.nickname = nameCont.text;
+      nameCont.clear();
+      Get.back();
+      update();
+    }
   }
 
   static void editNamePressed() {
     Get.toNamed('/editName');
-    nameCont.clear();
   }
 
   static void editHeightPressed() {
