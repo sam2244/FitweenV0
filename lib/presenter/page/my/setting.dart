@@ -9,36 +9,13 @@ import 'package:get/get.dart';
 class SettingPresenter extends GetxController {
   static final userPresenter = Get.find<UserPresenter>();
 
-  /*void profileImagePressed(ThemeData themeData) {
-    Get.dialog(
-      AlertDialog(
-        title: FWText(
-          '이미지 선택',
-          style: themeData.textTheme.titleLarge,
-          color: themeData.colorScheme.primary,
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: const <Widget>[
-            Text(
-              "이미지를 가져올 곳을 선택해주세요.",
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            child: const Text("갤러리"),
-            onPressed: () {},
-          ),
-          TextButton(
-            child: const Text("카메라"),
-            onPressed: () {},
-          )
-        ],
-      ),
-    );
-  }*/
+  static final nameCont = TextEditingController();
+  double defaultHeight = userPresenter.user.height;
+
+  void heightSelected(double height) {
+    defaultHeight = height;
+    update();
+  }
 
   void profileImageChange(context, ThemeData themeData) {
     showModalBottomSheet<void>(
@@ -112,11 +89,25 @@ class SettingPresenter extends GetxController {
 
   // 뒤로가기 버튼 클릭 트리거
   void backPressed() {
-    Get.offAllNamed('/my');
+    Get.back();
+  }
+
+  Future editHeightDone() async {
+    userPresenter.user.height = double.parse(defaultHeight.toStringAsFixed(2));
+    Get.back();
+    update();
+  }
+
+  Future editNameDone(String name) async {
+    userPresenter.nickname = nameCont.text;
+    nameCont.clear();
+    Get.back();
+    update();
   }
 
   static void editNamePressed() {
     Get.toNamed('/editName');
+    nameCont.clear();
   }
 
   static void editHeightPressed() {

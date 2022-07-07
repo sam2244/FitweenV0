@@ -68,16 +68,19 @@ class TraineeCard extends StatelessWidget {
           for (var trainee in trainees)
             Padding(
               padding: const EdgeInsets.all(10.0),
-              child: Card(
-                child: Container(
-                  margin: const EdgeInsets.all(10.0),
-                  child: SizedBox(
-                    height: 108.0,
-                    child: Row(
-                      children: [
-                        const TraineeProfileImage(),
-                        Expanded(child: TraineeInfo(trainee: trainee)),
-                      ],
+              child: InkWell(
+                onTap: () => Get.toNamed('/detail/trainer', arguments: trainee),
+                child: Card(
+                  child: Container(
+                    margin: const EdgeInsets.all(10.0),
+                    child: SizedBox(
+                      height: 108.0,
+                      child: Row(
+                        children: [
+                          const TraineeProfileImage(),
+                          Expanded(child: TraineeInfo(trainee: trainee)),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -169,23 +172,23 @@ class TraineeName extends StatelessWidget {
 }
 
 // 트레이너 메인 페이지 CategoryBar
-// class TrainerMainPageSubTitle extends StatelessWidget {
-//   final String subtitle;
-//   const TrainerMainPageSubTitle({Key? key, required this.subtitle})
-//       : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       color: Colors.blue,
-//       child: FWText(
-//         subtitle,
-//         color: Theme.of(context).colorScheme.onSurfaceVariant,
-//         style: Theme.of(context).textTheme.labelSmall,
-//       ),
-//     );
-//   }
-// }
+class TrainerMainPageSubTitle extends StatelessWidget {
+  final String subtitle;
+  const TrainerMainPageSubTitle({Key? key, required this.subtitle})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.blue,
+      child: FWText(
+        subtitle,
+        color: Theme.of(context).colorScheme.onSurfaceVariant,
+        style: Theme.of(context).textTheme.labelSmall,
+      ),
+    );
+  }
+}
 
 // 트레이너 메인 페이지 Graph
 class TrainerMainPageGraph extends StatelessWidget {
@@ -248,7 +251,9 @@ class TrainerView extends StatelessWidget {
   Widget build(BuildContext context) {
     // Size screenSize = MediaQuery.of(context).size;
     // bool keyboardDisabled = WidgetsBinding.instance.window.viewInsets.bottom < 100.0;
+    final controller = Get.find<TrainerPresenter>();
     Size screenSize = MediaQuery.of(context).size;
+    // int _current = 0;
 
     List<Widget> items = categories()
         .map((category) => TraineeCard(
@@ -267,19 +272,24 @@ class TrainerView extends StatelessWidget {
       child: Column(
         children: [
           // TraineeCategory(category: currentCategory),
-          GetBuilder<TrainerPresenter>(builder: (controller) {
-            return TraineeCategory(
-                category: currentCategory[controller.pageIndex]);
-          }),
+          GetBuilder<TrainerPresenter>(
+            builder: (controller) {
+              return TraineeCategory(
+                category: currentCategory[controller.pageIndex],
+              );
+            },
+          ),
           Expanded(
             child: CarouselSlider(
               carouselController: TrainerPresenter.carouselCont,
               items: items,
               options: CarouselOptions(
-                height: double.infinity,
-                viewportFraction: 1.0,
-                scrollPhysics: const NeverScrollableScrollPhysics(),
-              ),
+                  height: double.infinity,
+                  viewportFraction: 1.0,
+                  // scrollPhysics: const NeverScrollableScrollPhysics(),
+                  onPageChanged: (index, reason) {
+                    controller.indexChanged(index);
+                  }),
             ),
           ),
         ],
