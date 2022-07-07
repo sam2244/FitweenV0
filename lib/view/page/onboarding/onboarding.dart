@@ -12,7 +12,7 @@ class OnboardingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: const OnboardingCarousel(),
+      body: const Parallax()
     );
   }
 }

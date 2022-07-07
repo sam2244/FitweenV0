@@ -57,6 +57,7 @@ flutter:
     - assets/img/onboarding3.svg
     - assets/img/onboarding4.svg
     - assets/img/onboarding5.svg
+    - assets/img/onboarding_background.svg
 
 fonts:
   - family: Noto_Sans_KR

@@ -4,6 +4,7 @@ import 'package:fitween1/view/widget/button.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
+import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import '../../../widget/container.dart';
@@ -273,10 +274,8 @@ class TraineeProfileButton extends StatelessWidget {
         height: 24.0,
         fontSize: 13.0,
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const TrainerMainPage()),
-          );
+          //Get.toNamed('/main/trainer');
+          print("I am not ready!");
         },
         text: "트레이너 프로필",
         fill: false,
