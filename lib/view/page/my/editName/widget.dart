@@ -76,9 +76,41 @@ class NameTextField extends StatelessWidget {
                       decoration: InputDecoration(
                         fillColor: Colors.white,
                         hintText: '이름을 입력하세요',
+                        suffixIcon: Padding(
+                          padding: const EdgeInsets.fromLTRB(3.0, 3.0, 3.0, 3.0),
+                          child: Container(
+                            width: 20,
+                            height: 20,
+                            //padding: const EdgeInsets.all(.0),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100),
+                                color: Theme.of(context).colorScheme.surface,
+                                border: Border.all(
+                                    width: 2
+                                )
+                            ),
+                            child: IconButton(
+                                onPressed: SettingPresenter.nameCont.clear,
+                                icon: Icon(Icons.clear,
+                                    color: Theme.of(context).colorScheme.onSurfaceVariant)
+                              /*CircleAvatar(
+                              backgroundColor: Theme.of(context).colorScheme.surface,
+                              radius: 100,
+                              child: Icon(Icons.clear,
+                              color: Theme.of(context).colorScheme.onSurfaceVariant),
+                              ),*/
+                            ),
+                          ),
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(4.0),
                           borderSide: const BorderSide(),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:  BorderSide(color: Theme.of(context).colorScheme.outline),
                         ),
                       ),
                       validator: (value) {
