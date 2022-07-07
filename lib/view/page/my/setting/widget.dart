@@ -51,10 +51,14 @@ class MyProfileImageButton extends StatelessWidget {
                 //onPressed: () => controller.profileImagePressed(Theme.of(context)),
                 onPressed: () => controller.profileImageChange(context,Theme.of(context)),
               ),
-              FWText(
-                '사진 변경', size: 20.0,
-                style: Theme.of(context).textTheme.labelLarge,
-              ),
+              TextButton.icon(
+                onPressed: () => controller.profileImageChange(context,Theme.of(context)),
+                label: const Icon(Icons.add_photo_alternate_outlined, size: 24),
+                icon: FWText("사진 변경", size: 20.0,
+                    style: Theme.of(context).textTheme.labelLarge,
+                    color: Theme.of(context).colorScheme.primary,
+                ),
+              )
             ],
           );
         }
