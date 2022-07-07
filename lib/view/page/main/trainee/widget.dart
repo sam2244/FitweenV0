@@ -780,7 +780,7 @@ class _TraineeCheckBoxListState extends State<TraineeCheckBoxList> {
   Widget build(BuildContext context) {
     return CheckboxListTile(
       title: const Text(
-        'Running',
+        '조깅 3km',
       ),
       activeColor: FWTheme.primary[30],
       value: timeDilation != 1.0,
