@@ -20,7 +20,6 @@ class MyPage extends StatelessWidget {
               children: const [
                 MyProfileImage(),
                 MyWeightGraphView(title: '체중', ratio: 1.5),
-                WeightInfo(),
               ],
             ),
           ),

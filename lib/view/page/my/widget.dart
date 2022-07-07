@@ -1,6 +1,7 @@
 import 'package:fitween1/global/global.dart';
 import 'package:fitween1/model/user/chart.dart';
 import 'package:fitween1/presenter/page/my/my.dart';
+import 'package:fitween1/view/widget/container.dart';
 import 'package:fitween1/view/widget/image.dart';
 import 'package:fitween1/view/widget/text.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -93,82 +94,87 @@ class MyWeightGraphView extends StatelessWidget {
                 children: [
                   Container(
                     alignment: Alignment.centerLeft,
-                    padding: const EdgeInsets.all(15.0),
                     child: FWText(
-                      "신장  |  ${MyPresenter.userPresenter.user.height} cm",
-                      style: Theme.of(context).textTheme.headlineSmall,
+                      "기본 정보",
+                      style: Theme.of(context).textTheme.headlineMedium,
                       color: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    padding: const EdgeInsets.all(15.0),
-                    child: FWText(
-                      title,
-                      style: Theme.of(context).textTheme.headlineSmall,
-                      color: Theme.of(context).colorScheme.onSurface,
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                    child: FWCard(
+                        height: 447,
+                        child: Column(
+                          children: [
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              padding: const EdgeInsets.all(10.0),
+                              child: FWText(
+                                "신장  |  ${MyPresenter.userPresenter.user.height} cm",
+                                style: Theme.of(context).textTheme.headlineSmall,
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
+                            ),
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              padding: const EdgeInsets.all(10.0),
+                              child: FWText(
+                                title,
+                                style: Theme.of(context).textTheme.headlineSmall,
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
+                            ),
+                            AspectRatio(
+                              aspectRatio: ratio,
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: LineChart(
+                                  controller.weightChart.chartData,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              height: 50.0,
+                              padding: const EdgeInsets.fromLTRB(20.0, 0.0, 0.0, 0.0),
+                              child: ListView.builder(
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: PeriodType.values.length,
+                                  itemBuilder: (context, index) {
+                                    return TextButton(
+                                      onPressed: () => controller.typeChanged(PeriodType.values[index]),
+                                      child: Text(PeriodType.values[index].name),
+                                    );
+                                  }
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.fromLTRB(30.0, 0.0, 0.0, 0.0),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  primary: Theme.of(context).colorScheme.primary,
+                                ),
+                                onPressed: controller.addWeightPressed,
+                                child: FWText(
+                                  '체중 기록하기',
+                                  size: 15.0,
+                                  style: Theme.of(context).textTheme.titleMedium,
+                                  color: Theme.of(context).colorScheme.onPrimary,
+                                ),
+                              ),
+                            ),
+
+                          ],
+                        )
                     ),
-                  ),
-                  AspectRatio(
-                    aspectRatio: ratio,
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: LineChart(
-                        controller.weightChart.chartData,
-                      ),
-                    ),
-                  ),
+                  )
                 ],
               ),
             ),
-            SizedBox(
-              height: 50.0,
-              child: ListView.builder(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: PeriodType.values.length,
-                  itemBuilder: (context, index) {
-                    return TextButton(
-                      onPressed: () => controller.typeChanged(PeriodType.values[index]),
-                      child: Text(PeriodType.values[index].name),
-                    );
-                  }
-              ),
-            ),
+
           ],
         );
       }
-    );
-  }
-}
-
-class WeightInfo extends StatelessWidget {
-  const WeightInfo({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GetBuilder<MyPresenter>(
-        builder: (controller) {
-          return Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.all(20.0),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                  primary: Theme.of(context).colorScheme.primary,
-                  ),
-                  onPressed: controller.addWeightPressed,
-                  child: FWText(
-                    '체중 기록하기',
-                    size: 15.0,
-                    style: Theme.of(context).textTheme.titleMedium,
-                    color: Theme.of(context).colorScheme.onPrimary,
-                  ),
-                ),
-              ),
-            ],
-          );
-        }
     );
   }
 }
