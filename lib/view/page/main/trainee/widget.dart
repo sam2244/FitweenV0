@@ -1,15 +1,18 @@
+import 'dart:math' as math;
+import 'package:fitween1/view/page/main/trainer/trainer.dart';
+import 'package:fitween1/view/widget/container.dart';
+import 'package:fitween1/view/widget/text.dart';
+import 'package:flutter/scheduler.dart' show timeDilation;
+
 import 'package:fitween1/global/config/theme.dart';
 import 'package:fitween1/presenter/page/main/trainee.dart';
 import 'package:fitween1/view/widget/button.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
+import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import '../../../widget/container.dart';
-import '../../../widget/text.dart';
-import 'dart:math' as math;
-import '../trainer/trainer.dart';
 
 //트레이니 페이지의 위젯 모음
 
@@ -194,9 +197,11 @@ class TraineeInfo extends StatelessWidget {
 
 //트레이니 이름 텍스트 스타일
 class TraineeName extends StatelessWidget {
-  final String name;
+
 
   const TraineeName({Key? key, required this.name}) : super(key: key);
+
+  final String name;
 
   @override
   Widget build(BuildContext context) {
@@ -268,10 +273,8 @@ class TraineeProfileButton extends StatelessWidget {
         height: 24.0,
         fontSize: 13.0,
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const TrainerMainPage()),
-          );
+          //Get.toNamed('/main/trainer');
+          print("I am not ready!");
         },
         text: "트레이너 프로필",
         fill: false,

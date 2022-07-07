@@ -12,12 +12,14 @@ class ChatroomPresenter extends GetxController {
   bool isMe(Chat chat) => userPresenter.isMe(chat.user);
 
   void addChat() {
-    chats.add(Chat(
-      user: userPresenter.user,
-      text: textCont.text,
-      date: DateTime.now(),
-    ));
-    textCont.clear();
-    update();
+    if(textCont.text != '') {
+      chats.add(Chat(
+        user: userPresenter.user,
+        text: textCont.text,
+        date: DateTime.now(),
+      ));
+      textCont.clear();
+      update();
+    }
   }
 }

@@ -8,6 +8,7 @@ import 'package:fitween1/view/page/login/login.dart';
 import 'package:fitween1/view/page/main/trainee/trainee.dart';
 import 'package:fitween1/view/page/main/trainer/trainer.dart';
 import 'package:fitween1/view/page/my/my.dart';
+import 'package:fitween1/view/page/onboarding/onboarding.dart';
 import 'package:fitween1/view/page/register/register.dart';
 import 'package:fitween1/view/page/scheduler/scheduler.dart';
 import 'package:fitween1/view/page/my/setting/setting.dart';
@@ -33,6 +34,7 @@ class FWRoute {
         '/editHeight': const EditHeightPage(),
         '/editName': const EditNamePage(),
         '/detail/trainer': const TrainerDetailPage(),
+        '/onboarding' : const OnboardingPage(),
       };
 
   static const Transition transition = Transition.fadeIn;

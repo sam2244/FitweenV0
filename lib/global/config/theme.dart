@@ -146,7 +146,7 @@ class FWTheme extends GetxController {
     inverseSurface: Color(0xFF2F3033),
     inversePrimary: Color(0xFFA5C8FF),
     shadow: Color(0xFF000000),
-    surfaceTint: Color(0xFF005FAF),
+    surfaceTint: Color(0xFFFDFCFF),
   );
 
   static const ColorScheme darkScheme = ColorScheme(

@@ -1,6 +1,8 @@
 // 할일 모델
 class Todo {
   String? exercise;
+  int count = 0;
+  String? unit;
   bool completed = false;
 
   Todo();
