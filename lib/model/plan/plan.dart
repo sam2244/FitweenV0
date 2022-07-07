@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitween1/model/chat/chat.dart';
 import 'package:fitween1/model/plan/todo.dart';
 import 'package:fitween1/model/user/user.dart';
@@ -6,6 +5,11 @@ import 'package:intl/intl.dart';
 
 // 플랜의 상태
 enum PlanState { training, fail, complete }
+// 요일
+enum Weekday {
+  mon, tue, wed, thu, fri, sat, sun;
+  get kr => ['월', '화', '수', '목', '금', '토', '일'][index];
+}
 
 // 플랜 모델
 class Plan {
@@ -18,7 +22,7 @@ class Plan {
   DateTime? endDate;
   bool isDiet = false;
   bool isWeight = true;
-  Map<Timestamp, List<Todo>>? todos;
+  Map<DateTime, List<Todo>>? todos;
 
   Plan();
 
@@ -70,4 +74,5 @@ class Plan {
   static DateTime get today => Chat.removeTime(DateTime.now());
 
   static const List<String> purposes = ['다이어트', '벌크업', '기타'];
+
 }

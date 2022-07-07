@@ -15,12 +15,14 @@ class MyPage extends StatelessWidget {
         return Scaffold(
           backgroundColor: Theme.of(context).colorScheme.surface,
           appBar: const MyAppBar(),
-          body: Column(
-            children: const [
-              MyProfileImage(),
-              MyWeightGraphView(title: '체중', ratio: 1.5),
-              WeightInfo(),
-            ],
+          body: SingleChildScrollView(
+            child: Column(
+              children: const [
+                MyProfileImage(),
+                MyWeightGraphView(title: '체중', ratio: 1.5),
+                WeightInfo(),
+              ],
+            ),
           ),
           bottomNavigationBar: const FWBottomBar(),
         );

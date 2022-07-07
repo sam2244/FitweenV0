@@ -1,3 +1,9 @@
+import 'dart:math' as math;
+import 'package:fitween1/view/page/main/trainer/trainer.dart';
+import 'package:fitween1/view/widget/container.dart';
+import 'package:fitween1/view/widget/text.dart';
+import 'package:flutter/scheduler.dart' show timeDilation;
+
 import 'package:fitween1/global/config/theme.dart';
 import 'package:fitween1/presenter/page/main/trainee.dart';
 import 'package:fitween1/view/widget/button.dart';
@@ -7,10 +13,6 @@ import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import '../../../widget/container.dart';
-import '../../../widget/text.dart';
-import 'dart:math' as math;
-import '../trainer/trainer.dart';
 
 //트레이니 페이지의 위젯 모음
 

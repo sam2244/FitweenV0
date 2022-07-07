@@ -328,7 +328,7 @@ class WeightHeightView extends StatelessWidget {
           FWText(
             'kg',
             style: Theme.of(context).textTheme.labelLarge,
-            color: FWTheme.primary,
+            color: Theme.of(context).colorScheme.primary,
           ),
         ],
       ),
@@ -351,7 +351,7 @@ class WeightHeightView extends StatelessWidget {
           FWText(
             'cm',
             style: Theme.of(context).textTheme.labelLarge,
-            color: FWTheme.primary,
+            color: Theme.of(context).colorScheme.primary,
           ),
         ],
       ),
