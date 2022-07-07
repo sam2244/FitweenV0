@@ -17,7 +17,7 @@ class SettingPresenter extends GetxController {
     update();
   }
 
-  void profileImageChange(context, ThemeData themeData) {
+  /*void profileImageChange(context, ThemeData themeData) {
     showModalBottomSheet<void>(
       context: context,
       shape: RoundedRectangleBorder(
@@ -85,7 +85,7 @@ class SettingPresenter extends GetxController {
         );
       },
     );
-  }
+  }*/
 
   // 뒤로가기 버튼 클릭 트리거
   void backPressed() {

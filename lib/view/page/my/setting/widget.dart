@@ -1,5 +1,6 @@
 import 'package:fitween1/global/global.dart';
 import 'package:fitween1/presenter/page/my/setting.dart';
+import 'package:fitween1/presenter/global.dart';
 import 'package:fitween1/view/widget/image.dart';
 import 'package:fitween1/view/widget/text.dart';
 import 'package:flutter/material.dart';
@@ -48,11 +49,12 @@ class MyProfileImageButton extends StatelessWidget {
               ProfileImageCircle(
                 size: 100.0,
                 user: SettingPresenter.userPresenter.user,
-                //onPressed: () => controller.profileImagePressed(Theme.of(context)),
-                onPressed: () => controller.profileImageChange(context,Theme.of(context)),
+                onPressed: () => GlobalPresenter.imageUpload(context, Theme.of(context))
+                //onPressed: () => controller.profileImageChange(context,Theme.of(context)),
               ),
               TextButton.icon(
-                onPressed: () => controller.profileImageChange(context,Theme.of(context)),
+                onPressed: () => GlobalPresenter.imageUpload(context, Theme.of(context)),
+                //onPressed: () => controller.profileImageChange(context,Theme.of(context)),
                 label: const Icon(Icons.add_photo_alternate_outlined, size: 24),
                 icon: FWText("사진 변경", size: 20.0,
                     style: Theme.of(context).textTheme.labelLarge,
