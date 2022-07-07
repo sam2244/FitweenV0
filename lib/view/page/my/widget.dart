@@ -163,7 +163,6 @@ class MyWeightGraphView extends StatelessWidget {
                                 ),
                               ),
                             ),
-
                           ],
                         )
                     ),
@@ -171,7 +170,6 @@ class MyWeightGraphView extends StatelessWidget {
                 ],
               ),
             ),
-
           ],
         );
       }
