@@ -27,7 +27,7 @@ class EditHeightAppBar extends StatelessWidget implements PreferredSizeWidget {
                     Icons.arrow_back,
                     color: Theme.of(context).colorScheme.primary,
                   ),
-                  onPressed: controller.backPressed,
+                  onPressed: controller.backPressedEditHeight,
                 );
               }
           ),
@@ -57,23 +57,38 @@ class HeightTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<SettingPresenter>(
         builder: (controller) {
-          return FWCard(
-            title: '식단',
-            height: 156.0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                FWNumberPicker(
-                  onChanged: (value) => controller.heightSelected(value * .1),
-                  value: controller.defaultHeight,
-                  step: .1,
-                  minValue: FWUser.weightRange.start,
-                  maxValue: FWUser.weightRange.end,
+          return Column(
+            children: [
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.fromLTRB(20.0, 10.0, 0.0, 0.0),
+                child: FWText(
+                  "신장",
+                  style: Theme.of(context).textTheme.headlineSmall,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
-                const SizedBox(width: 5.0),
-                FWText('cm', style: Theme.of(context).textTheme.labelLarge),
-              ],
-            ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(10.0),
+                child: FWCard(
+                  height: 156.0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      FWNumberPicker(
+                        onChanged: (value) => controller.heightSelected(value * .1),
+                        value: controller.defaultHeight,
+                        step: .1,
+                        minValue: FWUser.weightRange.start,
+                        maxValue: FWUser.weightRange.end,
+                      ),
+                      const SizedBox(width: 5.0),
+                      FWText('cm', style: Theme.of(context).textTheme.labelLarge),
+                    ],
+                  ),
+                ),
+              )
+            ],
           );
         },
     );

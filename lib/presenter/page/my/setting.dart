@@ -17,7 +17,7 @@ class SettingPresenter extends GetxController {
     update();
   }
 
-  void profileImageChange(context, ThemeData themeData) {
+  /*void profileImageChange(context, ThemeData themeData) {
     showModalBottomSheet<void>(
       context: context,
       shape: RoundedRectangleBorder(
@@ -85,11 +85,23 @@ class SettingPresenter extends GetxController {
         );
       },
     );
-  }
+  }*/
 
   // 뒤로가기 버튼 클릭 트리거
   void backPressed() {
     Get.back();
+  }
+
+  // 뒤로가기 버튼 클릭 트리거
+  void backPressedEditName() {
+    Get.back();
+    nameCont.clear();
+  }
+
+  // 뒤로가기 버튼 클릭 트리거
+  void backPressedEditHeight() {
+    Get.back();
+    defaultHeight = userPresenter.user.height;
   }
 
   Future editHeightDone() async {
@@ -99,15 +111,16 @@ class SettingPresenter extends GetxController {
   }
 
   Future editNameDone(String name) async {
-    userPresenter.nickname = nameCont.text;
-    nameCont.clear();
-    Get.back();
-    update();
+    if(nameCont.text != '') {
+      userPresenter.nickname = nameCont.text;
+      nameCont.clear();
+      Get.back();
+      update();
+    }
   }
 
   static void editNamePressed() {
     Get.toNamed('/editName');
-    nameCont.clear();
   }
 
   static void editHeightPressed() {

@@ -145,7 +145,7 @@ class BottomUserInputField extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(10.0, 0.0, 24.0, 0.0),
+                padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
                 child: Container(
                   width: 44.0,
                   padding: const EdgeInsets.all(5.0),
