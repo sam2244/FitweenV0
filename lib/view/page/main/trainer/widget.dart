@@ -20,16 +20,18 @@ class TraineeCategory extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          IconButton(
-            onPressed: () {
-              controller.backPressed();
-            },
-            icon: Icon(
-              Icons.arrow_back_ios_new,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            iconSize: 40,
-          ),
+          controller.selectMod
+              ? Container()
+              : IconButton(
+                  onPressed: () {
+                    controller.backPressed();
+                  },
+                  icon: Icon(
+                    Icons.arrow_back_ios_new,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  iconSize: 24,
+                ),
           Container(
             alignment: Alignment.center,
             width: MediaQuery.of(context).size.width - 150,
@@ -39,16 +41,18 @@ class TraineeCategory extends StatelessWidget {
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ),
-          IconButton(
-            onPressed: () {
-              controller.nextPressed();
-            },
-            icon: Icon(
-              Icons.arrow_forward_ios,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            iconSize: 40,
-          ),
+          controller.selectMod
+              ? Container()
+              : IconButton(
+                  onPressed: () {
+                    controller.selectMod ? null : controller.nextPressed();
+                  },
+                  icon: Icon(
+                    Icons.arrow_forward_ios,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  iconSize: 24,
+                ),
         ],
       ),
     );
@@ -62,32 +66,52 @@ class TraineeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          for (var trainee in trainees)
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: InkWell(
-                onTap: () => Get.toNamed('/detail/trainer', arguments: trainee),
-                child: Card(
-                  child: Container(
-                    margin: const EdgeInsets.all(10.0),
-                    child: SizedBox(
-                      height: 108.0,
-                      child: Row(
-                        children: [
-                          const TraineeProfileImage(),
-                          Expanded(child: TraineeInfo(trainee: trainee)),
-                        ],
+    return GetBuilder<TrainerPresenter>(
+      builder: (controller) {
+        return SingleChildScrollView(
+          child: Column(
+            children: [
+              for (int i = 0; i < trainees.length; i++)
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: InkWell(
+                    onTap: () => controller.selectMod
+                        ? controller.toggleSelectState(i)
+                        : Get.toNamed(
+                            '/detail/trainer',
+                            arguments: trainees.elementAt(i),
+                          ),
+                    onLongPress: () {
+                      controller.modChange(true);
+                      controller.toggleSelectState(i);
+                    },
+                    child: Card(
+                      color: TrainerPresenter.traineeCheck[i]
+                          ? Theme.of(context).colorScheme.surfaceVariant
+                          : null,
+                      child: Container(
+                        margin: const EdgeInsets.all(10.0),
+                        child: SizedBox(
+                          height: 108.0,
+                          child: Row(
+                            children: [
+                              const TraineeProfileImage(),
+                              Expanded(
+                                child: TraineeInfo(
+                                  trainee: trainees.elementAt(i),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ),
-        ],
-      ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
@@ -232,82 +256,53 @@ class TrainerMainPageGraph extends StatelessWidget {
 class TrainerView extends StatelessWidget {
   const TrainerView({Key? key}) : super(key: key);
 
-  static List<String> categories() => ['삼손', '암스트롱', '청풍'];
-
-  static List<Trainee> trainees() => const [
-        Trainee(category: '삼손', name: '정윤석', total: 5, completed: 4),
-        Trainee(category: '삼손', name: '정윤석', total: 5, completed: 2),
-        Trainee(category: '삼손', name: '정윤석', total: 5, completed: 5),
-        Trainee(category: '암스트롱', name: '정윤석', total: 5, completed: 4),
-        Trainee(category: '암스트롱', name: '정윤석', total: 5, completed: 3),
-        Trainee(category: '암스트롱', name: '정윤석', total: 5, completed: 0),
-        Trainee(category: '암스트롱', name: '정윤석', total: 5, completed: 2),
-        Trainee(category: '청풍', name: '정윤석', total: 5, completed: 4),
-        Trainee(category: '청풍', name: '정윤석', total: 5, completed: 5),
-      ];
-  static int widgetCount = categories().length;
-
   @override
   Widget build(BuildContext context) {
     // Size screenSize = MediaQuery.of(context).size;
     // bool keyboardDisabled = WidgetsBinding.instance.window.viewInsets.bottom < 100.0;
-    final controller = Get.find<TrainerPresenter>();
     Size screenSize = MediaQuery.of(context).size;
     // int _current = 0;
 
-    List<Widget> items = categories()
+    List<Widget> items = TrainerPresenter.categories()
         .map((category) => TraineeCard(
-            trainees:
-                trainees().where((element) => element.category == category)))
+            trainees: TrainerPresenter.trainees()
+                .where((element) => element.category == category)))
         .toList();
 
-    items.insert(0, TraineeCard(trainees: trainees()));
+    items.insert(0, TraineeCard(trainees: TrainerPresenter.trainees()));
 
-    List<String> currentCategory = categories();
+    List<String> currentCategory = TrainerPresenter.categories();
     currentCategory.insert(0, '전체보기');
 
     return Container(
       alignment: Alignment.topCenter,
       constraints: BoxConstraints(minWidth: screenSize.width),
-      child: Column(
-        children: [
-          // TraineeCategory(category: currentCategory),
-          GetBuilder<TrainerPresenter>(
-            builder: (controller) {
-              return TraineeCategory(
+      child: GetBuilder<TrainerPresenter>(
+        builder: (controller) {
+          return Column(
+            children: [
+              TraineeCategory(
                 category: currentCategory[controller.pageIndex],
-              );
-            },
-          ),
-          Expanded(
-            child: CarouselSlider(
-              carouselController: TrainerPresenter.carouselCont,
-              items: items,
-              options: CarouselOptions(
-                  height: double.infinity,
-                  viewportFraction: 1.0,
-                  // scrollPhysics: const NeverScrollableScrollPhysics(),
-                  onPageChanged: (index, reason) {
-                    controller.indexChanged(index);
-                  }),
-            ),
-          ),
-        ],
+              ),
+              Expanded(
+                child: CarouselSlider(
+                  carouselController: TrainerPresenter.carouselCont,
+                  items: items,
+                  options: CarouselOptions(
+                      height: double.infinity,
+                      viewportFraction: 1.0,
+                      scrollPhysics: controller.selectMod
+                          ? const NeverScrollableScrollPhysics()
+                          : null,
+                      onPageChanged: (index, reason) {
+                        controller.indexChanged(index);
+                      }),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
-}
-
-class Trainee {
-  final String category;
-  final String name;
-  final int total;
-  final int completed;
-
-  const Trainee({
-    required this.category,
-    required this.name,
-    required this.total,
-    required this.completed,
-  });
 }
