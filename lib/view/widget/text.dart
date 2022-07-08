@@ -44,7 +44,7 @@ class FWText extends StatelessWidget {
 
     return Text(
       data,
-      maxLines: 2,
+      maxLines: overflow ? 1 : 2,
       style: style?.merge(textStyle)
           ?? textStyle.merge(style),
     );

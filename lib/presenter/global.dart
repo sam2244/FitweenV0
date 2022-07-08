@@ -3,7 +3,9 @@ import 'package:fitween1/model/user/user.dart';
 import 'package:fitween1/presenter/model/plan.dart';
 import 'package:fitween1/presenter/model/user.dart';
 import 'package:fitween1/presenter/page/add_info.dart';
-import 'package:fitween1/presenter/page/add_plan.dart';
+import 'package:fitween1/presenter/page/add_plan/add_diet.dart';
+import 'package:fitween1/presenter/page/add_plan/add_plan.dart';
+import 'package:fitween1/presenter/page/add_plan/add_todo.dart';
 import 'package:fitween1/presenter/page/detail.dart';
 import 'package:fitween1/presenter/page/main/trainer.dart';
 import 'package:fitween1/presenter/page/chat/chat.dart';
@@ -48,29 +50,95 @@ class GlobalPresenter extends GetxController {
           children: [
             ProfileImageRect(user: user),
             const SizedBox(width: 8.0),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  FWText(
-                    user.nickname!,
-                    style: themeData.textTheme.labelLarge,
-                    color: themeData.colorScheme.onSurface,
-                  ),
-                  const SizedBox(height: 4.0),
-                  Expanded(
-                    child: FWText(
-                      user.statusMessage ?? '',
-                      style: themeData.textTheme.labelSmall,
-                      color: themeData.colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                ],
-              ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                FWText(
+                  user.nickname!,
+                  style: themeData.textTheme.labelLarge,
+                  color: themeData.colorScheme.onSurface,
+                ),
+                const SizedBox(height: 4.0),
+                FWText(
+                  user.statusMessage ?? '',
+                  style: themeData.textTheme.labelSmall,
+                  color: themeData.colorScheme.onSurfaceVariant,
+                ),
+              ],
             ),
           ],
         ),
       ),
+    );
+  }
+
+  static void imageUpload(context, ThemeData themeData) {
+    showModalBottomSheet<void>(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      builder: (BuildContext context) {
+        return Container(
+          height: 175,
+          decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10.0),
+                  topRight: Radius.circular(10.0)
+              )
+          ),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Container(
+                  margin: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 7.5),
+                  width: 311,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Theme.of(context).colorScheme.primary,
+                      side: BorderSide(width: 1.0, color: Theme.of(context).colorScheme.outline),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    onPressed: () => Navigator.pop(context),
+                    child: FWText(
+                      '갤러리',
+                      size: 15.0,
+                      style: Theme.of(context).textTheme.titleMedium,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.fromLTRB(0.0, 7.5, 0.0, 10.0),
+                  width: 311,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Theme.of(context).colorScheme.primary,
+                      side: BorderSide(width: 1.0, color: Theme.of(context).colorScheme.outline),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    onPressed: () => Navigator.pop(context),
+                    child: FWText(
+                      '카메라',
+                      size: 15.0,
+                      style: Theme.of(context).textTheme.titleMedium,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -84,6 +152,8 @@ class GlobalPresenter extends GetxController {
     Get.put(ChatroomPresenter());
     Get.put(AddInfoPresenter());
     Get.put(AddPlanPresenter());
+    Get.put(AddTodoPresenter());
+    Get.put(AddDietPresenter());
     Get.put(MyPresenter());
     Get.put(SettingPresenter());
     Get.put(TrainerPresenter());

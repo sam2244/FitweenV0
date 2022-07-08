@@ -27,7 +27,7 @@ class EditHeightAppBar extends StatelessWidget implements PreferredSizeWidget {
                     Icons.arrow_back,
                     color: Theme.of(context).colorScheme.primary,
                   ),
-                  onPressed: controller.backPressed,
+                  onPressed: controller.backPressedEditHeight,
                 );
               }
           ),
@@ -69,7 +69,7 @@ class HeightTextField extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(10.0),
                 child: FWCard(
                   height: 156.0,
                   child: Row(

@@ -1,30 +1,26 @@
 import 'dart:math' as math;
-import 'package:fitween1/view/page/main/trainer/trainer.dart';
-import 'package:fitween1/view/widget/container.dart';
-import 'package:fitween1/view/widget/text.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
-
+import 'package:fitween1/view/widget/text.dart';
 import 'package:fitween1/global/config/theme.dart';
 import 'package:fitween1/presenter/page/main/trainee.dart';
+import 'package:fitween1/presenter/global.dart';
 import 'package:fitween1/view/widget/button.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/scheduler.dart' show timeDilation;
-import 'package:get/get.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
 
 //트레이니 페이지의 위젯 모음
 
-//트레이니 페이지 Body CarouselSlider Widget
+//트레이니 메인 페이지 Body CarouselSlider Widget
 class TraineeCarousel extends StatelessWidget {
   const TraineeCarousel({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final List<Widget> carouselWidgets = [
-      const TraineeCard(),
       const TraineeAddPlanButton(),
+      const TraineeCard(),
     ];
 
     final double height = MediaQuery.of(context).size.height;
@@ -57,8 +53,12 @@ class TraineeAddPlanButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          SvgPicture.asset(
+            'assets/img/add_plan.svg',
+            height: 300.0,
+          ),
           Padding(
-            padding: const EdgeInsets.all(4.0),
+            padding: const EdgeInsets.all(10.0),
             child: FWText(
               "현재 진행중인 플랜이 없습니다.",
               style: Theme.of(context).textTheme.bodyMedium,
@@ -84,7 +84,7 @@ class TraineeAddPlanButton extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 5.0),
                         child: FWText(
-                          '새 플랜 추가',
+                          '새 플랜 가입',
                           style: Theme.of(context).textTheme.labelLarge,
                           color: Theme.of(context).colorScheme.onPrimary,
                         ),
@@ -101,7 +101,7 @@ class TraineeAddPlanButton extends StatelessWidget {
   }
 }
 
-//트레이니 카드 View
+//트레이니 메인 페이지 View
 class TraineeCard extends StatelessWidget {
   const TraineeCard({Key? key}) : super(key: key);
 
@@ -113,36 +113,94 @@ class TraineeCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: const [
+          TraineeWelcomeMessage(),
           TraineeToDoCard(),
-          TraineeDietCard(),
+          TraineeDietCardView(),
         ],
       ),
     );
   }
 }
 
-//트레이니 프로필
-class TraineeProfile extends StatelessWidget {
-  const TraineeProfile({Key? key}) : super(key: key);
+class TraineeWelcomeMessage extends StatelessWidget {
+  const TraineeWelcomeMessage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.zero,
+      padding: const EdgeInsets.only(top: 35.0),
+      child: Text.rich(
+        style: Theme.of(context).textTheme.headlineMedium,
+        TextSpan(
+          text: "안녕하세요,",
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.primary,
+            ),
+          children: <TextSpan>[
+            TextSpan(
+              text: TraineePresenter.userPresenter.user.nickname!,
+              style: TextStyle(
+                color: FWTheme.primary[60],
+              ),
+            ),
+            TextSpan(
+                text: '님!',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+            )
+          ]
+
+        )
+
+
+      ),
+    );
+  }
+}
+
+
+//트레이니 ToDo 카드
+class TraineeToDoCard extends StatelessWidget {
+  const TraineeToDoCard({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
       child: Card(
-        color: Colors.transparent,
-        elevation: 0.0,
         child: Padding(
           padding: EdgeInsets.zero,
-          child: SizedBox(
-            //height: 120.0,
-            //width: 300.0,
-            child: Row(
-              children: const [
-                TraineeProfileImage(),
-                //TraineeInfo(),
-              ],
-            ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      TraineeProfileButton(),
+                      ToDoCardTitle(
+                        title: '바프 가보자고',
+                      ),
+                      ToDoCardSubTitle(
+                        subtitle: '운동',
+                      ),
+                    ],
+                  ),
+                  const TraineePercentGraphView(),
+                ],
+              ),
+              const Divider(
+                color: Colors.black,
+                indent: 15.0,
+                endIndent: 12.0,
+              ),
+              const TraineeCheckBoxList(),
+            ],
           ),
         ),
       ),
@@ -150,34 +208,51 @@ class TraineeProfile extends StatelessWidget {
   }
 }
 
-//트레이니 메인 페이지 트레이니 Image 위젯
-class TraineeProfileImage extends StatelessWidget {
-  const TraineeProfileImage({Key? key}) : super(key: key);
+//트레이니 퍼센테지 그래프
+class TraineePercentGraphView extends StatelessWidget {
+  const TraineePercentGraphView ({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Padding(
+      padding: EdgeInsets.only(right: 10.0, top: 15.0),
+      child: TraineePercentGraph(),
+    );
+  }
+}
+
+//트레이니 메인 페이지 트레이니 Inner Text 위젯
+class TraineePercentGraph extends StatelessWidget {
+  const TraineePercentGraph({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CircularPercentIndicator(
-      radius: 60.0,
-      lineWidth: 10.0,
-      percent: 0.8,
+      animation: true,
+      radius: 40.0,
+      lineWidth: 12.0,
+      percent: 0.75,
       center: ClipOval(
         child: SizedBox.fromSize(
-          size: const Size.fromRadius(50), // Image radius
-          child: Image.network(
-              'https://www.walkerhillstory.com/wp-content/uploads/2020/09/2-1.jpg',
-              fit: BoxFit.cover),
+          size: const Size.fromRadius(50),
+          child: Center(
+            child: FWText(
+                '75%',
+            ),
+          ),// Image radius
         ),
       ),
-      reverse: true,
-      backgroundColor: Colors.transparent,
+      reverse: false,
+      backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
       linearGradient: const LinearGradient(
-        colors: <Color>[Color(0xffB07BE6), Color(0xff5BA2E0)],
+        colors: <Color>[Color(0xff01B5FF), Color(0xff0291FF)],
       ),
       circularStrokeCap: CircularStrokeCap.round,
     );
   }
 }
 
+/*
 // 트레이니 메인 페이지 Trainee Information
 class TraineeInfo extends StatelessWidget {
   const TraineeInfo({Key? key}) : super(key: key);
@@ -216,51 +291,11 @@ class TraineeName extends StatelessWidget {
   }
 }
 
-//트레이니 ToDo 카드
-class TraineeToDoCard extends StatelessWidget {
-  const TraineeToDoCard({Key? key}) : super(key: key);
+ */
 
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: FWCard(
-        child: Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Column(
-                    children: const [
-                      TraineeProfileButton(),
-                      ToDoCardTitle(
-                        title: '바프 가보자고',
-                      ),
-                      ToDoCardSubTitle(
-                        subtitle: '운동',
-                      ),
-                    ],
-                  ),
-                  const TraineeProfile(),
-                ],
-              ),
-              const Divider(
-                color: Colors.black,
-                indent: 15.0,
-                endIndent: 15.0,
-              ),
-              const TraineeCheckBoxList(),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
 
-//트페이니 프로필 버튼
+
+//트레이니 페이지 트레이너 프로필 버튼
 class TraineeProfileButton extends StatelessWidget {
   const TraineeProfileButton({Key? key}) : super(key: key);
 
@@ -274,7 +309,6 @@ class TraineeProfileButton extends StatelessWidget {
         fontSize: 13.0,
         onPressed: () {
           //Get.toNamed('/main/trainer');
-          print("I am not ready!");
         },
         text: "트레이너 프로필",
         fill: false,
@@ -283,34 +317,129 @@ class TraineeProfileButton extends StatelessWidget {
   }
 }
 
-//트레이니 식단 카드
-class TraineeDietCard extends StatelessWidget {
-  const TraineeDietCard({Key? key}) : super(key: key);
+//트레이니 식단 카드 뷰
+class TraineeDietCardView extends StatelessWidget {
+  const TraineeDietCardView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: FWCard(
-          /*color: Theme.of(context).colorScheme.onSecondary,
-          shape: RoundedRectangleBorder(
-            side: BorderSide(
-              color: Theme.of(context).colorScheme.onSecondary,
-            ),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          elevation: 1.0,
-           */
+        child: Padding(
+          padding: EdgeInsets.zero,
           child: Column(
-        children: const [
-          DietCardTitle(
-            title: '식단',
-          ),
-        ],
-      )),
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: const [
+            DietCardViewTitle(
+              title: '식단',
+            ),
+              TraineeDietCardCarousel(),
+          ],
+      ),
+        ),
     );
   }
 }
 
+//트레이니 식단 카드
+
+class TraineeDietCard extends StatelessWidget {
+  const TraineeDietCard(this.meal, {
+    Key? key,
+    this.menu,
+  }
+) : super(key: key);
+
+  final String meal;
+  final String? menu;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+        child: Container(
+          width: 100.0,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: <Color>[Color(0xff01B5FF), Color(0xff0291FF)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+        ),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 4.0, left: 8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                FWText(
+                  meal,
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+                FWText(
+                  '$menu',
+                  style: Theme.of(context).textTheme.labelSmall,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 15.0),
+                  child: Container(
+                    width: 40.0,
+                    decoration: ShapeDecoration(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      shape: const CircleBorder(),
+                    ),
+                    child: IconButton(
+                        onPressed: () => GlobalPresenter.imageUpload(context,Theme.of(context)),
+                      icon: const Icon(
+                        Icons.add,
+                      ),
+                      color: Theme.of(context).colorScheme.primary
+                    ),
+                  ),
+                )
+            ],
+        ),
+          ),
+      ),
+    );
+  }
+}
+
+
+
+//트레이니 식단 카라호셀
+class TraineeDietCardCarousel extends StatelessWidget {
+  const TraineeDietCardCarousel({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final List<Widget> carouselWidgets = [
+      const TraineeDietCard('아침', menu: '식빵, 계란, 우유',),
+      const TraineeDietCard('점심', menu: '닭가슴살 샐러드',),
+      const TraineeDietCard('저녁', menu: '닭가슴살, 매실차',),
+    ];
+
+    return CarouselSlider(
+      options: CarouselOptions(
+        padEnds: false,
+        height: 131.0,
+        disableCenter: true,
+        enlargeCenterPage: false,
+        enableInfiniteScroll: false,
+        initialPage: 0,
+        viewportFraction: 0.3,
+        // autoPlay: false,
+      ),
+      items: carouselWidgets
+          .map((widget) => Container(
+        padding: EdgeInsets.zero,
+        child: widget,
+      ))
+          .toList(),
+    );
+  }
+}
+/*
 // 트레이니 메인 페이지 D-Day
 class TraineeMainPageDDay extends StatelessWidget {
   final String dDay;
@@ -330,30 +459,10 @@ class TraineeMainPageDDay extends StatelessWidget {
   }
 }
 
-// 트레이니 메인 페이지 Graph
-class TraineeMainPageGraph extends StatelessWidget {
-  final int total;
-  final int completed;
+ */
 
-  const TraineeMainPageGraph(
-      {Key? key, required this.completed, required this.total})
-      : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return LinearPercentIndicator(
-      width: 180.0,
-      lineHeight: 15,
-      linearGradient: const LinearGradient(
-        colors: <Color>[Color(0xffB07BE6), Color(0xff5BA2E0)],
-      ),
-      barRadius: const Radius.circular(10.0),
-      percent: completed / total,
-    );
-  }
-}
-
-// 트레이니 메인 페이지 -> ToDo 카드 위젯 title
+// 트레이니 메인 페이지 -> ToDo 카드 위젯 title text
 class ToDoCardTitle extends StatelessWidget {
   final String title;
 
@@ -376,7 +485,7 @@ class ToDoCardTitle extends StatelessWidget {
   }
 }
 
-// 트레이니 메인 페이지 -> ToDo 카드 위젯 subtitle
+// 트레이니 메인 페이지 -> ToDo 카드 위젯 subtitle text
 class ToDoCardSubTitle extends StatelessWidget {
   final String subtitle;
 
@@ -399,11 +508,11 @@ class ToDoCardSubTitle extends StatelessWidget {
   }
 }
 
-// 트레이니 메인 페이지 -> 식단 카드 위젯 subtitle
-class DietCardTitle extends StatelessWidget {
+// 트레이니 메인 페이지 -> 식단 뷰 title
+class DietCardViewTitle extends StatelessWidget {
   final String title;
 
-  const DietCardTitle({Key? key, required this.title}) : super(key: key);
+  const DietCardViewTitle({Key? key, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -671,7 +780,7 @@ class _TraineeCheckBoxListState extends State<TraineeCheckBoxList> {
   Widget build(BuildContext context) {
     return CheckboxListTile(
       title: const Text(
-        'Running',
+        '조깅 3km',
       ),
       activeColor: FWTheme.primary[30],
       value: timeDilation != 1.0,

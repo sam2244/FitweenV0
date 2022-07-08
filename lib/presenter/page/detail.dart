@@ -7,37 +7,37 @@ class TrainerDetailPresenter extends GetxController {
     {
       'dateTime': DateTime(
           DateTime.now().year, DateTime.now().month, DateTime.now().day - 2),
-      'exercises': ['윗몸일으키기'],
+      'exercises': ['윗몸일으키기 20회'],
       'completed': [false],
     },
     {
       'dateTime': DateTime(
           DateTime.now().year, DateTime.now().month, DateTime.now().day - 1),
-      'exercises': ['푸쉬업'],
+      'exercises': ['푸쉬업 30회'],
       'completed': [true],
     },
     {
       'dateTime': DateTime(
           DateTime.now().year, DateTime.now().month, DateTime.now().day),
-      'exercises': ['턱걸이'],
+      'exercises': ['턱걸이 20회'],
       'completed': [false],
     },
     {
       'dateTime': DateTime(
           DateTime.now().year, DateTime.now().month, DateTime.now().day + 1),
-      'exercises': ['윗몸일으키기', '푸쉬업'],
+      'exercises': ['윗몸일으키기 20회', '푸쉬업 30회'],
       'completed': [false, false],
     },
     {
       'dateTime': DateTime(
           DateTime.now().year, DateTime.now().month, DateTime.now().day + 2),
-      'exercises': ['윗몸일으키기', '턱걸이'],
+      'exercises': ['윗몸일으키기 20회', '턱걸이 30회'],
       'completed': [false, true],
     },
     {
       'dateTime': DateTime(
           DateTime.now().year, DateTime.now().month, DateTime.now().day + 3),
-      'exercises': ['푸쉬업', '턱걸이'],
+      'exercises': ['푸쉬업 30회', '턱걸이 30회'],
       'completed': [true, false],
     },
     {

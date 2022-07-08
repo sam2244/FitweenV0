@@ -1,7 +1,7 @@
 import 'package:fitween1/model/user/user.dart';
 import 'package:fitween1/presenter/global.dart';
 import 'package:fitween1/presenter/model/user.dart';
-import 'package:fitween1/view/page/chat/widget.dart';
+import 'package:fitween1/view/page/chat/chat/widget.dart';
 import 'package:fitween1/view/widget/container.dart';
 import 'package:fitween1/view/widget/image.dart';
 import 'package:fitween1/view/widget/text.dart';

@@ -25,7 +25,7 @@ class EditNameAppBar extends StatelessWidget implements PreferredSizeWidget {
                     Icons.arrow_back,
                     color: Theme.of(context).colorScheme.primary,
                   ),
-                  onPressed: controller.backPressed,
+                  onPressed: controller.backPressedEditName,
                 );
               }
           ),

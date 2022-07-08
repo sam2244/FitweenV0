@@ -98,6 +98,12 @@ class UserPresenter extends GetxController {
     update();
   }
 
+  void addPlan(Plan plan) {
+    user.trainerPlans ??= [];
+    user.trainerPlans!.add(plan);
+    update();
+  }
+
   // firebase 에서 로드된 데이터 가공 후 user 객체로 반환
   Future<FWUser?> loadDB(String? uid) async {
     if (uid == null) return null;
