@@ -1,4 +1,5 @@
 import 'package:fitween1/model/chat/chat.dart';
+import 'package:fitween1/model/plan/diet.dart';
 import 'package:fitween1/model/plan/todo.dart';
 import 'package:fitween1/model/user/user.dart';
 import 'package:intl/intl.dart';
@@ -23,6 +24,7 @@ class Plan {
   bool isDiet = false;
   bool isWeight = true;
   Map<DateTime, List<Todo>>? todos;
+  Map<DateTime, List<Diet>>? diets;
 
   Plan();
 
@@ -75,4 +77,15 @@ class Plan {
 
   static const List<String> purposes = ['다이어트', '벌크업', '기타'];
 
+  static Weekday toWeekday(DateTime date) {
+    return {
+      DateTime.monday: Weekday.mon,
+      DateTime.tuesday: Weekday.tue,
+      DateTime.wednesday: Weekday.wed,
+      DateTime.thursday: Weekday.thu,
+      DateTime.friday: Weekday.fri,
+      DateTime.saturday: Weekday.sat,
+      DateTime.sunday: Weekday.sun,
+    }[date.weekday]!;
+  }
 }

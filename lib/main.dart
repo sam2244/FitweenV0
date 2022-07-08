@@ -1,6 +1,7 @@
 import 'package:fitween1/firebase_options.dart';
 import 'package:fitween1/global/config/theme.dart';
 import 'package:fitween1/presenter/global.dart';
+import 'package:fitween1/presenter/model/exercise.dart';
 import 'package:fitween1/route.dart';
 import 'package:fitween1/view/page/splash/splash.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,7 @@ class Fitween extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     GlobalPresenter.initControllers();
+    ExercisePresenter.loadExercises();
 
     return ScreenUtilInit(
         designSize: const Size(375, 812),

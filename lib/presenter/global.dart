@@ -3,7 +3,9 @@ import 'package:fitween1/model/user/user.dart';
 import 'package:fitween1/presenter/model/plan.dart';
 import 'package:fitween1/presenter/model/user.dart';
 import 'package:fitween1/presenter/page/add_info.dart';
-import 'package:fitween1/presenter/page/add_plan.dart';
+import 'package:fitween1/presenter/page/add_plan/add_diet.dart';
+import 'package:fitween1/presenter/page/add_plan/add_plan.dart';
+import 'package:fitween1/presenter/page/add_plan/add_todo.dart';
 import 'package:fitween1/presenter/page/detail.dart';
 import 'package:fitween1/presenter/page/main/trainer.dart';
 import 'package:fitween1/presenter/page/chat/chat.dart';
@@ -48,25 +50,21 @@ class GlobalPresenter extends GetxController {
           children: [
             ProfileImageRect(user: user),
             const SizedBox(width: 8.0),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  FWText(
-                    user.nickname!,
-                    style: themeData.textTheme.labelLarge,
-                    color: themeData.colorScheme.onSurface,
-                  ),
-                  const SizedBox(height: 4.0),
-                  Expanded(
-                    child: FWText(
-                      user.statusMessage ?? '',
-                      style: themeData.textTheme.labelSmall,
-                      color: themeData.colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                ],
-              ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                FWText(
+                  user.nickname!,
+                  style: themeData.textTheme.labelLarge,
+                  color: themeData.colorScheme.onSurface,
+                ),
+                const SizedBox(height: 4.0),
+                FWText(
+                  user.statusMessage ?? '',
+                  style: themeData.textTheme.labelSmall,
+                  color: themeData.colorScheme.onSurfaceVariant,
+                ),
+              ],
             ),
           ],
         ),
@@ -84,6 +82,8 @@ class GlobalPresenter extends GetxController {
     Get.put(ChatroomPresenter());
     Get.put(AddInfoPresenter());
     Get.put(AddPlanPresenter());
+    Get.put(AddTodoPresenter());
+    Get.put(AddDietPresenter());
     Get.put(MyPresenter());
     Get.put(SettingPresenter());
     Get.put(TrainerPresenter());
