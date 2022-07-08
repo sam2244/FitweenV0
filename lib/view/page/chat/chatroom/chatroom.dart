@@ -1,4 +1,4 @@
-import 'package:fitween1/view/page/chatroom/widget.dart';
+import 'package:fitween1/view/page/chat/chatroom/widget.dart';
 import 'package:flutter/material.dart';
 
 class ChatroomPage extends StatefulWidget {

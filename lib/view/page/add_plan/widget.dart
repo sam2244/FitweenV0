@@ -6,7 +6,6 @@ import 'package:fitween1/global/global.dart';
 import 'package:fitween1/model/plan/plan.dart';
 import 'package:fitween1/presenter/page/add_plan/add_diet.dart';
 import 'package:fitween1/presenter/page/add_plan/add_plan.dart';
-import 'package:fitween1/presenter/page/add_plan/add_todo.dart';
 import 'package:fitween1/view/widget/button.dart';
 import 'package:fitween1/view/widget/container.dart';
 import 'package:fitween1/view/widget/text.dart';

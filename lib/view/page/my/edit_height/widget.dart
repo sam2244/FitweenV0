@@ -69,7 +69,7 @@ class HeightTextField extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(10.0),
                 child: FWCard(
                   height: 156.0,
                   child: Row(
