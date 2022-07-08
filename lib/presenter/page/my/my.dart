@@ -38,7 +38,8 @@ class MyPresenter extends GetxController {
     defaultWeight = userPresenter.user.weights!.values.last;
     Get.dialog(
       FWDialog(
-        maxHeight: 150.0,
+        title: '체중을 입력하세요.',
+        maxHeight: 140.0,
         rightPressed: () {
           userPresenter.user.weights![Plan.today] = defaultWeight;
           update(); Get.back();
@@ -46,17 +47,14 @@ class MyPresenter extends GetxController {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('체중을 입력하세요.'),
             GetBuilder<MyPresenter>(
               builder: (controller) {
-                return Expanded(
-                  child: FWNumberPicker(
-                    onChanged: (value) => controller.weightSelected(value * .1),
-                    value: controller.defaultWeight,
-                    step: .1,
-                    minValue: FWUser.weightRange.start,
-                    maxValue: FWUser.weightRange.end,
-                  ),
+                return FWNumberPicker(
+                  onChanged: (value) => controller.weightSelected(value * .1),
+                  value: controller.defaultWeight,
+                  step: .1,
+                  minValue: FWUser.weightRange.start,
+                  maxValue: FWUser.weightRange.end,
                 );
               },
             ),

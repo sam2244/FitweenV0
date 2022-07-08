@@ -84,7 +84,7 @@ class TraineeAddPlanButton extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 5.0),
                         child: FWText(
-                          '새 플랜 추가',
+                          '새 플랜 가입',
                           style: Theme.of(context).textTheme.labelLarge,
                           color: Theme.of(context).colorScheme.onPrimary,
                         ),

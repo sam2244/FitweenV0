@@ -8,6 +8,7 @@ enum DialogType { info, warning }
 class FWDialog extends StatelessWidget {
   FWDialog({
     Key? key,
+    this.title,
     required this.child,
     this.leftLabel = '취소',
     this.rightLabel = '확인',
@@ -18,6 +19,7 @@ class FWDialog extends StatelessWidget {
     this.type = DialogType.info,
   }) : super(key: key);
 
+  final String? title;
   final Widget child;
   final String leftLabel;
   final String rightLabel;
@@ -54,7 +56,20 @@ class FWDialog extends StatelessWidget {
                 maxWidth: maxWidth,
                 maxHeight: maxHeight,
               ),
-              child: child,
+              child: Column(
+                children: [
+                  if (title != null)
+                  Row(
+                    children: [
+                      FWText(title!,
+                        style: Theme.of(context).textTheme.headlineSmall,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                    ],
+                  ),
+                  child,
+                ],
+              ),
             ),
           ),
           Row(
