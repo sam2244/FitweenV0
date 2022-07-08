@@ -1,8 +1,10 @@
 import 'package:fitween1/model/user/user.dart';
+import 'package:fitween1/presenter/page/main/trainer.dart';
 import 'package:fitween1/view/page/main/trainer/widget.dart';
 import 'package:fitween1/view/page/main/widget.dart';
 import 'package:fitween1/view/widget/container.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 // 트레이너 메인 페이지
 class TrainerMainPage extends StatelessWidget {
@@ -14,7 +16,40 @@ class TrainerMainPage extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: const MainAppBar(role: Role.trainer),
       body: const TrainerView(),
-      bottomNavigationBar: const FWBottomBar(),
+      bottomNavigationBar: GetBuilder<TrainerPresenter>(
+        builder: (controller) {
+          return controller.selectMod == false
+              ? const FWBottomBar()
+              : BottomAppBar(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.drive_file_move_outline),
+                          iconSize: 40.0,
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.add),
+                          iconSize: 40.0,
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            controller.resetSelectState();
+                            controller.modChange(false);
+                          },
+                          icon: const Icon(Icons.close_rounded),
+                          iconSize: 40.0,
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+        },
+      ),
     );
   }
 }

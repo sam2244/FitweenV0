@@ -1,10 +1,11 @@
 import 'package:fitween1/presenter/page/detail.dart';
-import 'package:fitween1/view/page/main/trainer/widget.dart';
 import 'package:fitween1/view/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:weekly_date_picker/weekly_date_picker.dart';
+
+import '../../../presenter/page/main/trainer.dart';
 
 class TraineeDetailPage extends StatelessWidget {
   final Trainee trainee;
@@ -14,12 +15,14 @@ class TraineeDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          TraineeInformation(trainee: trainee),
-          const TraineeWeeklyCalendar(),
-          const TraineeExerciseCard(),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            TraineeInformation(trainee: trainee),
+            const TraineeWeeklyCalendar(),
+            const TraineeExerciseCard(),
+          ],
+        ),
       ),
     );
   }
@@ -159,6 +162,53 @@ class TraineeExerciseCard extends StatelessWidget {
                           color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
+                  const SizedBox(height: 8),
+                  FWText(
+                    "식단",
+                    style: Theme.of(context).textTheme.titleMedium,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                  Divider(
+                    color: Theme.of(context).colorScheme.outline,
+                  ),
+                  SizedBox(
+                    height: 104.0,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        Container(
+                          width: 80.0,
+                          margin:
+                              const EdgeInsets.fromLTRB(0.0, 8.0, 12.0, 16.0),
+                          decoration: BoxDecoration(
+                            border: Border.all(),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: const Icon(Icons.camera),
+                        ),
+                        Container(
+                          width: 80.0,
+                          margin:
+                              const EdgeInsets.fromLTRB(0.0, 8.0, 12.0, 16.0),
+                          decoration: BoxDecoration(
+                            border: Border.all(),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: const Icon(Icons.camera),
+                        ),
+                        Container(
+                          width: 80.0,
+                          margin:
+                              const EdgeInsets.fromLTRB(0.0, 8.0, 12.0, 16.0),
+                          decoration: BoxDecoration(
+                            border: Border.all(),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: const Icon(Icons.camera),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),

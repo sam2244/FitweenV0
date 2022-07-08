@@ -43,8 +43,8 @@ class TrainerDetailPresenter extends GetxController {
     {
       'dateTime': DateTime(
           DateTime.now().year, DateTime.now().month, DateTime.now().day + 4),
-      'exercises': ['윗몸일으키기 20회', '푸쉬업 30회', '턱걸이 30회'],
-      'completed': [true, false, true],
+      'exercises': ['윗몸일으키기', '푸쉬업', '턱걸이', '바벨컬', '달리기'],
+      'completed': [true, false, true, false, false],
     },
   ];
 
