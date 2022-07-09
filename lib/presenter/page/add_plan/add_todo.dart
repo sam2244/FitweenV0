@@ -31,7 +31,6 @@ class AddTodoPresenter extends GetxController {
     Todo todo = Todo(
       name: name!,
       numbers: numbers,
-      units: ExercisePresenter.getExercise(name)?.units ?? [],
       selectedDays: [...addPlanPresenter.selectedDays],
     );
 

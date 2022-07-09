@@ -8,7 +8,7 @@ class ExercisePresenter {
   static String jsonFileDir = '/Volumes/One Touch/projects/flutter/Fitween/assets/json/exercises.json';
   static List<Exercise> exercises = [];
 
-  static void loadExercises() {
+  static void loadExercises() async {
     List<dynamic> json = jsonDecode(File(jsonFileDir).readAsStringSync());
     exercises = json.map((data) => Exercise(
       category: data['분류'], name: data['이름'], unit: data['단위'],

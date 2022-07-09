@@ -10,6 +10,7 @@ import 'package:fitween1/view/widget/button.dart';
 import 'package:fitween1/view/widget/container.dart';
 import 'package:fitween1/view/widget/text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 enum DateType { start, end }
@@ -52,7 +53,7 @@ class CarouselView extends StatelessWidget {
   static List<Widget> carouselWidgets() => [
     const PurposeDietView(),
     const PTPeriodView(),
-    const RoutineSelectionView(),
+    const TodoSelectionView(),
     const DietSelectionView(),
   ];
   static int widgetCount = carouselWidgets().length;
@@ -118,102 +119,96 @@ class PurposeDietView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> contents = [
-      FWCard(
-        height: 190.0,
-        title: '트레이닝의 목적이 무엇인가요?',
-        child: GetBuilder<AddPlanPresenter>(
-          builder: (controller) => Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              children: [
-                DropdownSearch<String>(
-                  items: Plan.purposes,
-                  onChanged: (value) => controller.purposeSelected(value ?? ''),
-                  dropdownDecoratorProps: DropDownDecoratorProps(
-                    dropdownSearchDecoration: InputDecoration(
-                      contentPadding: const EdgeInsets.only(left: 10.0),
-                      border: const OutlineInputBorder(),
-                      labelText: '목적',
-                      suffixIcon: const Icon(Icons.arrow_drop_down),
-                      hintStyle: Theme.of(context).textTheme.labelLarge,
-                    ),
-                  ),
-                  dropdownBuilder: (context, purpose) => FWText(
-                    purpose ?? '다이어트',
-                    style: Theme.of(context).textTheme.labelLarge,
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  ),
-                  popupProps: PopupProps.menu(
-                    fit: FlexFit.loose,
-                    listViewProps: const ListViewProps(itemExtent: 48.0),
-                    menuProps: MenuProps(
-                      elevation: 3.0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4.0),
+    return Column(
+      children: [
+        FWCard(
+          title: '트레이닝의 목적이 무엇인가요?',
+          child: GetBuilder<AddPlanPresenter>(
+            builder: (controller) => Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                children: [
+                  DropdownSearch<String>(
+                    items: Plan.purposes,
+                    onChanged: (value) => controller.purposeSelected(value ?? ''),
+                    dropdownDecoratorProps: DropDownDecoratorProps(
+                      dropdownSearchDecoration: InputDecoration(
+                        contentPadding: const EdgeInsets.only(left: 10.0),
+                        border: const OutlineInputBorder(),
+                        labelText: '목적',
+                        suffixIcon: const Icon(Icons.arrow_drop_down),
+                        hintStyle: Theme.of(context).textTheme.labelLarge,
                       ),
-                      animationDuration: Duration.zero,
-                      textStyle: Theme.of(context).textTheme.labelLarge,
-                      shadowColor: Theme.of(context).colorScheme.shadow,
                     ),
-                    itemBuilder: (context, purpose, _) {
-                      return ListTile(
-                        contentPadding: const EdgeInsets.only(left: 15.0),
-                        selected: purpose == AddPlanPresenter.planPresenter.plan.purpose,
-                        tileColor: FWTheme.surface[2],
-                        selectedTileColor: Color.alphaBlend(
-                          Theme.of(context).colorScheme.onSurface.withOpacity(.12),
-                          FWTheme.surface[2]!,
+                    dropdownBuilder: (context, purpose) => FWText(
+                      purpose ?? '다이어트',
+                      style: Theme.of(context).textTheme.labelLarge,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    ),
+                    popupProps: PopupProps.menu(
+                      fit: FlexFit.loose,
+                      listViewProps: const ListViewProps(itemExtent: 48.0),
+                      menuProps: MenuProps(
+                        elevation: 3.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4.0),
                         ),
-                        title: FWText(
-                          purpose,
-                          style: Theme.of(context).textTheme.labelLarge,
-                          color: Theme.of(context).colorScheme.onSurfaceVariant,
-                        ),
-                      );
-                    },
+                        animationDuration: Duration.zero,
+                        textStyle: Theme.of(context).textTheme.labelLarge,
+                        shadowColor: Theme.of(context).colorScheme.shadow,
+                      ),
+                      itemBuilder: (context, purpose, _) {
+                        return ListTile(
+                          contentPadding: const EdgeInsets.only(left: 15.0),
+                          selected: purpose == AddPlanPresenter.planPresenter.plan.purpose,
+                          tileColor: FWTheme.surface[2],
+                          selectedTileColor: Color.alphaBlend(
+                            Theme.of(context).colorScheme.onSurface.withOpacity(.12),
+                            FWTheme.surface[2]!,
+                          ),
+                          title: FWText(
+                            purpose,
+                            style: Theme.of(context).textTheme.labelLarge,
+                            color: Theme.of(context).colorScheme.onSurfaceVariant,
+                          ),
+                        );
+                      },
+                    ),
                   ),
+                  const SizedBox(height: 12.0),
+                  FWInputField(
+                    controller: AddPlanPresenter.purposeCont,
+                    hintText: controller.hintText,
+                    enabled: controller.fieldActive,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        FWCard(
+          title: '피트위너의 식단을 관리하시겠습니까?',
+          child: GetBuilder<AddPlanPresenter>(
+            builder: (controller) => Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                FWButton(
+                  text: '예',
+                  fill: AddPlanPresenter.planPresenter.plan.isDiet,
+                  width: 132.0,
+                  onPressed: () => controller.dietSelected(true),
                 ),
-                const SizedBox(height: 12.0),
-                FWInputField(
-                  controller: AddPlanPresenter.purposeCont,
-                  hintText: controller.hintText,
-                  enabled: controller.fieldActive,
+                FWButton(
+                  text: '아니오',
+                  width: 132.0,
+                  fill: !AddPlanPresenter.planPresenter.plan.isDiet,
+                  onPressed: () => controller.dietSelected(false),
                 ),
               ],
             ),
           ),
         ),
-      ),
-      FWCard(
-        height: 116.0,
-        title: '피트위너의 식단을 관리하시겠습니까?',
-        child: GetBuilder<AddPlanPresenter>(
-          builder: (controller) => Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              FWButton(
-                text: '예',
-                fill: AddPlanPresenter.planPresenter.plan.isDiet,
-                width: 132.0,
-                onPressed: () => controller.dietSelected(true),
-              ),
-              FWButton(
-                text: '아니오',
-                width: 132.0,
-                fill: !AddPlanPresenter.planPresenter.plan.isDiet,
-                onPressed: () => controller.dietSelected(false),
-              ),
-            ],
-          ),
-        ),
-      ),
-    ];
-
-    return ListView.separated(
-      itemCount: contents.length,
-      itemBuilder: (context, index) => contents[index],
-      separatorBuilder: (context, index) => const SizedBox(height: 10.0),
+      ],
     );
   }
 }
@@ -227,7 +222,6 @@ class PTPeriodView extends StatelessWidget {
       children: [
         FWCard(
           title: '트레이닝 기간을 선택해주세요.',
-          height: 310.0,
           child: Column(
             children: [
               const DateSelectionButton(type: DateType.start),
@@ -365,8 +359,8 @@ class PeriodSelectionButton extends StatelessWidget {
 }
 
 
-class RoutineSelectionView extends StatelessWidget {
-  const RoutineSelectionView({Key? key}) : super(key: key);
+class TodoSelectionView extends StatelessWidget {
+  const TodoSelectionView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -379,9 +373,13 @@ class RoutineSelectionView extends StatelessWidget {
               children: Weekday.values.map((day) => WeekdayButton(day: day)).toList(),
             ),
             FWCard(
-              height: 300.0,
               child: Column(
                 children: [
+                  if (controller.selectedDays.isEmpty)
+                  FWText('요일을 선택해주세요.',
+                    color: Theme.of(context).colorScheme.outline,
+                  ),
+                  if (controller.selectedDays.isNotEmpty)
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -399,7 +397,6 @@ class RoutineSelectionView extends StatelessWidget {
                     color: FWTheme.surface[2],
                   ),
                   const TodoListView(),
-                  const Expanded(child: SizedBox()),
                 ],
               ),
             ),
@@ -489,9 +486,13 @@ class TodoListView extends StatelessWidget {
       builder: (controller) {
         return Column(
           children: [
-            SizedBox(
-              height: 180.0,
+            ConstrainedBox(
+              constraints: BoxConstraints(
+                maxHeight: 300.0.h,
+              ),
               child: ListView(
+                padding: EdgeInsets.zero,
+                shrinkWrap: true,
                 children: controller.getTodosInSelectedDays().map((todo) => InkWell(
                   onTap: () => controller.updateTodoPressed(todo),
                   child: ListTile(
@@ -520,12 +521,12 @@ class TodoListView extends StatelessWidget {
                 )).toList(),
               ),
             ),
-            Divider(
-              height: 0.0,
-              thickness: 2.0,
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            const SizedBox(height: 10.0),
+            AddButton(
+              active: controller.selectedDays.isNotEmpty,
+              text: '루틴 추가',
+              onPressed: controller.addTodoPressed,
             ),
-            AddButton(text: '루틴 추가', onPressed: controller.addTodoPressed),
           ],
         );
       }
@@ -547,7 +548,6 @@ class DietSelectionView extends StatelessWidget {
               children: Weekday.values.map((day) => WeekdayButton(day: day)).toList(),
             ),
             FWCard(
-              height: 410.0,
               child: Column(
                 children: [
                   Row(
@@ -567,7 +567,6 @@ class DietSelectionView extends StatelessWidget {
                     color: FWTheme.surface[2],
                   ),
                   const DietListView(),
-                  const Expanded(child: SizedBox()),
                 ],
               ),
             ),
@@ -587,9 +586,13 @@ class DietListView extends StatelessWidget {
       builder: (controller) {
         return Column(
           children: [
-            SizedBox(
-              height: 280.0,
+            ConstrainedBox(
+              constraints: BoxConstraints(
+                maxHeight: 300.0.h,
+              ),
               child: ListView(
+                padding: EdgeInsets.zero,
+                shrinkWrap: true,
                 children: AddDietPresenter.types.map((type) => Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -632,12 +635,12 @@ class DietListView extends StatelessWidget {
                 )).toList(),
               ),
             ),
-            Divider(
-              height: 0.0,
-              thickness: 2.0,
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            const SizedBox(height: 10.0),
+            AddButton(
+              active: controller.selectedDays.isNotEmpty,
+              text: '식단 추가',
+              onPressed: controller.addDietPressed,
             ),
-            AddButton(text: '식단 추가', onPressed: controller.addDietPressed),
           ],
         );
       },
@@ -651,25 +654,52 @@ class AddButton extends StatelessWidget {
     Key? key,
     required this.text,
     required this.onPressed,
+    this.active = true,
   }) : super(key: key);
 
   final String text;
   final VoidCallback onPressed;
+  final bool active;
 
   @override
   Widget build(BuildContext context) {
+    BorderRadius borderRadius = BorderRadius.circular(10.0);
+
     return InkWell(
       onTap: onPressed,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.add_circle_outline, size: 20.0),
-          const SizedBox(width: 10.0),
-          FWText(text,
-            style: Theme.of(context).textTheme.headlineSmall,
-            color: Theme.of(context).colorScheme.onSurfaceVariant,
+      borderRadius: borderRadius,
+      child: Container(
+        padding: const EdgeInsets.all(5.0),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: active
+                ? Theme.of(context).colorScheme.outline
+                : Colors.transparent,
           ),
-        ],
+          borderRadius: borderRadius,
+          color: active
+              ? Colors.transparent
+              : Theme.of(context).colorScheme.onInverseSurface,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.add_circle_outline,
+              size: 20.0,
+              color: active
+                  ? Theme.of(context).colorScheme.onSurfaceVariant
+                  : Theme.of(context).colorScheme.outline,
+            ),
+            const SizedBox(width: 10.0),
+            FWText(text,
+              style: Theme.of(context).textTheme.headlineSmall,
+              color: active
+                  ? Theme.of(context).colorScheme.onSurfaceVariant
+                  : Theme.of(context).colorScheme.outline,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -687,19 +717,19 @@ class CarouselIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AddPlanPresenter>(
-        builder: (controller) {
-          return SizedBox(
-            height: 100.0,
-            child: DotsIndicator(
-              dotsCount: count,
-              position: controller.pageIndex.toDouble(),
-              decorator: DotsDecorator(
-                color: FWTheme.grey,
-                activeColor: Theme.of(context).colorScheme.primary,
-              ),
+      builder: (controller) {
+        return SizedBox(
+          height: 100.0,
+          child: DotsIndicator(
+            dotsCount: count,
+            position: controller.pageIndex.toDouble(),
+            decorator: DotsDecorator(
+              color: FWTheme.grey,
+              activeColor: Theme.of(context).colorScheme.primary,
             ),
-          );
-        }
+          ),
+        );
+      },
     );
   }
 }

@@ -24,5 +24,8 @@ class Chat {
   };
 
   static DateTime removeTime(DateTime date) => DateTime(date.year, date.month, date.day);
+  static DateTime fullTime(DateTime date) => removeTime(date).add(
+    const Duration(days: 1)).subtract(const Duration(seconds: 1),
+  );
   DateTime ignoreTime() => removeTime(date);
 }

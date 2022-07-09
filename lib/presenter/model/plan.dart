@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitween1/model/plan/plan.dart';
 import 'package:fitween1/presenter/firebase/firebase.dart';
 import 'package:fitween1/presenter/model/user.dart';
@@ -12,10 +11,13 @@ class PlanPresenter extends GetxController {
   // json 데이터를 plan 객체에 주입
   Future fromJson(Map<String, dynamic> json) async {
     Map<String, dynamic> map = {...json};
+    map['state'] = Plan.toState(json['state']);
     map['trainer'] ??= await userPresenter.loadDB(json['trainerUid']);
     map['trainee'] ??= await userPresenter.loadDB(json['traineeUid']);
     map['startDate'] = json['startDate'] as DateTime;
     map['endDate'] = json['endDate'] as DateTime;
+    map['todos'] = Plan.toTodos(json['todos']);
+    map['diets'] = Plan.toDiets(json['diets']);
     plan.fromMap(map);
     update();
   }
@@ -23,11 +25,19 @@ class PlanPresenter extends GetxController {
   // plan 객체에서 json 데이터 추출
   Map<String, dynamic> toJson() => {
     'id': plan.id,
-    'state': plan.state.toString(),
+    'state': plan.state.name,
     'trainerUid': plan.trainer?.uid,
     'trainee': plan.trainee?.uid,
-    'startDate': plan.startDate as Timestamp,
-    'endDate': plan.endDate as Timestamp,
+    'startDate': plan.startDate,
+    'endDate': plan.endDate,
+    'todos': plan.todos.entries.map((dateTodo) => {
+      'date': dateTodo.key,
+      'todoList': dateTodo.value.map((todo) => todo.toJson()).toList(),
+    }).toList(),
+    'diets': plan.diets.entries.map((dateDiet) => {
+      'date': dateDiet.key,
+      'dietList': dateDiet.value.map((diet) => diet.toJson()).toList(),
+    }).toList(),
   };
 
   // firebase 에서 로드된 데이터 가공 후 plan 객체로 반환

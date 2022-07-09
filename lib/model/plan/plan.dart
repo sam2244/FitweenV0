@@ -23,10 +23,23 @@ class Plan {
   DateTime? endDate;
   bool isDiet = false;
   bool isWeight = true;
-  Map<DateTime, List<Todo>>? todos;
-  Map<DateTime, List<Diet>>? diets;
+  late Map<DateTime, List<Todo>> todos;
+  late Map<DateTime, List<Diet>> diets;
 
-  Plan();
+  Plan() {
+    todos = initMap<Todo>();
+    diets = initMap<Diet>();
+  }
+
+  Map<DateTime, List<T>> initMap<T>() {
+    Map<DateTime, List<T>> result = {};
+    DateTime date = startDate ?? today;
+    while (date.isBefore(endDate ?? tomorrow)) {
+      result[date] = [];
+      date = date.add(const Duration(days: 1));
+    }
+    return result;
+  }
 
   void fromMap(Map<String, dynamic> map) {
     id = map['id'];
@@ -38,7 +51,6 @@ class Plan {
     endDate = map['endDate'];
     isDiet = map['isDiet'];
     isWeight = map['isWeight'];
-    todos = map['todos'];
   }
 
   Map<String, dynamic> toMap() => {
@@ -51,14 +63,20 @@ class Plan {
     'endDate': endDate,
     'isDiet': isDiet,
     'isWeight': isWeight,
-    'todos': todos,
   };
+
+  // @override
+  // String toString() {
+  //   return '\n\n${toMap().entries.map(
+  //         (data) => '${data.key}: ${data.value}',
+  //   ).join('\n')}';
+  // }
 
   @override
   String toString() {
-    return '\n\n${toMap().entries.map(
-          (data) => '${data.key}: ${data.value}',
-    ).join('\n')}';
+    return '\n\nPLAN INFO\n${toMap().entries.map(
+          (data) => '  ${data.key}: ${data.value}',
+    ).join('\n')}\n';
   }
 
   // 문자열을 상태 enum 으로 전환 ('training' => State.training)
@@ -72,8 +90,27 @@ class Plan {
     return plans.map((plan) => plan.id ?? '').toList();
   }
 
+  static Map<DateTime, List<Todo>>? toTodos(List<dynamic>? jsonTodos) {
+    Map<DateTime, List<Todo>> result = {};
+    if (jsonTodos == null) return null;
+    for (var jsonTodo in jsonTodos) {
+      result[jsonTodo['date']] = jsonTodo['todos'];
+    }
+    return result;
+  }
+
+  static Map<DateTime, List<Todo>>? toDiets(List<dynamic>? jsonDiets) {
+    Map<DateTime, List<Todo>> result = {};
+    if (jsonDiets == null) return null;
+    for (var jsonDiet in jsonDiets) {
+      result[jsonDiet['date']] = jsonDiet['diets'];
+    }
+    return result;
+  }
+
   static dateToString(DateTime date) => DateFormat('yyyy년 MM월 dd일').format(date);
   static DateTime get today => Chat.removeTime(DateTime.now());
+  static DateTime get tomorrow => Chat.fullTime(today);
 
   static const List<String> purposes = ['다이어트', '벌크업', '기타'];
 
@@ -87,5 +124,9 @@ class Plan {
       DateTime.saturday: Weekday.sat,
       DateTime.sunday: Weekday.sun,
     }[date.weekday]!;
+  }
+
+  static Weekday stringToWeekDay(String date) {
+    return Weekday.values.firstWhere((day) => day.name == date);
   }
 }

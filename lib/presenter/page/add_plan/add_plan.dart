@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_controller.dart';
+import 'package:fitween1/model/chat/chat.dart';
 import 'package:fitween1/model/plan/diet.dart';
 import 'package:fitween1/model/plan/plan.dart';
 import 'package:fitween1/model/plan/todo.dart';
@@ -39,6 +40,18 @@ class AddPlanPresenter extends GetxController {
   static final addTodoPresenter = Get.find<AddTodoPresenter>();
   static final addDietPresenter = Get.find<AddDietPresenter>();
 
+  void initialize() {
+    pageIndex = 0;
+    hintText = Plan.purposes.first;
+    fieldActive = false;
+    period = 1;
+
+    selectedDays = [];
+    todos = [];
+    diets = [];
+
+    initDates();
+  }
 
   // 현재 페이지 인덱스 증가
   void pageIndexIncrease() {
@@ -68,8 +81,12 @@ class AddPlanPresenter extends GetxController {
     bool isLastPage = plan.isDiet && pageIndex == CarouselView.widgetCount - 1;
     isLastPage |= !plan.isDiet && pageIndex == CarouselView.widgetCount - 2;
 
+    if (pageIndex == 1) initDates();
+    if (pageIndex == 2) plan.endDate = Chat.fullTime(plan.endDate!);
+
     if (isLastPage) {
       extendTodos(); extendDiets(); complete();
+      pageIndex = 0;
       Get.offAllNamed('/main/trainer');
       return;
     }
@@ -83,9 +100,10 @@ class AddPlanPresenter extends GetxController {
   }
 
   void complete() {
+    plan.trainer = userPresenter.user;
     userPresenter.addPlan(plan);
     Get.offAllNamed('/main/trainer');
-    // planPresenter.updateDB();
+    planPresenter.updateDB();
   }
 
   void purposeSelected(String purpose) {
@@ -236,9 +254,15 @@ class AddPlanPresenter extends GetxController {
   void extendTodos() {
     DateTime date = plan.startDate!;
     while (date.isBefore(plan.endDate!)) {
-      if (plan.todos != null) {
-        plan.todos![date] = getTodos([Plan.toWeekday(date)]);
+      List<Todo> todos = getTodos([Plan.toWeekday(date)]);
+      List<Todo> dailyTodos = [];
+
+      for (Todo todo in todos) {
+        if (todo.selectedDays.contains(Plan.toWeekday(date))) {
+          dailyTodos.add(todo);
+        }
       }
+      plan.todos[date] = dailyTodos;
       date = date.add(const Duration(days: 1));
     }
   }
@@ -289,9 +313,7 @@ class AddPlanPresenter extends GetxController {
   void extendDiets() {
     DateTime date = plan.startDate!;
     while (date.isBefore(plan.endDate!)) {
-      if (plan.diets != null) {
-        plan.diets![date] = getDiets([Plan.toWeekday(date)]);
-      }
+      plan.diets[date] = getDiets([Plan.toWeekday(date)]);
       date = date.add(const Duration(days: 1));
     }
   }

@@ -24,13 +24,12 @@ class AddTodoPage extends StatelessWidget {
               children: [
                 FWCard(
                   title: '운동을 입력하세요.',
-                  height: 260.0,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Row(
                         children: [
-                          Expanded(
+                          Flexible(
                             flex: 2,
                             child: FWDropdownSearch(
                               hintText: '운동',
@@ -41,7 +40,7 @@ class AddTodoPage extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(width: 15.0),
-                          Expanded(
+                          Flexible(
                             child: FWDropdownSearch(
                               enable: ExercisePresenter.unitsLength(controller.name) > 1,
                               hintText: controller.unitType ?? '단위',
@@ -52,13 +51,12 @@ class AddTodoPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Expanded(
-                        child: {
-                          '횟수': const CountPicker(),
-                          '거리': const DistancePicker(),
-                          '시간': const TimePicker(),
-                        }[controller.unitType] ?? Container(),
-                      ),
+                      const SizedBox(height: 20.0),
+                      {
+                        '횟수': const CountPicker(),
+                        '거리': const DistancePicker(),
+                        '시간': const TimePicker(),
+                      }[controller.unitType] ?? Container(),
                     ],
                   ),
                 ),
@@ -104,7 +102,7 @@ class AddTodoAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
               onPressed: controller.backPressed
           ),
-          title: FWText('주간 루틴',
+          title: FWText('주간루틴',
             style: Theme.of(context).textTheme.headlineMedium,
           ),
           elevation: 0.0,

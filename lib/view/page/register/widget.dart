@@ -361,7 +361,6 @@ class WeightHeightView extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: contents.length,
       itemBuilder: (context, index) => FWCard(
-        height: 160.0,
         title: contents.keys.toList()[index],
         child: contents[contents.keys.toList()[index]]!,
       ),

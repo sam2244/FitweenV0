@@ -42,7 +42,7 @@ class FWRoute {
   };
 
   static const Transition transition = Transition.fadeIn;
-  static const Duration duration = Duration.zero;
+  static const Duration duration = Duration(milliseconds: 100);
 
   static List<GetPage> get getPages => pages.entries.map((page) => GetPage(
     name: page.key,

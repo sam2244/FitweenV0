@@ -23,7 +23,6 @@ class AddDietPage extends StatelessWidget {
               children: [
                 FWCard(
                   title: '식단을 입력하세요.',
-                  height: 120.0,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
