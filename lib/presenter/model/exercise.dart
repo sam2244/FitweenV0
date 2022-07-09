@@ -1,18 +1,27 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:fitween1/model/plan/exercise.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class ExercisePresenter {
-  static String jsonFileDir = '/Volumes/One Touch/projects/flutter/Fitween/assets/json/exercises.json';
+  static String jsonFileDir = 'assets/json/exercises.json';
   static List<Exercise> exercises = [];
 
-  static void loadExercises() {
-    List<dynamic> json = jsonDecode(File(jsonFileDir).readAsStringSync());
-    exercises = json.map((data) => Exercise(
-      category: data['분류'], name: data['이름'], unit: data['단위'],
-    )).toList();
+  static Future<String> _loadAStudentAsset() async {
+    return await rootBundle.loadString(jsonFileDir);
+  }
+
+  static Future<void> loadExercises() async {
+    String jsonString = await _loadAStudentAsset();
+    List<dynamic> json = jsonDecode(jsonString);
+    exercises = json
+        .map((data) => Exercise(
+              category: data['분류'],
+              name: data['이름'],
+              unit: data['단위'],
+            ))
+        .toList();
   }
 
   static Exercise? getExercise(String? name) {
