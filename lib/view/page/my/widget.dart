@@ -89,7 +89,7 @@ class MyWeightGraphView extends StatelessWidget {
         return Column(
           children: [
             Container(
-              padding: const EdgeInsets.fromLTRB(20.0, 0.0, 50.0, 0.0),
+              padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
               child: Column(
                 children: [
                   Container(
@@ -148,7 +148,7 @@ class MyWeightGraphView extends StatelessWidget {
                               ),
                             ),
                             Container(
-                              margin: const EdgeInsets.fromLTRB(30.0, 0.0, 0.0, 0.0),
+                              margin: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                   primary: Theme.of(context).colorScheme.primary,
