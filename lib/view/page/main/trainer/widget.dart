@@ -1,4 +1,3 @@
-// Carousel 뷰 위젯
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fitween1/global/config/theme.dart';
 import 'package:fitween1/model/plan/plan.dart';
@@ -52,7 +51,6 @@ class SelectModeBottomBar extends StatelessWidget {
     );
   }
 }
-
 
 // 트레이너 메인 페이지 CategoryBar
 class TraineeCategoryBar extends StatelessWidget {

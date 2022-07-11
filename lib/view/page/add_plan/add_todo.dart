@@ -67,7 +67,7 @@ class AddTodoPage extends StatelessWidget {
                     children: [
                       FWButton(
                         onPressed: controller.nextPressed,
-                        text: '다음',
+                        text: '완료',
                         width: 120.0,
                         height: 45.0,
                       ),
