@@ -6,6 +6,7 @@ import 'package:fitween1/view/widget/image.dart';
 import 'package:fitween1/view/widget/text.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 // 마이 페이지의 위젯 모음
@@ -20,11 +21,11 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return PreferredSize(
-      preferredSize: const Size.fromHeight(60.0),
+      preferredSize: Size.fromHeight(60.0.h),
         child: AppBar(
-          leading: const Padding(
-            padding: EdgeInsets.all(15.0),
-            child: FWLogo(),
+          leading: Padding(
+            padding: EdgeInsets.all(15.0.h),
+            child: const FWLogo(),
           ),
           leadingWidth: 600.0,
           actions: [
@@ -52,15 +53,15 @@ class MyProfileImage extends StatelessWidget {
         return Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(16.0.h),
               child: ProfileImageCircle(
-                size: 100.0,
+                size: 100.0.h,
                 user: MyPresenter.userPresenter.user,
                 //onPressed: () => controller.profileImagePressed(Theme.of(context)),
               ),
             ),
             FWText(
-              MyPresenter.userPresenter.user.nickname!, size: 20.0,
+              MyPresenter.userPresenter.user.nickname!, size: 20.0.h,
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ],
@@ -107,7 +108,7 @@ class MyWeightGraphView extends StatelessWidget {
                           children: [
                             Container(
                               alignment: Alignment.centerLeft,
-                              padding: const EdgeInsets.all(10.0),
+                              padding: EdgeInsets.all(10.0.h),
                               child: FWText(
                                 "신장  |  ${MyPresenter.userPresenter.user.height} cm",
                                 style: Theme.of(context).textTheme.headlineSmall,
@@ -116,7 +117,7 @@ class MyWeightGraphView extends StatelessWidget {
                             ),
                             Container(
                               alignment: Alignment.centerLeft,
-                              padding: const EdgeInsets.all(10.0),
+                              padding: EdgeInsets.all(10.0.h),
                               child: FWText(
                                 title,
                                 style: Theme.of(context).textTheme.headlineSmall,
@@ -133,7 +134,7 @@ class MyWeightGraphView extends StatelessWidget {
                               ),
                             ),
                             Container(
-                              height: 50.0,
+                              height: 50.0.h,
                               padding: const EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
                               child: ListView.builder(
                                   shrinkWrap: true,
@@ -156,7 +157,7 @@ class MyWeightGraphView extends StatelessWidget {
                                 onPressed: controller.addWeightPressed,
                                 child: FWText(
                                   '체중 기록하기',
-                                  size: 15.0,
+                                  size: 15.0.h,
                                   style: Theme.of(context).textTheme.titleMedium,
                                   color: Theme.of(context).colorScheme.onPrimary,
                                 ),
