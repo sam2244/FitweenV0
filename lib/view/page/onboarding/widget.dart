@@ -2,6 +2,7 @@ import 'package:fitween1/presenter/page/before_main/onboarding.dart';
 import 'package:fitween1/view/widget/button.dart';
 import 'package:fitween1/view/widget/text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -30,16 +31,16 @@ class Parallax extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.zero,
                     child: SvgPicture.asset(screen['svgName']!,
-                      height: 300.0,
+                      height: 340.0.h,
                     ),
                   ),
-                  const SizedBox(height: 20.0),
+                  SizedBox(height: 30.0.h),
                   FWText(screen['text']!,
                     align: TextAlign.center,
                     style: Theme.of(context).textTheme.headlineSmall,
                     color: Theme.of(context).colorScheme.onSurface,
                   ),
-                  const SizedBox(height: 10.0),
+                  //const SizedBox(height: 10.0),
                 ],
               )).toList(),
             ),
@@ -49,11 +50,11 @@ class Parallax extends StatelessWidget {
               duration: Duration.zero,
               child: Container(
                 alignment: Alignment.bottomCenter,
-                margin: const EdgeInsets.only(bottom: 150.0),
-                child: const FWButton(
+                margin: EdgeInsets.only(bottom: 80.0.h),
+                child: FWButton(
                   onPressed: OnboardingPresenter.startPressed,
                   text: '시작하기',
-                  width: 200.0,
+                  width: 200.0.w,
                 ),
               ),
             ),
@@ -95,7 +96,7 @@ class BackgroundImage extends StatelessWidget {
     double alignment = (offset - firstPageIdx) * alignmentRange / pageRange + alignmentMin;
 
     return SizedBox(
-      height: 500.0,
+      height: 500.0.h,
       width: screenSize.width,
       child: SvgPicture.asset(
         'assets/image/page/onboarding/background.svg',
