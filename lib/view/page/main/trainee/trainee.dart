@@ -9,7 +9,7 @@ class TraineeMainPage extends StatelessWidget {
   const TraineeMainPage({Key? key}) : super(key: key);
 
   //Expanded FAB를 위한 function
-  static const _actionTitles = ['Open Camera', 'Upload Photo'];
+  /*static const _actionTitles = ['Open Camera', 'Upload Photo'];
 
   void _showAction(BuildContext context, int index) {
     showDialog<void>(
@@ -27,6 +27,7 @@ class TraineeMainPage extends StatelessWidget {
       },
     );
   }
+   */
 
   //Trainee Main Page View
   @override
@@ -35,8 +36,8 @@ class TraineeMainPage extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: const MainAppBar(role: Role.trainee),
       body: const TraineeView(),
-      floatingActionButton: ExpandableFab(
-        distance: 80.0,
+      floatingActionButton: const ExpandableTraineeFAB(role: Role.trainee),
+        /*distance: 80.0,
         children: [
           ActionButton(
             onPressed: () => _showAction(context, 0),
@@ -48,6 +49,7 @@ class TraineeMainPage extends StatelessWidget {
           ),
         ],
       ),
+      */
       bottomNavigationBar: const FWBottomBar(),
     );
   }
