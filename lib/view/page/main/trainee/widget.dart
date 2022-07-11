@@ -124,9 +124,13 @@ class TraineeToDoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FWCard(
-      child: SingleChildScrollView(
+    return Container(
+      constraints: BoxConstraints(
+        maxHeight: 200.0.h,
+      ),
+      child: FWCard(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             StatusWidget(plan: plan),
             TodoListWidget(plan: plan),
@@ -144,22 +148,19 @@ class StatusWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 80.0,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              const TrainerProfileButton(),
-              PurposeWidget(plan: plan),
-            ],
-          ),
-          GoalRateGraph(plan: plan),
-        ],
-      ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            const TrainerProfileButton(),
+            PurposeWidget(plan: plan),
+          ],
+        ),
+        GoalRateGraph(plan: plan),
+      ],
     );
   }
 }
@@ -170,7 +171,7 @@ class TrainerProfileButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  FWButton(
-      width: 98.0,
+      width: 98.0.w,
       height: 24.0.h,
       fontSize: 13.0,
       onPressed: () {
@@ -193,7 +194,6 @@ class PurposeWidget extends StatelessWidget {
       plan.purpose ?? '널입니다',
       color: Theme.of(context).colorScheme.secondary,
       style: Theme.of(context).textTheme.titleLarge,
-      size: 24.0,
     );
   }
 }
@@ -207,12 +207,12 @@ class GoalRateGraph extends StatelessWidget {
   Widget build(BuildContext context) {
     return CircularPercentIndicator(
       animation: true,
-      radius: 40.0,
-      lineWidth: 12.0,
+      radius: 40.0.r,
+      lineWidth: 10.0.h,
       percent: plan.goalRate,
       center: ClipOval(
         child: SizedBox.fromSize(
-          size: const Size.fromRadius(50),
+          size: Size.fromRadius(50.0.r),
           child: Center(
             child: FWText('${(plan.goalRate * 100).toInt()}%'),
           ),// Image radius
@@ -277,32 +277,29 @@ class TodoListView extends StatelessWidget {
       Todo(name: '싯업', numbers: {'회': 100}, selectedDays: [Weekday.mon]),
       Todo(name: '싯업', numbers: {'회': 100}, selectedDays: [Weekday.mon]),
     ];
-    return SizedBox(
-      height: 80.0.h,
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: todoList.length,
-        padding: EdgeInsets.zero,
-        itemBuilder: (context, index) {
-          return InkWell(
-            onTap: () {},
-            child: ListTile(
-              dense: true,
-              minLeadingWidth: 0.0,
-              visualDensity: VisualDensity.compact,
-              contentPadding: EdgeInsets.zero,
-              leading: Icon(todoList[index].completed
-                  ? Icons.check_box
-                  : Icons.check_box_outline_blank,
-              ),
-              title: FWText(todoList[index].toString(),
-                style: Theme.of(context).textTheme.bodyLarge,
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: todoList.length,
+      padding: EdgeInsets.zero,
+      itemBuilder: (context, index) {
+        return InkWell(
+          onTap: () {},
+          child: ListTile(
+            dense: true,
+            minLeadingWidth: 0.0,
+            visualDensity: VisualDensity.compact,
+            contentPadding: EdgeInsets.zero,
+            leading: Icon(todoList[index].completed
+                ? Icons.check_box
+                : Icons.check_box_outline_blank,
             ),
-          );
-        },
-      ),
+            title: FWText(todoList[index].toString(),
+              style: Theme.of(context).textTheme.bodyLarge,
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
+          ),
+        );
+      },
     );
   }
 }
@@ -424,7 +421,7 @@ class TraineeDietCardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(15.0),
+      padding: EdgeInsets.all(15.0.w),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
