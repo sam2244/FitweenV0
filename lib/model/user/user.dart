@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitween1/global/global.dart';
 import 'package:fitween1/model/plan/plan.dart';
 import 'package:fitween1/model/user/range.dart';
@@ -46,30 +47,14 @@ class FWUser {
   double height = defaultHeight;
   DateTime? dateOfBirth;
   Map<DateTime, double>? weights;
-  // Map<DateTime, double>? weights = {
-  //   DateTime(2019, 5, 3): 53.0,
-  //   DateTime(2019, 7, 8): 52.0,
-  //   DateTime(2019, 11, 11): 51.0,
-  //   DateTime(2020, 3, 5): 51.2,
-  //   DateTime(2020, 6, 5): 50.0,
-  //   DateTime(2020, 9, 11): 49.1,
-  //   DateTime(2020, 11, 11): 48.0,
-  //   DateTime(2021, 4, 5): 47.6,
-  //   DateTime(2021, 7, 7): 47.4,
-  //   DateTime(2021, 11, 25): 47.4,
-  //   DateTime(2022, 1, 1): 47.2,
-  //   DateTime(2022, 2, 7): 46.5,
-  //   DateTime(2022, 3, 2): 46.4,
-  //   DateTime(2022, 4, 1): 45.4,
-  //   DateTime(2022, 5, 1): 45.7,
-  //   DateTime(2022, 6, 6): 45.1,
-  //   DateTime(2022, 6, 25): 44.8,
-  //   DateTime(2022, 7, 2): 44.5,
-  // };
   List<Plan>? trainerPlans;
   List<Plan>? traineePlans;
   List<FWUser>? friends;
   List<String> categories = [];
+
+  List<String> trainerPlanIds = [];
+  List<String> traineePlanIds = [];
+  List<String> friendUids = [];
 
   FWUser();
 
@@ -90,7 +75,10 @@ class FWUser {
     dateOfBirth = map['dateOfBirth'];
     trainerPlans = map['trainerPlans'];
     traineePlans = map['traineePlans'];
+    trainerPlanIds = map['trainerPlanIds'];
+    traineePlanIds = map['traineePlanIds'];
     friends = map['friends'];
+    friendUids = map['friendUids'];
     categories = map['categories'];
   }
 
@@ -107,8 +95,52 @@ class FWUser {
     'dateOfBirth': dateOfBirth,
     'trainerPlans': trainerPlans,
     'traineePlans': traineePlans,
+    'trainerPlanIds': trainerPlanIds,
+    'traineePlanIds': traineePlanIds,
     'friends': friends,
+    'friendUids': friendUids,
     'categories': categories,
+  };
+
+  // json 데이터를 user 객체에 주입
+  Future fromJson(Map<String, dynamic> json) async {
+    Map<String, dynamic> map = toJson();
+    map.addAll(json);
+    map['role'] = FWUser.toRole(json['role']);
+    map['sex'] = FWUser.toSex(json['sex']);
+    map['height'] = json['height'] ?? defaultHeight;
+    map['weights'] = <DateTime, double>{
+      if (json['weights'] != null)
+      for (var data in json['weights'].map((data) => MapEntry<DateTime, double>(
+        data['date'].toDate(), data['weight'],
+      ))) data.key : data.value,
+    };
+    map['trainerPlanIds'] = json['trainerPlanIds'].cast<String>();
+    map['traineePlanIds'] = json['traineePlanIds'].cast<String>();
+    map['friendUids'] = json['friendUids'].cast<String>();
+    map['dateOfBirth'] = json['dateOfBirth']?.toDate();
+    map['categories'] = json['categories'] ?? <String>[];
+    fromMap(map);
+  }
+
+  // user 객체에서 json 데이터 추출
+  Map<String, dynamic> toJson() => {
+    'uid': uid,
+    'email': email,
+    'nickname': nickname,
+    'imageUrl': imageUrl,
+    'role': role.name,
+    'sex': sex?.name,
+    'height': height,
+    'weights': weights?.entries.map((data) => {
+      'date': Timestamp.fromDate(data.key),
+      'weight': data.value,
+    }).toList(),
+    'dateOfBirth': dateOfBirth == null
+        ? null : Timestamp.fromDate(dateOfBirth!),
+    'friendUids': friendUids,
+    'trainerPlanIds': trainerPlanIds,
+    'traineePlanIds': traineePlanIds,
   };
 
   static Map<String, DataType> get types => {
@@ -130,6 +162,23 @@ class FWUser {
     return '\n\nUSER INFO\n${toMap().entries.map(
       (data) => '  ${data.key}: ${data.value}',
     ).join('\n')}\n';
+  }
+
+  static DateTime? stringToDate(String string) {
+    try {
+      String yy = string.substring(0, 2);
+      int year = int.parse('${int.parse(yy) > 50 ? '19' : '20'}$yy');
+      int month = int.parse(string.substring(2, 4));
+      int day = int.parse(string.substring(4));
+
+      if (month > 12) return null;
+      if (month == 2 && day > 29) return null;
+      if ([4, 6, 9, 11].contains(month) && day > 30) return null;
+      if (day > 31) return null;
+
+      return DateTime(year, month, day);
+    }
+    catch(e) { return null; }
   }
 
   // 문자열을 역할 enum 으로 전환 ('trainer' => Role.trainer)

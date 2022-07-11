@@ -10,25 +10,15 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      // 임시 AppBar
-      appBar: const LoginAppBar(),
       body: Stack(
         children: [
           // 중앙에 로고 배치
           const Positioned.fill(
-            top: -60.0,
-            // child: Center(
-            //   child: Padding(
-            //     padding: EdgeInsets.all(50.0),
-            //     child: FWLogo(),
-            //   ),
-            // ),
             child: Padding(
               padding: EdgeInsets.all(50.0),
               child: FWLogo(),
             ),
           ),
-
           // 로그인 버튼
           Positioned.fill(
             child: Center(

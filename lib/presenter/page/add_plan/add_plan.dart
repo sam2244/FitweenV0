@@ -3,12 +3,15 @@ import 'package:fitween1/model/chat/chat.dart';
 import 'package:fitween1/model/plan/diet.dart';
 import 'package:fitween1/model/plan/plan.dart';
 import 'package:fitween1/model/plan/todo.dart';
+import 'package:fitween1/model/user/user.dart';
 import 'package:fitween1/presenter/model/plan.dart';
 import 'package:fitween1/presenter/model/user.dart';
 import 'package:fitween1/presenter/page/add_plan/add_todo.dart';
 import 'package:fitween1/presenter/page/add_plan/add_diet.dart';
+import 'package:fitween1/presenter/page/main/trainer.dart';
 import 'package:fitween1/view/page/add_plan/widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class AddPlanPresenter extends GetxController {
@@ -25,7 +28,7 @@ class AddPlanPresenter extends GetxController {
   Plan plan = planPresenter.plan;
 
   static const int max = 999;
-  static const List<String> titles = ['플랜추가', '기간설정', '주간루틴', '식단관리'];
+  static const List<String> titles = ['플랜 추가', '기간 설정', '주간 루틴', '식단 관리', '플랜 코드'];
 
   static const Duration shakeDuration = Duration(milliseconds: 500);
 
@@ -39,6 +42,7 @@ class AddPlanPresenter extends GetxController {
   static final planPresenter = Get.find<PlanPresenter>();
   static final addTodoPresenter = Get.find<AddTodoPresenter>();
   static final addDietPresenter = Get.find<AddDietPresenter>();
+  static final trainerPresenter = Get.find<TrainerPresenter>();
 
   void initialize() {
     pageIndex = 0;
@@ -83,7 +87,7 @@ class AddPlanPresenter extends GetxController {
 
     if (pageIndex == 1) initDates();
     if (pageIndex == 2) plan.endDate = Chat.fullTime(plan.endDate!);
-
+    if (pageIndex == 3) plan.generatePlanId();
     if (isLastPage) {
       extendTodos(); extendDiets(); complete();
       pageIndex = 0;
@@ -99,11 +103,18 @@ class AddPlanPresenter extends GetxController {
     pageIndexIncrease();
   }
 
-  void complete() {
-    plan.trainer = userPresenter.user;
-    userPresenter.addPlan(plan);
+  void complete() async {
+    FWUser user = FWUser.fromMap(userPresenter.user.toMap());
+    plan.trainer = FWUser.fromMap(user.toMap());
+    plan.trainer!.trainerPlanIds.add(plan.id!);
+    plan.trainerUid = user.uid;
     Get.offAllNamed('/main/trainer');
-    planPresenter.updateDB();
+    UserPresenter.updateDB(plan.trainer!);
+    PlanPresenter.updateDB(plan);
+    await userPresenter.loadPlans();
+    await planPresenter.loadTrainer();
+    trainerPresenter.initialize();
+    update();
   }
 
   void purposeSelected(String purpose) {
@@ -316,5 +327,9 @@ class AddPlanPresenter extends GetxController {
       plan.diets[date] = getDiets([Plan.toWeekday(date)]);
       date = date.add(const Duration(days: 1));
     }
+  }
+
+  static void copyButtonPressed(String text) {
+    Clipboard.setData(ClipboardData(text: text));
   }
 }

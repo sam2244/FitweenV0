@@ -6,12 +6,14 @@ import 'package:fitween1/presenter/page/add_info.dart';
 import 'package:fitween1/presenter/page/add_plan/add_diet.dart';
 import 'package:fitween1/presenter/page/add_plan/add_plan.dart';
 import 'package:fitween1/presenter/page/add_plan/add_todo.dart';
+import 'package:fitween1/presenter/page/before_main/onboarding.dart';
+import 'package:fitween1/presenter/page/before_main/register.dart';
 import 'package:fitween1/presenter/page/detail.dart';
+import 'package:fitween1/presenter/page/main/trainee.dart';
 import 'package:fitween1/presenter/page/main/trainer.dart';
 import 'package:fitween1/presenter/page/chat/chat.dart';
 import 'package:fitween1/presenter/page/chat/chatroom.dart';
 import 'package:fitween1/presenter/page/my/my.dart';
-import 'package:fitween1/presenter/page/register.dart';
 import 'package:fitween1/presenter/page/my/setting.dart';
 import 'package:fitween1/view/widget/image.dart';
 import 'package:fitween1/view/widget/popup.dart';
@@ -21,10 +23,14 @@ import 'package:get/get.dart';
 
 class GlobalPresenter extends GetxController {
   int navIndex = 0;
+  bool loading = false;
 
   static final userPresenter = Get.find<UserPresenter>();
+  static final planPresenter = Get.find<PlanPresenter>();
+  static final trainerPresenter = Get.find<TrainerPresenter>();
+  static final traineePresenter = Get.find<TraineePresenter>();
 
-  void navigate(int index) {
+  void navigate(int index) async {
     navIndex = index;
     Get.offAllNamed(
       [
@@ -33,6 +39,17 @@ class GlobalPresenter extends GetxController {
         '/my',
       ][navIndex],
     );
+
+    trainerPresenter.initialize();
+    traineePresenter.initialize();
+
+    await Future.delayed(const Duration(milliseconds: 1000), () {
+      loading = true;
+      update();
+    });
+    loading = false;
+    await userPresenter.loadPlans();
+    await userPresenter.loadFriends();
     update();
   }
 
@@ -145,6 +162,7 @@ class GlobalPresenter extends GetxController {
   static void initControllers() {
     Get.put(GlobalPresenter());
     Get.put(FWTheme());
+    Get.put(OnboardingPresenter());
     Get.put(UserPresenter());
     Get.put(PlanPresenter());
     Get.put(RegisterPresenter());
@@ -157,6 +175,7 @@ class GlobalPresenter extends GetxController {
     Get.put(MyPresenter());
     Get.put(SettingPresenter());
     Get.put(TrainerPresenter());
+    Get.put(TraineePresenter());
     Get.put(TrainerDetailPresenter());
   }
 }

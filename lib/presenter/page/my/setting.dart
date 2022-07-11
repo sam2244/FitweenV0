@@ -1,5 +1,5 @@
 import 'package:fitween1/presenter/model/user.dart';
-import 'package:fitween1/presenter/page/login.dart';
+import 'package:fitween1/presenter/page/before_main/login.dart';
 import 'package:fitween1/view/widget/popup.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

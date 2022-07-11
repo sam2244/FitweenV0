@@ -8,50 +8,29 @@ class PlanPresenter extends GetxController {
   static final userPresenter = Get.find<UserPresenter>();
   Plan plan = Plan();
 
-  // json 데이터를 plan 객체에 주입
-  Future fromJson(Map<String, dynamic> json) async {
-    Map<String, dynamic> map = {...json};
-    map['state'] = Plan.toState(json['state']);
-    map['trainer'] ??= await userPresenter.loadDB(json['trainerUid']);
-    map['trainee'] ??= await userPresenter.loadDB(json['traineeUid']);
-    map['startDate'] = json['startDate'] as DateTime;
-    map['endDate'] = json['endDate'] as DateTime;
-    map['todos'] = Plan.toTodos(json['todos']);
-    map['diets'] = Plan.toDiets(json['diets']);
-    plan.fromMap(map);
+  Future loadTrainer() async {
+    if (plan.trainerUid == null) return;
+    plan.trainer = await UserPresenter.loadDB(plan.trainerUid!);
+    update();
+  }
+  Future loadTrainee() async {
+    if (plan.traineeUid == null) return;
+    plan.trainee = await UserPresenter.loadDB(plan.traineeUid!);
     update();
   }
 
-  // plan 객체에서 json 데이터 추출
-  Map<String, dynamic> toJson() => {
-    'id': plan.id,
-    'state': plan.state.name,
-    'trainerUid': plan.trainer?.uid,
-    'trainee': plan.trainee?.uid,
-    'startDate': plan.startDate,
-    'endDate': plan.endDate,
-    'todos': plan.todos.entries.map((dateTodo) => {
-      'date': dateTodo.key,
-      'todoList': dateTodo.value.map((todo) => todo.toJson()).toList(),
-    }).toList(),
-    'diets': plan.diets.entries.map((dateDiet) => {
-      'date': dateDiet.key,
-      'dietList': dateDiet.value.map((diet) => diet.toJson()).toList(),
-    }).toList(),
-  };
-
   // firebase 에서 로드된 데이터 가공 후 plan 객체로 반환
-  Future<Plan?> loadDB(String? id) async {
-    if (id == null) return null;
-    var data = await FirebasePresenter.f.collection('plans').doc(id).get();
+  static Future<Plan> loadDB(String id) async {
+    Plan plan = Plan(id: id);
+    var data = await FirebasePresenter.f.collection('plans').doc(plan.id).get();
     Map<String, dynamic> json = data.data() ?? {};
-    if (data.exists) await fromJson(json);
+    if (data.exists) plan.fromJson(json);
 
     return plan;
   }
 
   // 로컬 데이터로 firebase 최신화
-  void updateDB() {
-    FirebasePresenter.f.collection('plans').doc(plan.id).set(toJson());
+  static void updateDB(Plan plan) {
+    FirebasePresenter.f.collection('plans').doc(plan.id).set(plan.toJson());
   }
 }

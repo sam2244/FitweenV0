@@ -4,6 +4,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:fitween1/global/config/theme.dart';
 import 'package:fitween1/global/global.dart';
 import 'package:fitween1/model/plan/plan.dart';
+import 'package:fitween1/presenter/model/user.dart';
 import 'package:fitween1/presenter/page/add_plan/add_diet.dart';
 import 'package:fitween1/presenter/page/add_plan/add_plan.dart';
 import 'package:fitween1/view/widget/button.dart';
@@ -48,13 +49,13 @@ class AddPlanAppBar extends StatelessWidget implements PreferredSizeWidget {
 class CarouselView extends StatelessWidget {
   const CarouselView({Key? key}) : super(key: key);
 
-
   // 플랜 추가 페이지 carousel 리스트
-  static List<Widget> carouselWidgets() => [
-    const PurposeDietView(),
-    const PTPeriodView(),
-    const TodoSelectionView(),
-    const DietSelectionView(),
+  static List<Widget> carouselWidgets() => const [
+    PurposeDietView(),
+    PTPeriodView(),
+    TodoSelectionView(),
+    DietSelectionView(),
+    PlanCodeView(),
   ];
   static int widgetCount = carouselWidgets().length;
 
@@ -700,6 +701,64 @@ class AddButton extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class PlanCodeView extends StatelessWidget {
+  const PlanCodeView({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          GetBuilder<UserPresenter>(
+            builder: (controller) {
+              return FWText('축하합니다 ${controller.user.nickname}님,\n플랜이 성공적으로 만들어졌습니다!',
+                style: Theme.of(context).textTheme.headlineSmall,
+              );
+            },
+          ),
+          const SizedBox(height: 10.0),
+          FWText('아래 코드를 피트위너에게 공유해주세요.',
+            style: Theme.of(context).textTheme.titleSmall,
+            color: Theme.of(context).colorScheme.onPrimaryContainer,
+          ),
+          const SizedBox(height: 10.0),
+          GetBuilder<AddPlanPresenter>(
+            builder: (controller) {
+              return Material(
+                borderRadius: BorderRadius.circular(20.0),
+                color: Theme.of(context).colorScheme.primaryContainer,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      FWText(controller.plan.id!,
+                        style: Theme.of(context).textTheme.labelLarge,
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
+                      ),
+                      const SizedBox(width: 10.0),
+                      IconButton(
+                        onPressed: () => AddPlanPresenter.copyButtonPressed(controller.plan.id!),
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(),
+                        icon: const Icon(Icons.copy),
+                        iconSize: 14,
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }
+          ),
+        ],
       ),
     );
   }

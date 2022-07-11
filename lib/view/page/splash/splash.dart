@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:fitween1/presenter/page/splash.dart';
+import 'package:fitween1/presenter/page/before_main/splash.dart';
 import 'package:fitween1/view/widget/image.dart';
 import 'package:flutter/material.dart';
 

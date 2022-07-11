@@ -34,7 +34,7 @@ class TraineeMainPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: const MainAppBar(role: Role.trainee),
-      body: const TraineeCarousel(),
+      body: const TraineeView(),
       floatingActionButton: ExpandableFab(
         distance: 80.0,
         children: [

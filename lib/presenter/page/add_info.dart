@@ -37,11 +37,11 @@ class AddInfoPresenter extends GetxController {
       }
     });
 
-    Map<String, dynamic> json = userPresenter.toJson();
+    Map<String, dynamic> json = userPresenter.user.toJson();
     additionalJson.forEach((key, value) => json[key] = value);
-    await userPresenter.fromJson(json);
+    await userPresenter.user.fromJson(json);
 
-    userPresenter.updateDB();
+    UserPresenter.updateDB(userPresenter.user);
     
     Get.offAndToNamed('/main/${userPresenter.user.role.name}');
   }

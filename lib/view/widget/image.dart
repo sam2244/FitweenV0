@@ -7,7 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 class FWLogo extends StatelessWidget {
   const FWLogo({Key? key}) : super(key: key);
 
-  static const String asset = 'assets/img/logo/fitween.svg';
+  static const String asset = 'assets/image/logo/fitween.svg';
 
   @override
   Widget build(BuildContext context) => SvgPicture.asset(asset);

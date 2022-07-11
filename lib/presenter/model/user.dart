@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitween1/model/plan/plan.dart';
 import 'package:fitween1/model/user/user.dart';
 import 'package:fitween1/presenter/firebase/firebase.dart';
@@ -16,52 +15,10 @@ class UserPresenter extends GetxController {
   FWUser user = FWUser();
 
   List<String> getNullData() {
-    return toJson().entries.where(
+    return user.toJson().entries.where(
       (entry) => FWUser.isRequired(entry.key) && entry.value == null
     ).map((entry) => entry.key).toList();
   }
-
-  // json 데이터를 user 객체에 주입
-  Future fromJson(Map<String, dynamic> json) async {
-    Map<String, dynamic> map = toJson();
-    map.addAll(json);
-    map['role'] = FWUser.toRole(json['role']);
-    map['sex'] = FWUser.toSex(json['sex']);
-    map['height'] = json['height'] ?? currentHeight;
-    map['weights'] = <DateTime, double>{
-      if (json['weights'] != null)
-      for (var data in json['weights'].map((data) => MapEntry<DateTime, double>(
-        data['date'].toDate(), data['weight'],
-      ))) data.key : data.value,
-    };
-    map['trainerPlans'] ??= await planPresenter.loadDB(json['trainerUid']);
-    map['traineePlans'] ??= await planPresenter.loadDB(json['traineeUid']);
-    map['friends'] ??= await loadDB(json['friends']);
-    map['dateOfBirth'] = json['dateOfBirth']?.toDate();
-    map['categories'] = json['categories'] ?? <String>[];
-    user.fromMap(map);
-    update();
-  }
-
-  // user 객체에서 json 데이터 추출
-  Map<String, dynamic> toJson() => {
-    'uid': user.uid,
-    'email': user.email,
-    'nickname': user.nickname,
-    'imageUrl': user.imageUrl,
-    'role': user.role.name,
-    'sex': user.sex?.name,
-    'height': user.height,
-    'weights': user.weights?.entries.map((data) => {
-      'date': Timestamp.fromDate(data.key),
-      'weight': data.value,
-    }).toList(),
-    'dateOfBirth': user.dateOfBirth == null
-        ? null : Timestamp.fromDate(user.dateOfBirth!),
-    'friends': FWUser.toUids(user.friends),
-    'trainerPlanIds': Plan.toIds(user.trainerPlans),
-    'traineePlanIds': Plan.toIds(user.traineePlans),
-  };
 
   // 닉네임 설정
   set nickname(String nickname) { user.nickname = nickname; update(); }
@@ -74,13 +31,6 @@ class UserPresenter extends GetxController {
 
   // 성별 변경
   void setSex(Sex sex) { user.setSex(sex); update(); }
-
-  // 생년월일 설정
-  void setDateOfBirth(String string) {
-    user.dateOfBirth = DateTime.parse(
-      '${int.parse(string.substring(2)) > 50 ? '19' : '20'}$string'
-    );
-  }
 
   // 로그인, 로그아웃
   void login() { logged = true; update(); }
@@ -98,25 +48,49 @@ class UserPresenter extends GetxController {
     update();
   }
 
-  void addPlan(Plan plan) {
-    user.trainerPlans ??= [];
-    user.trainerPlans!.add(plan);
+  List<String> get allCategories {
+    List<String> categories = [];
+    for (Plan plan in user.trainerPlans ?? []) {
+      if (plan.group != null) categories.add(plan.group!);
+    }
+    return categories;
+  }
+
+
+  Future loadFriends() async {
+    user.friends = [];
+    for (String uid in user.friendUids) {
+      user.friends!.add((await UserPresenter.loadDB(uid)));
+    }
+    update();
+  }
+
+  Future loadPlans() async {
+    user.trainerPlans = [];
+    user.traineePlans = [];
+    for (String id in user.trainerPlanIds) {
+      user.trainerPlans!.add((await PlanPresenter.loadDB(id)));
+    }
+    for (String id in user.traineePlanIds) {
+      user.traineePlans!.add((await PlanPresenter.loadDB(id)));
+    }
     update();
   }
 
   // firebase 에서 로드된 데이터 가공 후 user 객체로 반환
-  Future<FWUser?> loadDB(String? uid) async {
-    if (uid == null) return null;
-    var data = await FirebasePresenter.f.collection('users').doc(uid).get();
-    Map<String, dynamic> json = data.data() ?? toJson();
+  static Future<FWUser> loadDB(String uid) async {
+    FWUser user = FWUser();
 
-    if (data.exists) await fromJson(json);
+    var data = await FirebasePresenter.f.collection('users').doc(uid).get();
+    Map<String, dynamic> json = data.data() ?? {};
+
+    if (data.exists) await user.fromJson(json);
 
     return user;
   }
 
   // 로컬 데이터로 firebase 최신화
-  void updateDB() => FirebasePresenter.f.collection('users').doc(user.uid).set(toJson());
+  static void updateDB(FWUser user) => FirebasePresenter.f.collection('users').doc(user.uid).set(user.toJson());
 
-  void deleteDB() => FirebasePresenter.f.collection('users').doc(user.uid).delete();
+  static void deleteDB(FWUser user) => FirebasePresenter.f.collection('users').doc(user.uid).delete();
 }
