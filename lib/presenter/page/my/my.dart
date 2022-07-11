@@ -35,6 +35,7 @@ class MyPresenter extends GetxController {
   }
 
   void addWeightPressed() {
+    ThemeData themeData = Theme.of(Get.context!);
     defaultWeight = userPresenter.user.weights!.values.last;
     Get.dialog(
       FWDialog(
@@ -60,9 +61,7 @@ class MyPresenter extends GetxController {
                       maxValue: FWUser.weightRange.end,
                     ),
                     const SizedBox(width: 5.0),
-                    FWText('cm',
-                        //style: Theme.of(context).textTheme.labelLarge
-                    ),
+                    FWText('kg',style: themeData.textTheme.labelLarge),
                   ],
                 );
               },
