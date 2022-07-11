@@ -4,6 +4,7 @@ import 'package:fitween1/presenter/global.dart';
 import 'package:fitween1/presenter/model/exercise.dart';
 import 'package:fitween1/route.dart';
 import 'package:fitween1/view/page/onboarding/onboarding.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -33,6 +34,7 @@ class Fitween extends StatelessWidget {
       splitScreenMode: true,
       builder: (context, child) {
         return GetMaterialApp(
+          enableLog: false,
           title: 'Fitween',
           debugShowCheckedModeBanner: false,
           themeMode: ThemeMode.light,

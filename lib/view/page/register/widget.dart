@@ -367,19 +367,21 @@ class CarouselIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<RegisterPresenter>(builder: (controller) {
-      return SizedBox(
-        height: 100.0,
-        child: DotsIndicator(
-          dotsCount: count,
-          position: controller.pageIndex.toDouble(),
-          decorator: DotsDecorator(
-            color: FWTheme.grey,
-            activeColor: Theme.of(context).colorScheme.primary,
+    return GetBuilder<RegisterPresenter>(
+      builder: (controller) {
+        return SizedBox(
+          height: 100.0,
+          child: DotsIndicator(
+            dotsCount: count,
+            position: controller.pageIndex.toDouble(),
+            decorator: DotsDecorator(
+              color: Theme.of(context).colorScheme.primaryContainer,
+              activeColor: Theme.of(context).colorScheme.primary,
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }
 

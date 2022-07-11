@@ -28,11 +28,11 @@ class AddPlanAppBar extends StatelessWidget implements PreferredSizeWidget {
       builder: (controller) {
         return AppBar(
           leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-              onPressed: controller.backPressed
+            icon: Icon(
+              Icons.arrow_back,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            onPressed: controller.backPressed,
           ),
           title: FWText(
             AddPlanPresenter.titles[controller.pageIndex],
@@ -101,7 +101,7 @@ class CarouselView extends StatelessWidget {
                 children: [
                   // Carousel 인디케이터
                   CarouselIndicator(
-                    count: widgetCount - (controller.plan.isDiet ? 0 : 1),
+                    count: widgetCount,
                   ),
                   // Carousel 다음 버튼
                   const CarouselNextButton(),
@@ -161,7 +161,7 @@ class PurposeDietView extends StatelessWidget {
                       itemBuilder: (context, purpose, _) {
                         return ListTile(
                           contentPadding: const EdgeInsets.only(left: 15.0),
-                          selected: purpose == AddPlanPresenter.planPresenter.plan.purpose,
+                          selected: purpose == controller.plan.purpose,
                           tileColor: FWTheme.surface[2],
                           selectedTileColor: Color.alphaBlend(
                             Theme.of(context).colorScheme.onSurface.withOpacity(.12),
@@ -195,14 +195,14 @@ class PurposeDietView extends StatelessWidget {
               children: [
                 FWButton(
                   text: '예',
-                  fill: AddPlanPresenter.planPresenter.plan.isDiet,
+                  fill: controller.plan.isDiet,
                   width: 132.0,
                   onPressed: () => controller.dietSelected(true),
                 ),
                 FWButton(
                   text: '아니오',
                   width: 132.0,
-                  fill: !AddPlanPresenter.planPresenter.plan.isDiet,
+                  fill: !controller.plan.isDiet,
                   onPressed: () => controller.dietSelected(false),
                 ),
               ],
@@ -288,8 +288,8 @@ class DateSelectionButton extends StatelessWidget {
                               child: FWText(
                                 Plan.dateToString((
                                     type == DateType.start
-                                        ? AddPlanPresenter.planPresenter.plan.startDate
-                                        : AddPlanPresenter.planPresenter.plan.endDate
+                                        ? controller.plan.startDate
+                                        : controller.plan.endDate
                                 ) ?? Plan.today),
                                 style: Theme.of(context).textTheme.labelLarge,
                                 color: Theme.of(context).colorScheme.onSurface,
@@ -497,6 +497,9 @@ class TodoListView extends StatelessWidget {
                 children: controller.getTodosInSelectedDays().map((todo) => InkWell(
                   onTap: () => controller.updateTodoPressed(todo),
                   child: ListTile(
+                    dense: true,
+                    minLeadingWidth: 0.0,
+                    visualDensity: VisualDensity.compact,
                     title: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -608,14 +611,12 @@ class DietListView extends StatelessWidget {
                       children: controller.getDietsInSelectedDays(type).map((diet) => InkWell(
                         onTap: () => controller.updateDietPressed(diet),
                         child: ListTile(
+                          dense: true,
+                          minLeadingWidth: 0.0,
+                          visualDensity: VisualDensity.compact,
                           title: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // FWText(diet.selectedDays.length == 7 ? '매일'
-                              //     : diet.selectedDays.map((day) => day.kr).join(','),
-                              //   style: Theme.of(context).textTheme.labelSmall,
-                              //   color: Theme.of(context).colorScheme.outline,
-                              // ),
                               FWText(diet.toString(),
                                 style: Theme.of(context).textTheme.titleMedium,
                                 color: Theme.of(context).colorScheme.onSurface,
@@ -783,7 +784,7 @@ class CarouselIndicator extends StatelessWidget {
             dotsCount: count,
             position: controller.pageIndex.toDouble(),
             decorator: DotsDecorator(
-              color: FWTheme.grey,
+              color: Theme.of(context).colorScheme.primaryContainer,
               activeColor: Theme.of(context).colorScheme.primary,
             ),
           ),

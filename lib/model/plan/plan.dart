@@ -140,7 +140,7 @@ class Plan {
 
   double get todoRate {
     todos[today] ??= [];
-    int total = todos[today]!.isEmpty ? 1 : todos[today]!.length ;
+    int total = todos[today]!.isEmpty ? 1 : todos[today]!.length;
     int completed = todos[today]?.where((todo) => todo.completed).length ?? 0;
     return completed / total;
   }
