@@ -126,7 +126,7 @@ class MyWeightGraphView extends StatelessWidget {
                             AspectRatio(
                               aspectRatio: ratio,
                               child: Padding(
-                                padding: const EdgeInsets.all(10.0),
+                                padding: const EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0),
                                 child: LineChart(
                                   controller.weightChart.chartData,
                                 ),
@@ -134,7 +134,7 @@ class MyWeightGraphView extends StatelessWidget {
                             ),
                             Container(
                               height: 50.0,
-                              padding: const EdgeInsets.fromLTRB(20.0, 0.0, 0.0, 0.0),
+                              padding: const EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
                               child: ListView.builder(
                                   shrinkWrap: true,
                                   scrollDirection: Axis.horizontal,
