@@ -5,6 +5,7 @@ import 'package:fitween1/presenter/model/user.dart';
 import 'package:fitween1/presenter/page/before_main/login.dart';
 import 'package:fitween1/view/widget/container.dart';
 import 'package:fitween1/view/widget/popup.dart';
+import 'package:fitween1/view/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -34,6 +35,7 @@ class MyPresenter extends GetxController {
   }
 
   void addWeightPressed() {
+    ThemeData themeData = Theme.of(Get.context!);
     defaultWeight = userPresenter.user.weights!.values.last;
     Get.dialog(
       FWDialog(
@@ -48,12 +50,19 @@ class MyPresenter extends GetxController {
           children: [
             GetBuilder<MyPresenter>(
               builder: (controller) {
-                return FWNumberPicker(
-                  onChanged: (value) => controller.weightSelected(value * .1),
-                  value: controller.defaultWeight,
-                  step: .1,
-                  minValue: FWUser.weightRange.start,
-                  maxValue: FWUser.weightRange.end,
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    FWNumberPicker(
+                      onChanged: (value) => controller.weightSelected(value * .1),
+                      value: controller.defaultWeight,
+                      step: .1,
+                      minValue: FWUser.weightRange.start,
+                      maxValue: FWUser.weightRange.end,
+                    ),
+                    const SizedBox(width: 5.0),
+                    FWText('kg',style: themeData.textTheme.labelLarge),
+                  ],
                 );
               },
             ),

@@ -26,7 +26,7 @@ class OnboardingPresenter extends GetxController {
   void pageScroll() async {
     pageOffset = pageCont.page ?? 0;
     if (pageOffset == 3.0) {
-      await Future.delayed(const Duration(milliseconds: 1000), () {
+      await Future.delayed(const Duration(milliseconds: 500), () {
         buttonVisible = true;
       });
     }

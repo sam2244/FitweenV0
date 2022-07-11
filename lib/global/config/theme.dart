@@ -15,11 +15,19 @@ class FWTheme {
   static const Color white = Colors.white;
   static const Color fitween1 = Color(0xFF0086FF);
   static const Color fitween2 = Color(0xFF00DBFF);
+  static const Color fitween3 = Color(0xFFA5C8FF);
+  static const Color fitween4 = Color(0xFFD4E3FF);
   static const LinearGradient fitweenGradient = LinearGradient(
     colors: [fitween1, fitween2],
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
   );
+  static const LinearGradient cardGradient = LinearGradient(
+    colors: [fitween4, fitween3],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  );
+
 
   // materialColor
   static const MaterialColor primary = MaterialColor(0xFF018DFF, {
