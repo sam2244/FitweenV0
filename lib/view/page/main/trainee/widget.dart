@@ -1,17 +1,16 @@
-import 'dart:math' as math;
 import 'package:fitween1/model/plan/plan.dart';
 import 'package:fitween1/model/plan/todo.dart';
 import 'package:fitween1/model/user/user.dart';
 import 'package:fitween1/view/page/main/widget.dart';
 import 'package:fitween1/view/widget/container.dart';
-import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:fitween1/view/widget/text.dart';
+import 'package:fitween1/view/widget/button.dart';
 import 'package:fitween1/global/config/theme.dart';
 import 'package:fitween1/presenter/page/main/trainee.dart';
 import 'package:fitween1/presenter/global.dart';
-import 'package:fitween1/view/widget/button.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
@@ -26,12 +25,12 @@ class TraineeView extends StatelessWidget {
         return controller.plans.isEmpty
             ? const NoPlanWidget(role: Role.trainee,)
             : Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            TraineeWelcomeMessage(),
-            TraineeCarousel(),
-            TraineeDietCardView(),
-          ],
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                TraineeWelcomeMessage(),
+                TraineeCarousel(),
+                TraineeDietCardView(),
+              ],
         );
       },
     );
@@ -74,7 +73,7 @@ class TraineeWelcomeMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 35.0, left: 15.0),
+      padding: const EdgeInsets.only(top: 5.0, left: 20.0),
       child: Text.rich(
         style: Theme.of(context).textTheme.headlineMedium,
         TextSpan(
@@ -172,7 +171,7 @@ class TrainerProfileButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return  FWButton(
       width: 98.0,
-      height: 24.0,
+      height: 24.0.h,
       fontSize: 13.0,
       onPressed: () {
         //Get.toNamed('/main/trainer');
@@ -279,7 +278,7 @@ class TodoListView extends StatelessWidget {
       Todo(name: '싯업', numbers: {'회': 100}, selectedDays: [Weekday.mon]),
     ];
     return SizedBox(
-      height: 140.0,
+      height: 80.0.h,
       child: ListView.builder(
         shrinkWrap: true,
         itemCount: todoList.length,
@@ -427,7 +426,7 @@ class TraineeDietCardView extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: const [
           DietCardViewTitle(title: '식단'),
@@ -459,7 +458,7 @@ class TraineeDietCard extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
           child: Padding(
-            padding: const EdgeInsets.only(top: 4.0, left: 8.0),
+            padding: const EdgeInsets.only(top: 5.0, left: 8.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -473,21 +472,24 @@ class TraineeDietCard extends StatelessWidget {
                   style: Theme.of(context).textTheme.labelSmall,
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 15.0),
-                  child: Container(
-                    width: 40.0,
-                    decoration: ShapeDecoration(
-                      color: Theme.of(context).colorScheme.onPrimary,
-                      shape: const CircleBorder(),
-                    ),
-                    child: IconButton(
-                        onPressed: () => GlobalPresenter.imageUpload(context,Theme.of(context)),
-                      icon: const Icon(
-                        Icons.add,
+                  padding: const EdgeInsets.only(top: 15.0, bottom: 5.0),
+                  child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Container(
+                      width: 40.0,
+                      decoration: ShapeDecoration(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                        shape: const CircleBorder(),
                       ),
-                      color: Theme.of(context).colorScheme.primary
+                      child: IconButton(
+                        onPressed: () => GlobalPresenter.imageUpload(context,Theme.of(context)),
+                        icon: Icon(
+                          Icons.add,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
                     ),
-                  ),
+                  )
                 )
             ],
         ),
@@ -512,12 +514,12 @@ class TraineeDietCardCarousel extends StatelessWidget {
     return CarouselSlider(
       options: CarouselOptions(
         padEnds: false,
-        height: 131.0,
+        height: 151.0.h,
         disableCenter: true,
         enlargeCenterPage: false,
         enableInfiniteScroll: false,
         initialPage: 0,
-        viewportFraction: 0.3,
+        viewportFraction: 0.33,
         // autoPlay: false,
       ),
       items: carouselWidgets
@@ -607,8 +609,8 @@ class DietCardViewTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(
-        top: 15.0,
-        left: 15.0,
+        //top: 15.0,
+        //left: 15.0,
       ),
       child: FWText(
         title,
