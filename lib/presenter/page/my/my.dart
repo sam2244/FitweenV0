@@ -2,7 +2,7 @@ import 'package:fitween1/model/plan/plan.dart';
 import 'package:fitween1/model/user/chart.dart';
 import 'package:fitween1/model/user/user.dart';
 import 'package:fitween1/presenter/model/user.dart';
-import 'package:fitween1/presenter/page/login.dart';
+import 'package:fitween1/presenter/page/before_main/login.dart';
 import 'package:fitween1/view/widget/container.dart';
 import 'package:fitween1/view/widget/popup.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +13,7 @@ import 'package:get/get.dart';
 class MyPresenter extends GetxController {
   PeriodType type = PeriodType.days;
   late Chart weightChart;
-  double defaultWeight = userPresenter
-      .user.weights?.values.last ?? FWUser.defaultWeight;
+  late double defaultWeight;
 
   static ThemeData themeData = Theme.of(Get.context!);
   static final userPresenter = Get.find<UserPresenter>();

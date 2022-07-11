@@ -3,7 +3,7 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:fitween1/global/config/theme.dart';
 import 'package:fitween1/global/global.dart';
 import 'package:fitween1/model/user/user.dart';
-import 'package:fitween1/presenter/page/register.dart';
+import 'package:fitween1/presenter/page/before_main/register.dart';
 import 'package:fitween1/presenter/model/user.dart';
 import 'package:fitween1/view/widget/button.dart';
 import 'package:fitween1/view/widget/container.dart';
@@ -24,17 +24,15 @@ class RegisterAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: GetBuilder<RegisterPresenter>(builder: (controller) {
-        return IconButton(
-          icon: Icon(
-            Icons.arrow_back,
+      leading: GetBuilder<RegisterPresenter>(
+        builder: (controller) => IconButton(
+          icon: Icon(Icons.arrow_back,
             color: Theme.of(context).colorScheme.primary,
           ),
           onPressed: controller.backPressed,
-        );
-      }),
-      title: FWText(
-        '기본 정보',
+        ),
+      ),
+      title: FWText('기본 정보',
         style: Theme.of(context).textTheme.headlineMedium,
       ),
       elevation: 0.0,
@@ -48,10 +46,9 @@ class CarouselView extends StatelessWidget {
 
   // 회원가입 페이지 carousel 리스트
   static List<Widget> carouselWidgets() => const [
-    NicknameInputView(),
-    RoleView(),
-    SexDateOfBirthView(),
+    UserInfoView(),
     WeightHeightView(),
+    RoleView(),
   ];
   static int widgetCount = carouselWidgets().length;
 
@@ -71,12 +68,10 @@ class CarouselView extends StatelessWidget {
               constraints: BoxConstraints(minWidth: screenSize.width),
               child: CarouselSlider(
                 carouselController: RegisterPresenter.carouselCont,
-                items: carouselWidgets()
-                    .map((widget) => Container(
+                items: carouselWidgets().map((widget) => Container(
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: widget,
-                ))
-                    .toList(),
+                )).toList(),
                 options: CarouselOptions(
                   height: double.infinity,
                   initialPage: 0,
@@ -109,32 +104,114 @@ class CarouselView extends StatelessWidget {
 }
 
 // 닉네임 입력 뷰
-class NicknameInputView extends StatelessWidget {
-  const NicknameInputView({Key? key}) : super(key: key);
+class UserInfoView extends StatelessWidget {
+  const UserInfoView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<RegisterPresenter>(builder: (controller) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          FWText(
-            '별명을 입력하세요.',
-            style: Theme.of(context).textTheme.headlineSmall,
-          ),
-          const SizedBox(height: 8.0),
-          ShakeWidget(
-            autoPlay: controller.invalids[0],
-            shakeConstant: ShakeHorizontalConstant2(),
-            child: FWInputField(
-              controller: RegisterPresenter.nicknameCont,
-              onSubmitted: (_) => controller.nextPressed(),
-              hintText: '별명',
-              invalid: controller.invalids[0],
+    return GetBuilder<RegisterPresenter>(
+      builder: (controller) {
+        return Column(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                FWText('닉네임을 입력하세요.',
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+                const SizedBox(height: 8.0),
+                ShakeWidget(
+                  autoPlay: controller.invalids[0],
+                  shakeConstant: ShakeHorizontalConstant2(),
+                  child: FWInputField(
+                    controller: RegisterPresenter.nicknameCont,
+                    onSubmitted: (_) => controller.nextPressed(),
+                    hintText: '별명',
+                    invalid: controller.invalids[0],
+                  ),
+                ),
+                const SizedBox(height: 8.0),
+                FWText('한글, 영문, 숫자만 입력해주세요.',
+                  style: Theme.of(context).textTheme.bodySmall,
+                  color: Theme.of(context).colorScheme.outline,
+                ),
+              ],
             ),
-          ),
-          const SizedBox(height: 8.0),
-        ],
+            Divider(
+              height: 40.0,
+              thickness: 2.0,
+              color: Theme.of(context).colorScheme.primaryContainer,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                FWText('생년월일을 입력하세요.',
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+                const SizedBox(height: 8.0),
+                ShakeWidget(
+                  autoPlay: controller.invalids[1],
+                  shakeConstant: ShakeHorizontalConstant2(),
+                  child: FWInputField(
+                    controller: RegisterPresenter.dateOfBirthCont,
+                    hintText: 'YYMMDD',
+                  ),
+                ),
+              ],
+            ),
+            Divider(
+              height: 40.0,
+              thickness: 2.0,
+              color: Theme.of(context).colorScheme.primaryContainer,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                FWText('성별을 선택하세요.',
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+                const SizedBox(height: 8.0),
+                ShakeWidget(
+                  autoPlay: controller.invalids[2],
+                  shakeConstant: ShakeHorizontalConstant2(),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: const [
+                      SexSelectionButton(sex: Sex.male),
+                      SexSelectionButton(sex: Sex.female),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+// 성별 선택 버튼
+class SexSelectionButton extends StatelessWidget {
+  const SexSelectionButton({Key? key, required this.sex}) : super(key: key);
+
+  final Sex sex;
+
+  @override
+  Widget build(BuildContext context) {
+    final registerCont = Get.find<RegisterPresenter>();
+
+    const Map<Sex, String> texts = {
+      Sex.male: '남자',
+      Sex.female: '여자',
+    };
+
+    return GetBuilder<UserPresenter>(builder: (userCont) {
+      return FWButton(
+        text: texts[sex],
+        width: 128.0,
+        fill: sex == userCont.user.sex,
+        onPressed: () => registerCont.sexSelected(sex),
       );
     });
   }
@@ -157,14 +234,12 @@ class RoleView extends StatelessWidget {
               Flexible(
                 child: Container(
                   constraints: const BoxConstraints(maxWidth: 100.0),
-                  child: FWText(
-                    '${controller.user.nickname}',
+                  child: FWText('${controller.user.nickname}',
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                 ),
               ),
-              FWText(
-                ' 님은 무엇을 하고 싶으신가요?',
+              FWText(' 님은 무엇을 하고 싶으신가요?',
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
             ],
@@ -176,9 +251,8 @@ class RoleView extends StatelessWidget {
           Container(
             height: 50.0,
             alignment: Alignment.center,
-            child: FWText(
-              'TIP: 역할은 언제든지 바꿀 수 있어요!',
-              color: Theme.of(context).primaryColor,
+            child: FWText('TIP: 역할은 언제든지 바꿀 수 있어요!',
+              color: Theme.of(context).colorScheme.outline,
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ),
@@ -217,91 +291,6 @@ class RoleSelectionButton extends StatelessWidget {
   }
 }
 
-// 성별 생년월일 선택 뷰
-class SexDateOfBirthView extends StatelessWidget {
-  const SexDateOfBirthView({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    Map<String, Widget> contents = {
-      '성별': Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          GetBuilder<RegisterPresenter>(builder: (controller) {
-            return ShakeWidget(
-              autoPlay: controller.invalids[0],
-              shakeConstant: ShakeHorizontalConstant2(),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const [
-                  SexSelectionButton(sex: Sex.male),
-                  SexSelectionButton(sex: Sex.female),
-                ],
-              ),
-            );
-          }),
-        ],
-      ),
-      '생년월일': Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          GetBuilder<RegisterPresenter>(builder: (controller) {
-            return Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: ShakeWidget(
-                  autoPlay: controller.invalids[1],
-                  shakeConstant: ShakeHorizontalConstant2(),
-                  child: FWInputField(
-                    controller: RegisterPresenter.dateOfBirthCont,
-                    hintText: '011223',
-                  ),
-                ),
-              ),
-            );
-          }),
-        ],
-      ),
-    };
-
-    return ListView.separated(
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: contents.length,
-      itemBuilder: (context, index) => FWCard(
-        title: contents.keys.toList()[index],
-        child: contents[contents.keys.toList()[index]]!,
-      ),
-      separatorBuilder: (context, index) => const SizedBox(height: 10.0),
-    );
-  }
-}
-
-// 성별 선택 버튼
-class SexSelectionButton extends StatelessWidget {
-  const SexSelectionButton({Key? key, required this.sex}) : super(key: key);
-
-  final Sex sex;
-
-  @override
-  Widget build(BuildContext context) {
-    final registerCont = Get.find<RegisterPresenter>();
-
-    const Map<Sex, String> texts = {
-      Sex.male: '남자',
-      Sex.female: '여자',
-    };
-
-    return GetBuilder<UserPresenter>(builder: (userCont) {
-      return FWButton(
-        text: texts[sex],
-        width: 128.0,
-        fill: sex == userCont.user.sex,
-        onPressed: () => registerCont.sexSelected(sex),
-      );
-    });
-  }
-}
-
 // 체중 신장 선택 뷰
 class WeightHeightView extends StatelessWidget {
   const WeightHeightView({Key? key}) : super(key: key);
@@ -321,7 +310,6 @@ class WeightHeightView extends StatelessWidget {
                 minValue: FWUser.weightRange.start,
                 maxValue: FWUser.weightRange.end,
                 step: .1,
-                surfaceColor: FWTheme.surface[1],
               );
             },
           ),
@@ -344,7 +332,6 @@ class WeightHeightView extends StatelessWidget {
                 minValue: FWUser.heightRange.start,
                 maxValue: FWUser.heightRange.end,
                 step: .1,
-                surfaceColor: FWTheme.surface[1],
               );
             },
           ),
@@ -361,7 +348,6 @@ class WeightHeightView extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: contents.length,
       itemBuilder: (context, index) => FWCard(
-        height: 160.0,
         title: contents.keys.toList()[index],
         child: contents[contents.keys.toList()[index]]!,
       ),
@@ -403,16 +389,20 @@ class CarouselNextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<RegisterPresenter>();
+    return GetBuilder<RegisterPresenter>(
+      builder: (controller) {
+        bool lastPage = controller.pageIndex == CarouselView.widgetCount - 1;
 
-    return FWButton(
-      onPressed: () {
-        controller.nextPressed();
-        FocusScope.of(context).unfocus();
-      },
-      width: 120.0,
-      height: 45.0,
-      text: '다음',
+        return FWButton(
+          onPressed: () {
+            controller.nextPressed();
+            FocusScope.of(context).unfocus();
+          },
+          width: 120.0,
+          height: 45.0,
+          text: lastPage ? '완료' : '다음',
+        );
+      }
     );
   }
 }

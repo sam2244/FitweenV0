@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class FWTheme extends GetxController {
+class FWTheme {
   // FWTheme._();
 
   ThemeMode mode = ThemeMode.light;
-
-  void toggleMode() {
-    mode = ThemeMode.values.lastWhere((value) => value != mode);
-    update();
-  }
 
   /// colors
   // simple
@@ -18,6 +13,13 @@ class FWTheme extends GetxController {
   static const Color grey = Color(0xFF929292);
   static const Color light = Color(0xFFF5F5F5);
   static const Color white = Colors.white;
+  static const Color fitween1 = Color(0xFF0086FF);
+  static const Color fitween2 = Color(0xFF00DBFF);
+  static const LinearGradient fitweenGradient = LinearGradient(
+    colors: [fitween1, fitween2],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  );
 
   // materialColor
   static const MaterialColor primary = MaterialColor(0xFF018DFF, {

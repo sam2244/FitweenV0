@@ -6,6 +6,7 @@ import 'package:fitween1/view/page/chat/chat/chat.dart';
 import 'package:fitween1/view/page/chat/chatroom/chatroom.dart';
 import 'package:fitween1/view/page/detail/detail.dart';
 import 'package:fitween1/view/page/developer.dart';
+import 'package:fitween1/view/page/greeting/greeting.dart';
 import 'package:fitween1/view/page/login/login.dart';
 import 'package:fitween1/view/page/main/trainee/trainee.dart';
 import 'package:fitween1/view/page/main/trainer/trainer.dart';
@@ -16,12 +17,15 @@ import 'package:fitween1/view/page/onboarding/onboarding.dart';
 import 'package:fitween1/view/page/register/register.dart';
 import 'package:fitween1/view/page/scheduler/scheduler.dart';
 import 'package:fitween1/view/page/my/setting/setting.dart';
+import 'package:fitween1/view/page/splash/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class FWRoute {
   static Map<String, Widget> get pages => {
+    '/splash': const SplashPage(),
     '/login': const LoginPage(),
+    '/greeting': const GreetingPage(),
     '/register': const RegisterPage(),
     '/main/trainer': const TrainerMainPage(),
     '/main/trainee': const TraineeMainPage(),
@@ -42,7 +46,7 @@ class FWRoute {
   };
 
   static const Transition transition = Transition.fadeIn;
-  static const Duration duration = Duration.zero;
+  static const Duration duration = Duration(milliseconds: 100);
 
   static List<GetPage> get getPages => pages.entries.map((page) => GetPage(
     name: page.key,

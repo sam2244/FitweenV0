@@ -19,6 +19,9 @@ class ChatPage extends StatelessWidget {
       'height': FWUser.defaultHeight,
       'statusMessage': 'ㄴr는 ㄱr끔 눈물을 흘린ㄷr...\n세계 최고 트레이너',
       'categories': <String>[],
+      'trainerPlanIds': <String>[],
+      'traineePlanIds': <String>[],
+      'friendUids': <String>[],
     };
 
     map['nickname'] = '이하준';

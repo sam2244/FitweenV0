@@ -1,4 +1,8 @@
 import 'dart:math' as math;
+import 'package:fitween1/model/plan/plan.dart';
+import 'package:fitween1/model/user/user.dart';
+import 'package:fitween1/view/page/main/widget.dart';
+import 'package:fitween1/view/widget/container.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:fitween1/view/widget/text.dart';
 import 'package:fitween1/global/config/theme.dart';
@@ -7,10 +11,31 @@ import 'package:fitween1/presenter/global.dart';
 import 'package:fitween1/view/widget/button.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 //트레이니 페이지의 위젯 모음
+
+class TraineeView extends StatelessWidget {
+  const TraineeView({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<TraineePresenter>(
+      builder: (controller) {
+        return controller.plans.isEmpty
+            ? const NoPlanWidget(role: Role.trainee,)
+            : Column(
+          children: const [
+            TraineeWelcomeMessage(),
+            TraineeCarousel(),
+          ],
+        );
+      },
+    );
+  }
+}
+
 
 //트레이니 메인 페이지 Body CarouselSlider Widget
 class TraineeCarousel extends StatelessWidget {
@@ -18,92 +43,41 @@ class TraineeCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> carouselWidgets = [
-      const TraineeAddPlanButton(),
-      const TraineeCard(),
-    ];
-
-    final double height = MediaQuery.of(context).size.height;
-    return CarouselSlider(
-      options: CarouselOptions(
-        enableInfiniteScroll: carouselWidgets.length > 1,
-        height: height,
-        viewportFraction: 1.0,
-        enlargeCenterPage: false,
-        // autoPlay: false,
-      ),
-      items: carouselWidgets
-          .map((widget) => Container(
-                padding: EdgeInsets.zero,
-                child: widget,
-              ))
-          .toList(),
-    );
-  }
-}
-
-//트레이니 플랜 추가 버튼
-class TraineeAddPlanButton extends StatelessWidget {
-  const TraineeAddPlanButton({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SvgPicture.asset(
-            'assets/img/add_plan.svg',
-            height: 300.0,
+    Size screenSize = MediaQuery.of(context).size;
+    
+    return GetBuilder<TraineePresenter>(
+      builder: (controller) {
+        final List<Widget> carouselWidgets = controller.plans.map((plan) {
+          return TraineePlanView(plan: plan);
+        }).toList();
+        return Container(
+          constraints: BoxConstraints(
+            minWidth: screenSize.width,
+            maxHeight: screenSize.height * .65,
           ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: FWText(
-              "현재 진행중인 플랜이 없습니다.",
-              style: Theme.of(context).textTheme.bodyMedium,
-              color: Theme.of(context).colorScheme.outline,
+          child: CarouselSlider(
+            options: CarouselOptions(
+              height: double.infinity,
+              enableInfiniteScroll: carouselWidgets.length > 1,
+              viewportFraction: 1.0,
+              enlargeCenterPage: false,
             ),
+            items: carouselWidgets.map((widget) => Container(
+              padding: EdgeInsets.zero,
+              child: widget,
+            )).toList(),
           ),
-          FWButton(
-            width: 193.0,
-            height: 52.0,
-            onPressed: TraineePresenter.addPlanButtonPressed,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-                  child: Row(
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.only(right: 5.0),
-                        child: Icon(Icons.add),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 5.0),
-                        child: FWText(
-                          '새 플랜 가입',
-                          style: Theme.of(context).textTheme.labelLarge,
-                          color: Theme.of(context).colorScheme.onPrimary,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
 
 //트레이니 메인 페이지 View
-class TraineeCard extends StatelessWidget {
-  const TraineeCard({Key? key}) : super(key: key);
+class TraineePlanView extends StatelessWidget {
+  const TraineePlanView({Key? key, required this.plan}) : super(key: key);
+
+  final Plan plan;
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +87,6 @@ class TraineeCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: const [
-          TraineeWelcomeMessage(),
           TraineeToDoCard(),
           TraineeDietCardView(),
         ],
@@ -132,7 +105,7 @@ class TraineeWelcomeMessage extends StatelessWidget {
       child: Text.rich(
         style: Theme.of(context).textTheme.headlineMedium,
         TextSpan(
-          text: "안녕하세요,",
+          text: '안녕하세요, ',
             style: TextStyle(
               color: Theme.of(context).colorScheme.primary,
             ),
@@ -167,7 +140,7 @@ class TraineeToDoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Card(
+      child: FWCard(
         child: Padding(
           padding: EdgeInsets.zero,
           child: Column(
@@ -324,19 +297,17 @@ class TraineeDietCardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-        child: Padding(
-          padding: EdgeInsets.zero,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-            DietCardViewTitle(
-              title: '식단',
-            ),
-              TraineeDietCardCarousel(),
+      child: Padding(
+        padding: EdgeInsets.zero,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            DietCardViewTitle(title: '식단'),
+            TraineeDietCardCarousel(),
           ],
-      ),
         ),
+      ),
     );
   }
 }
@@ -801,22 +772,23 @@ class TraineePagePhotoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-        margin: const EdgeInsets.only(
-          left: 15.0,
+      margin: const EdgeInsets.only(
+        left: 15.0,
+      ),
+      color: Theme.of(context).colorScheme.onSecondary,
+      shape: RoundedRectangleBorder(
+        side: const BorderSide(
+          color: FWTheme.grey,
         ),
-        color: Theme.of(context).colorScheme.onSecondary,
-        shape: RoundedRectangleBorder(
-          side: const BorderSide(
-            color: FWTheme.grey,
-          ),
-          borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: const Padding(
+        padding: EdgeInsets.all(28.5),
+        child: Icon(
+          Icons.camera_alt_outlined,
+          color: FWTheme.grey,
         ),
-        child: const Padding(
-          padding: EdgeInsets.all(28.5),
-          child: Icon(
-            Icons.camera_alt_outlined,
-            color: FWTheme.grey,
-          ),
-        ));
+      ),
+    );
   }
 }

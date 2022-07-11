@@ -103,7 +103,6 @@ class MyWeightGraphView extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
                     child: FWCard(
-                        height: 447,
                         child: Column(
                           children: [
                             Container(

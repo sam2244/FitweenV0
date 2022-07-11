@@ -117,45 +117,36 @@ class FWCard extends StatelessWidget {
     Key? key,
     this.title,
     required this.child,
-    this.height = 115.0,
     this.outline = false,
   }) : super(key: key);
 
   final String? title;
   final Widget child;
-  final double height;
   final bool outline;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: height,
-      child: Card(
-        elevation: 3.0,
-        shape: RoundedRectangleBorder(
-          side: BorderSide(
-            color: outline
-                ? Theme.of(context).colorScheme.primary
-                : Colors.transparent,
-          ),
-          borderRadius: BorderRadius.circular(10),
+    return Card(
+      elevation: 3.0,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(
+          color: outline
+              ? Theme.of(context).colorScheme.primary
+              : Colors.transparent,
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 15.0,
-            vertical: 10.0,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (title != null)
-              FWText(
-                title!,
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-              Expanded(child: child),
-            ],
-          ),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (title != null)
+            FWText(title!,
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
+            child,
+          ],
         ),
       ),
     );

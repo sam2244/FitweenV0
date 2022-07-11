@@ -51,19 +51,19 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/img/alarm.png
-    - assets/img/fitweenV1.png
-    - assets/img/guest.png
-    - assets/img/logo/apple.svg
-    - assets/img/logo/fitween.svg
-    - assets/img/logo/google.svg
-    - assets/img/onboarding1.svg
-    - assets/img/onboarding2.svg
-    - assets/img/onboarding3.svg
-    - assets/img/onboarding4.svg
-    - assets/img/onboarding5.svg
-    - assets/img/onboarding_background.svg
-    - assets/img/add_plan.svg
+    - assets/image/logo/apple.svg
+    - assets/image/logo/fitween.svg
+    - assets/image/logo/google.svg
+    - assets/image/page/greeting/greeting.svg
+    - assets/image/page/onboarding/background.svg
+    - assets/image/page/onboarding/carousel_01.svg
+    - assets/image/page/onboarding/carousel_02.svg
+    - assets/image/page/onboarding/carousel_03.svg
+    - assets/image/page/onboarding/carousel_04.svg
+    - assets/image/page/onboarding/carousel_05.svg
+    - assets/image/page/add_plan/bulk_up.svg
+    - assets/image/page/add_plan/diet.svg
+    - assets/image/page/add_plan/etc.svg
     - assets/json/exercises.json
 
 fonts:

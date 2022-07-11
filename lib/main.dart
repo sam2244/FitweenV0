@@ -3,7 +3,7 @@ import 'package:fitween1/global/config/theme.dart';
 import 'package:fitween1/presenter/global.dart';
 import 'package:fitween1/presenter/model/exercise.dart';
 import 'package:fitween1/route.dart';
-import 'package:fitween1/view/page/splash/splash.dart';
+import 'package:fitween1/view/page/onboarding/onboarding.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,30 +28,29 @@ class Fitween extends StatelessWidget {
     ExercisePresenter.loadExercises();
 
     return ScreenUtilInit(
-        designSize: const Size(375, 812),
-        minTextAdapt: true,
-        splitScreenMode: true,
-        builder: (context, child) {
-          return GetBuilder<FWTheme>(builder: (controller) {
-            return GetMaterialApp(
-              title: 'Fitween',
-              debugShowCheckedModeBanner: false,
-              themeMode: controller.mode,
-              theme: ThemeData(
-                useMaterial3: true,
-                colorScheme: FWTheme.lightScheme,
-                textTheme: FWTheme.textTheme,
-              ),
-              darkTheme: ThemeData(
-                useMaterial3: true,
-                colorScheme: FWTheme.darkScheme,
-                textTheme: FWTheme.textTheme,
-              ),
-              home: const SplashPage(),
-              // home: const DeveloperPage(),
-              getPages: FWRoute.getPages,
-            );
-          });
-        });
+      designSize: const Size(375, 812),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return GetMaterialApp(
+          title: 'Fitween',
+          debugShowCheckedModeBanner: false,
+          themeMode: ThemeMode.light,
+          theme: ThemeData(
+            useMaterial3: true,
+            colorScheme: FWTheme.lightScheme,
+            textTheme: FWTheme.textTheme,
+          ),
+          darkTheme: ThemeData(
+            useMaterial3: true,
+            colorScheme: FWTheme.darkScheme,
+            textTheme: FWTheme.textTheme,
+          ),
+          home: const OnboardingPage(),
+          // home: const DeveloperPage(),
+          getPages: FWRoute.getPages,
+        );
+      },
+    );
   }
 }

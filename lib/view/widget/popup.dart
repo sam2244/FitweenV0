@@ -67,7 +67,7 @@ class FWDialog extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child,
+                  Expanded(child: child),
                 ],
               ),
             ),

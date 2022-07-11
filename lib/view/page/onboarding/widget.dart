@@ -1,74 +1,66 @@
+import 'package:fitween1/presenter/page/before_main/onboarding.dart';
+import 'package:fitween1/view/widget/button.dart';
+import 'package:fitween1/view/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
-//Onboarding Page Parallax로 구현
-class Parallax extends StatefulWidget {
+//Onboarding Page Parallax 로 구현
+class Parallax extends StatelessWidget {
   const Parallax({Key? key}) : super(key: key);
 
   @override
-  _ParallaxState createState() => _ParallaxState();
-}
-
-class _ParallaxState extends State<Parallax> {
-  late PageController _pageController;
-  late double _pageOffset;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageOffset = 0;
-    _pageController = PageController(initialPage: 0);
-    _pageController.addListener(
-      () => setState(() => _pageOffset = _pageController.page ?? 0),
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        BackgroundImage( //배경이미지 변경되는 페이지에 따라 인덱스 값 설정
-          pageCount: screens.length + 1,
-          screenSize: MediaQuery.of(context).size,
-          offset: _pageOffset,
-        ),
-        PageView(
-          controller: _pageController,
+    return GetBuilder<OnboardingPresenter>(
+      builder: (controller) {
+        OnboardingPresenter.pageCont.addListener(controller.pageScroll);
+        return Stack(
           children: [
-            ...screens
-                .map((screen) => Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          padding: EdgeInsets.zero,
-                          child: SvgPicture.asset(
-                            screen.svgName,
-                            height: 300.0,
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          //color: Colors.black.withOpacity(0.4),
-                          child: Text(
-                            screen.text,
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.headlineSmall,
-                          ),
-                        ),
-                      ],
-                    ))
-                .toList(),
+            //배경이미지 변경되는 페이지에 따라 인덱스 값 설정
+            BackgroundImage(
+              pageCount: OnboardingPresenter.screens.length + 1,
+              screenSize: MediaQuery.of(context).size,
+              offset: controller.pageOffset,
+            ),
+            PageView(
+              controller: OnboardingPresenter.pageCont,
+              children: OnboardingPresenter.screens.map((screen) => Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: EdgeInsets.zero,
+                    child: SvgPicture.asset(screen['svgName']!,
+                      height: 300.0,
+                    ),
+                  ),
+                  const SizedBox(height: 20.0),
+                  FWText(screen['text']!,
+                    align: TextAlign.center,
+                    style: Theme.of(context).textTheme.headlineSmall,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                  const SizedBox(height: 10.0),
+                ],
+              )).toList(),
+            ),
+            if (controller.pageOffset == 3.0)
+            AnimatedOpacity(
+              opacity: controller.buttonVisible ? 1.0 : 0.0,
+              duration: Duration.zero,
+              child: Container(
+                alignment: Alignment.bottomCenter,
+                margin: const EdgeInsets.only(bottom: 150.0),
+                child: const FWButton(
+                  onPressed: OnboardingPresenter.startPressed,
+                  text: '시작하기',
+                  width: 200.0,
+                ),
+              ),
+            ),
           ],
-        ),
-      ],
+        );
+      },
     );
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
   }
 }
 
@@ -87,7 +79,7 @@ class BackgroundImage extends StatelessWidget {
   /// Number of pages
   final int pageCount;
 
-  /// Currnet page position
+  /// Current page position
   final double offset;
 
   @override
@@ -98,46 +90,18 @@ class BackgroundImage extends StatelessWidget {
     int firstPageIdx = 0;
     int alignmentMax = 1;
     int alignmentMin = -1;
-    int pageRange = (lastPageIdx - firstPageIdx) - 1;
-    int alignmentRange = (alignmentMax - alignmentMin);
-    double alignment =
-        (((offset - firstPageIdx) * alignmentRange) / pageRange) + alignmentMin;
+    int pageRange = lastPageIdx - firstPageIdx - 1;
+    int alignmentRange = alignmentMax - alignmentMin;
+    double alignment = (offset - firstPageIdx) * alignmentRange / pageRange + alignmentMin;
 
     return SizedBox(
       height: 500.0,
       width: screenSize.width,
       child: SvgPicture.asset(
-        'assets/img/onboarding_background.svg',
+        'assets/image/page/onboarding/background.svg',
         alignment: Alignment(alignment, 0),
         fit: BoxFit.fitHeight,
       ),
     );
   }
 }
-
-//스크린 위젯
-class Screen {
-  const Screen({required this.svgName, required this.text});
-
-  final String svgName;
-  final String text;
-}
-
-//페이지에 들어갈 리스트
-const List<Screen> screens = [
-  Screen(
-    svgName: 'assets/img/onboarding4.svg',
-    text: '비싼 PT 비용,\n부담으로 느끼신 적 있나요?',
-  ),
-  Screen(
-    svgName: 'assets/img/onboarding3.svg',
-    text: '친구들끼리 서로를\n코칭하며 운동하고 싶으신가요?',
-  ),
-  Screen(
-      svgName: 'assets/img/onboarding2.svg',
-      text: '피트윈은 비전문가도 트레이너가 되어\n서로를 관리해 줄 수 있어요!'),
-  Screen(
-    svgName: 'assets/img/onboarding1.svg',
-    text: '피트윈과 함께\n건강해져볼까요?',
-  ),
-];

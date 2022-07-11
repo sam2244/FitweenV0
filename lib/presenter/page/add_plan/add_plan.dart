@@ -1,13 +1,17 @@
 import 'package:carousel_slider/carousel_controller.dart';
+import 'package:fitween1/model/chat/chat.dart';
 import 'package:fitween1/model/plan/diet.dart';
 import 'package:fitween1/model/plan/plan.dart';
 import 'package:fitween1/model/plan/todo.dart';
+import 'package:fitween1/model/user/user.dart';
 import 'package:fitween1/presenter/model/plan.dart';
 import 'package:fitween1/presenter/model/user.dart';
 import 'package:fitween1/presenter/page/add_plan/add_todo.dart';
 import 'package:fitween1/presenter/page/add_plan/add_diet.dart';
+import 'package:fitween1/presenter/page/main/trainer.dart';
 import 'package:fitween1/view/page/add_plan/widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class AddPlanPresenter extends GetxController {
@@ -24,7 +28,7 @@ class AddPlanPresenter extends GetxController {
   Plan plan = planPresenter.plan;
 
   static const int max = 999;
-  static const List<String> titles = ['플랜추가', '기간설정', '주간루틴', '식단관리'];
+  static const List<String> titles = ['플랜 추가', '기간 설정', '주간 루틴', '식단 관리', '플랜 코드'];
 
   static const Duration shakeDuration = Duration(milliseconds: 500);
 
@@ -38,7 +42,20 @@ class AddPlanPresenter extends GetxController {
   static final planPresenter = Get.find<PlanPresenter>();
   static final addTodoPresenter = Get.find<AddTodoPresenter>();
   static final addDietPresenter = Get.find<AddDietPresenter>();
+  static final trainerPresenter = Get.find<TrainerPresenter>();
 
+  void initialize() {
+    pageIndex = 0;
+    hintText = Plan.purposes.first;
+    fieldActive = false;
+    period = 1;
+
+    selectedDays = [];
+    todos = [];
+    diets = [];
+
+    initDates();
+  }
 
   // 현재 페이지 인덱스 증가
   void pageIndexIncrease() {
@@ -68,8 +85,12 @@ class AddPlanPresenter extends GetxController {
     bool isLastPage = plan.isDiet && pageIndex == CarouselView.widgetCount - 1;
     isLastPage |= !plan.isDiet && pageIndex == CarouselView.widgetCount - 2;
 
+    if (pageIndex == 1) initDates();
+    if (pageIndex == 2) plan.endDate = Chat.fullTime(plan.endDate!);
+    if (pageIndex == 3) plan.generatePlanId();
     if (isLastPage) {
       extendTodos(); extendDiets(); complete();
+      pageIndex = 0;
       Get.offAllNamed('/main/trainer');
       return;
     }
@@ -82,10 +103,18 @@ class AddPlanPresenter extends GetxController {
     pageIndexIncrease();
   }
 
-  void complete() {
-    userPresenter.addPlan(plan);
+  void complete() async {
+    FWUser user = FWUser.fromMap(userPresenter.user.toMap());
+    plan.trainer = FWUser.fromMap(user.toMap());
+    plan.trainer!.trainerPlanIds.add(plan.id!);
+    plan.trainerUid = user.uid;
     Get.offAllNamed('/main/trainer');
-    // planPresenter.updateDB();
+    UserPresenter.updateDB(plan.trainer!);
+    PlanPresenter.updateDB(plan);
+    await userPresenter.loadPlans();
+    await planPresenter.loadTrainer();
+    trainerPresenter.initialize();
+    update();
   }
 
   void purposeSelected(String purpose) {
@@ -236,9 +265,15 @@ class AddPlanPresenter extends GetxController {
   void extendTodos() {
     DateTime date = plan.startDate!;
     while (date.isBefore(plan.endDate!)) {
-      if (plan.todos != null) {
-        plan.todos![date] = getTodos([Plan.toWeekday(date)]);
+      List<Todo> todos = getTodos([Plan.toWeekday(date)]);
+      List<Todo> dailyTodos = [];
+
+      for (Todo todo in todos) {
+        if (todo.selectedDays.contains(Plan.toWeekday(date))) {
+          dailyTodos.add(todo);
+        }
       }
+      plan.todos[date] = dailyTodos;
       date = date.add(const Duration(days: 1));
     }
   }
@@ -289,10 +324,12 @@ class AddPlanPresenter extends GetxController {
   void extendDiets() {
     DateTime date = plan.startDate!;
     while (date.isBefore(plan.endDate!)) {
-      if (plan.diets != null) {
-        plan.diets![date] = getDiets([Plan.toWeekday(date)]);
-      }
+      plan.diets[date] = getDiets([Plan.toWeekday(date)]);
       date = date.add(const Duration(days: 1));
     }
+  }
+
+  static void copyButtonPressed(String text) {
+    Clipboard.setData(ClipboardData(text: text));
   }
 }

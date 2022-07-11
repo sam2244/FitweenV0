@@ -1,15 +1,61 @@
 // Carousel 뷰 위젯
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:fitween1/global/config/theme.dart';
+import 'package:fitween1/model/plan/plan.dart';
+import 'package:fitween1/model/user/user.dart';
+import 'package:fitween1/presenter/global.dart';
+import 'package:fitween1/presenter/model/user.dart';
 import 'package:fitween1/presenter/page/main/trainer.dart';
+import 'package:fitween1/view/page/main/widget.dart';
 import 'package:fitween1/view/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
+class SelectModeBottomBar extends StatelessWidget {
+  const SelectModeBottomBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<TrainerPresenter>(
+      builder: (controller) {
+        return BottomAppBar(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.drive_file_move_outline),
+                  iconSize: 40.0,
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.add),
+                  iconSize: 40.0,
+                ),
+                IconButton(
+                  onPressed: () {
+                    controller.resetSelectState();
+                    controller.changeMode(false);
+                  },
+                  icon: const Icon(Icons.close_rounded),
+                  iconSize: 40.0,
+                ),
+              ],
+            ),
+          ),
+        );
+      }
+    );
+  }
+}
+
+
 // 트레이너 메인 페이지 CategoryBar
-class TraineeCategory extends StatelessWidget {
-  final String category;
-  const TraineeCategory({Key? key, required this.category}) : super(key: key);
+class TraineeCategoryBar extends StatelessWidget {
+  const TraineeCategoryBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,39 +66,32 @@ class TraineeCategory extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          controller.selectMod
-              ? Container()
-              : IconButton(
-                  onPressed: () {
-                    controller.backPressed();
-                  },
-                  icon: Icon(
-                    Icons.arrow_back_ios_new,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                  iconSize: 24,
-                ),
+          if (!controller.selectMode)
+          IconButton(
+            onPressed: controller.backPressed,
+            icon: Icon(
+              Icons.arrow_back_ios_new,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            iconSize: 24,
+          ),
           Container(
             alignment: Alignment.center,
             width: MediaQuery.of(context).size.width - 150,
             child: FWText(
-              category,
-              size: 20,
+              controller.currentGroup,
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ),
-          controller.selectMod
-              ? Container()
-              : IconButton(
-                  onPressed: () {
-                    controller.selectMod ? null : controller.nextPressed();
-                  },
-                  icon: Icon(
-                    Icons.arrow_forward_ios,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                  iconSize: 24,
-                ),
+          if (!controller.selectMode)
+          IconButton(
+            onPressed: controller.nextPressed,
+            icon: Icon(
+              Icons.arrow_forward_ios,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            iconSize: 24,
+          ),
         ],
       ),
     );
@@ -60,54 +99,63 @@ class TraineeCategory extends StatelessWidget {
 }
 
 // 트레이너 메인 페이지 Card
-class TraineeCard extends StatelessWidget {
-  final Iterable<Trainee> trainees;
-  const TraineeCard({Key? key, required this.trainees}) : super(key: key);
+class TraineeCardView extends StatelessWidget {
+  final String? group;
+  const TraineeCardView({Key? key, this.group}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<TrainerPresenter>(
       builder: (controller) {
-        return SingleChildScrollView(
+        List<Plan> filteredPlans = [];
+        if (group == null) { filteredPlans = [...controller.plans]; }
+        else {
+          filteredPlans = controller.plans.where((plan) {
+            return plan.group == group;
+          }).toList();
+        }
+
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
             children: [
-              for (int i = 0; i < trainees.length; i++)
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: InkWell(
-                    onTap: () => controller.selectMod
-                        ? controller.toggleSelectState(i)
-                        : Get.toNamed(
-                            '/detail/trainer',
-                            arguments: trainees.elementAt(i),
-                          ),
-                    onLongPress: () {
-                      controller.modChange(true);
-                      controller.toggleSelectState(i);
-                    },
-                    child: Card(
-                      color: TrainerPresenter.traineeCheck[i]
-                          ? Theme.of(context).colorScheme.surfaceVariant
-                          : null,
-                      child: Container(
-                        margin: const EdgeInsets.all(10.0),
-                        child: SizedBox(
-                          height: 108.0,
-                          child: Row(
-                            children: [
-                              const TraineeProfileImage(),
-                              Expanded(
-                                child: TraineeInfo(
-                                  trainee: trainees.elementAt(i),
-                                ),
-                              ),
-                            ],
-                          ),
+              const SizedBox(height: 20.0),
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxHeight: 400.0),
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  itemCount: filteredPlans.length,
+                  itemBuilder: (context, index) {
+                    return Material(
+                      color: controller.planSelected[index]
+                          ? Theme.of(context).colorScheme.primaryContainer
+                          : Colors.transparent,
+                      child: InkWell(
+                        onTap: () => controller.planTilePressed(index: index),
+                        onLongPress: () {
+                          controller.changeMode(true);
+                          controller.toggleSelectState(index);
+                        },
+                        child: Container(
+                          color: Colors.transparent,
+                          width: double.infinity,
+                          height: 120.0,
+                          margin: const EdgeInsets.symmetric(horizontal: 15.0),
+                          child: TraineeInfoTile(plan: filteredPlans[index]),
                         ),
                       ),
-                    ),
+                    );
+                  },
+                  separatorBuilder: (context, _) => Divider(
+                    thickness: 1.0,
+                    color: Theme.of(context).colorScheme.outline,
                   ),
                 ),
+              ),
+              Container(
+                padding: const EdgeInsets.all(30.0),
+                child: const PlanAddButton(role: Role.trainer),
+              ),
             ],
           ),
         );
@@ -116,64 +164,41 @@ class TraineeCard extends StatelessWidget {
   }
 }
 
-// 트레이너 메인 페이지 CategoryBar
-class TraineeProfileImage extends StatelessWidget {
-  const TraineeProfileImage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return CircularPercentIndicator(
-      radius: 40.0,
-      lineWidth: 8.0,
-      percent: 0.8,
-      center: ClipOval(
-        child: SizedBox.fromSize(
-          size: const Size.fromRadius(30.0), // Image radius
-          child: Image.network(
-            'https://www.walkerhillstory.com/wp-content/uploads/2020/09/2-1.jpg',
-            fit: BoxFit.cover,
-          ),
-        ),
-      ),
-      reverse: true,
-      backgroundColor: Colors.transparent,
-      linearGradient: const LinearGradient(
-        colors: [Color(0xffB07BE6), Color(0xff5BA2E0)],
-      ),
-      circularStrokeCap: CircularStrokeCap.round,
-    );
-  }
-}
 
 // 트레이너 메인 페이지 Trainee Information
-class TraineeInfo extends StatelessWidget {
-  final Trainee trainee;
-  const TraineeInfo({Key? key, required this.trainee}) : super(key: key);
+class TraineeInfoTile extends StatelessWidget {
+  final Plan plan;
+  const TraineeInfoTile({Key? key, required this.plan}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    FWUser? trainee = plan.trainee;
+
+    return Container(
       padding: const EdgeInsets.all(10.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
         children: [
-          TraineeName(name: trainee.name),
-          Expanded(
+          SizedBox(
+            width: 80.0,
+            child: TraineeProfileImage(
+              trainee: trainee,
+              rate: plan.goalRate,
+            ),
+          ),
+          const SizedBox(width: 15.0),
+          trainee == null ? FWText(
+            '피트위너를 등록하세요.\n${plan.id}',
+            color: Theme.of(context).colorScheme.onSurface,
+            style: Theme.of(context).textTheme.labelLarge,
+          ) : Expanded(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TrainerMainPageGraph(
-                    title: '운동',
-                    total: trainee.total,
-                    completed: trainee.completed),
-                if (true) // isDiet
-                  TrainerMainPageGraph(
-                      title: '식단',
-                      total: trainee.total,
-                      completed: trainee.completed),
+                TraineeNameWidget(trainee: trainee),
+                Expanded(child: TraineeGraphView(plan: plan)),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
@@ -181,35 +206,69 @@ class TraineeInfo extends StatelessWidget {
 }
 
 // 트레이너 메인 페이지 CategoryBar
-class TraineeName extends StatelessWidget {
-  final String name;
-  const TraineeName({Key? key, required this.name}) : super(key: key);
+class TraineeProfileImage extends StatelessWidget {
+  final FWUser? trainee;
+  final double rate;
+  const TraineeProfileImage({
+    Key? key,
+    required this.trainee,
+    required this.rate,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return FWText(
-      name,
+    return CircularPercentIndicator(
+      radius: 42.0,
+      lineWidth: 12.0,
+      percent: rate,
+      center: ClipOval(
+        child: SizedBox.fromSize(
+          size: const Size.fromRadius(30.0), // Image radius
+          child: Image.network(
+            trainee?.imageUrl ?? UserPresenter.defaultProfile,
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+      backgroundColor: Colors.transparent,
+      linearGradient: FWTheme.fitweenGradient,
+      circularStrokeCap: CircularStrokeCap.round,
+    );
+  }
+}
+// 트레이너 메인 페이지 CategoryBar
+class TraineeNameWidget extends StatelessWidget {
+  final FWUser? trainee;
+  const TraineeNameWidget({Key? key, this.trainee}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FWText(trainee!.nickname!,
       color: Theme.of(context).colorScheme.onSurface,
       style: Theme.of(context).textTheme.labelLarge,
     );
   }
 }
 
-// 트레이너 메인 페이지 CategoryBar
-class TrainerMainPageSubTitle extends StatelessWidget {
-  final String subtitle;
-  const TrainerMainPageSubTitle({Key? key, required this.subtitle})
-      : super(key: key);
+class TraineeGraphView extends StatelessWidget {
+  final Plan plan;
+  const TraineeGraphView({Key? key, required this.plan}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue,
-      child: FWText(
-        subtitle,
-        color: Theme.of(context).colorScheme.onSurfaceVariant,
-        style: Theme.of(context).textTheme.labelSmall,
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        TrainerMainPageGraph(
+          title: '운동',
+          rate: plan.todoRate,
+        ),
+        if (plan.isDiet)
+        TrainerMainPageGraph(
+          title: '식단',
+          rate: plan.dietRate,
+        ),
+      ],
     );
   }
 }
@@ -217,19 +276,18 @@ class TrainerMainPageSubTitle extends StatelessWidget {
 // 트레이너 메인 페이지 Graph
 class TrainerMainPageGraph extends StatelessWidget {
   final String title;
-  final int total;
-  final int completed;
+  final double rate;
 
   const TrainerMainPageGraph({
     Key? key,
     required this.title,
-    required this.completed,
-    required this.total,
+    required this.rate,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    double percent = completed / total == 0 ? 0.05 : completed / total;
+    double percent = rate;
+    if (rate == .0) percent = .05;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -239,14 +297,20 @@ class TrainerMainPageGraph extends StatelessWidget {
           color: Theme.of(context).colorScheme.onSurfaceVariant,
           style: Theme.of(context).textTheme.labelSmall,
         ),
-        LinearPercentIndicator(
-          padding: EdgeInsets.zero,
-          lineHeight: 8,
-          linearGradient: const LinearGradient(
-            colors: <Color>[Color(0xffB07BE6), Color(0xff5BA2E0)],
+        Container(
+          padding: const EdgeInsets.all(1.0),
+          decoration: BoxDecoration(
+            border: Border.all(color: Theme.of(context).colorScheme.outline),
+            borderRadius: BorderRadius.circular(100.0),
           ),
-          barRadius: const Radius.circular(10),
-          percent: percent,
+          child: LinearPercentIndicator(
+            padding: EdgeInsets.zero,
+            lineHeight: 10,
+            backgroundColor: Colors.transparent,
+            progressColor: FWTheme.primary.withOpacity(.3 + percent * 7 / 10),
+            barRadius: const Radius.circular(10.0),
+            percent: percent,
+          ),
         ),
       ],
     );
@@ -263,46 +327,53 @@ class TrainerView extends StatelessWidget {
     Size screenSize = MediaQuery.of(context).size;
     // int _current = 0;
 
-    List<Widget> items = TrainerPresenter.categories()
-        .map((category) => TraineeCard(
-            trainees: TrainerPresenter.trainees()
-                .where((element) => element.category == category)))
-        .toList();
+    return Stack(
+      children: [
+        Container(
+          alignment: Alignment.topCenter,
+          constraints: BoxConstraints(minWidth: screenSize.width),
+          child: GetBuilder<TrainerPresenter>(
+            builder: (controller) {
+              List<Widget> items = [const TraineeCardView()];
+              items.addAll(
+                controller.categories.map((group) {
+                  return TraineeCardView(group: group);
+                }).toList(),
+              );
 
-    items.insert(0, TraineeCard(trainees: TrainerPresenter.trainees()));
-
-    List<String> currentCategory = TrainerPresenter.categories();
-    currentCategory.insert(0, '전체보기');
-
-    return Container(
-      alignment: Alignment.topCenter,
-      constraints: BoxConstraints(minWidth: screenSize.width),
-      child: GetBuilder<TrainerPresenter>(
-        builder: (controller) {
-          return Column(
-            children: [
-              TraineeCategory(
-                category: currentCategory[controller.pageIndex],
-              ),
-              Expanded(
-                child: CarouselSlider(
-                  carouselController: TrainerPresenter.carouselCont,
-                  items: items,
-                  options: CarouselOptions(
-                      height: double.infinity,
-                      viewportFraction: 1.0,
-                      scrollPhysics: controller.selectMod
-                          ? const NeverScrollableScrollPhysics()
-                          : null,
-                      onPageChanged: (index, reason) {
-                        controller.indexChanged(index);
-                      }),
-                ),
-              ),
-            ],
-          );
-        },
-      ),
+              return controller.plans.isEmpty
+                  ? const NoPlanWidget(role: Role.trainer)
+                  : Column(
+                children: [
+                  const TraineeCategoryBar(),
+                  Expanded(
+                    child: CarouselSlider(
+                      carouselController: TrainerPresenter.carouselCont,
+                      items: items,
+                      options: CarouselOptions(
+                        height: double.infinity,
+                        viewportFraction: 1.0,
+                        scrollPhysics: controller.selectMode || controller.categories.isEmpty
+                            ? const NeverScrollableScrollPhysics()
+                            : null,
+                        onPageChanged: (index, _) => controller.pageChanged(index),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+        GetBuilder<GlobalPresenter>(
+          builder: (controller) {
+            if (!controller.loading) return Container();
+            return CircularProgressIndicator(
+              backgroundColor: Theme.of(context).colorScheme.onSurface.withOpacity(.7),
+            );
+          },
+        ),
+      ],
     );
   }
 }

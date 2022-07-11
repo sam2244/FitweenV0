@@ -11,6 +11,7 @@ class FWText extends StatelessWidget {
     this.size,
     this.weight,
     this.family,
+    this.align,
     this.overflow = false,
   }) : super(key: key);
 
@@ -20,6 +21,7 @@ class FWText extends StatelessWidget {
   final double? size;
   final FWFontWeight? weight;
   final String? family;
+  final TextAlign? align;
   final bool overflow;
 
   @override
@@ -42,11 +44,10 @@ class FWText extends StatelessWidget {
       fontFamily: family,
     );
 
-    return Text(
-      data,
+    return Text(data,
+      textAlign: align,
       maxLines: overflow ? 1 : 2,
-      style: style?.merge(textStyle)
-          ?? textStyle.merge(style),
+      style: style?.merge(textStyle) ?? textStyle.merge(style),
     );
   }
 }
