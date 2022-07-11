@@ -8,6 +8,7 @@ import 'package:fitween1/view/widget/button.dart';
 import 'package:fitween1/view/widget/image.dart';
 import 'package:fitween1/view/widget/text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
@@ -64,7 +65,7 @@ class NoPlanWidget extends StatelessWidget {
         children: [
           SvgPicture.asset(
             'assets/image/page/add_plan/etc.svg',
-            height: 300.0,
+            height: 300.0.h,
           ),
           Padding(
             padding: const EdgeInsets.all(10.0),
@@ -89,8 +90,8 @@ class PlanAddButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FWButton(
-      width: 193.0,
-      height: 52.0,
+      width: 193.0.w,
+      height: 52.0.h,
       onPressed: {
         Role.trainer: TrainerPresenter.addPlanButtonPressed,
         Role.trainee: TraineePresenter.joinPlanButtonPressed,
@@ -100,11 +101,11 @@ class PlanAddButton extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            padding: EdgeInsets.symmetric(horizontal: 10.0.w),
             child: Row(
               children: [
                 const Icon(Icons.add),
-                const SizedBox(width: 10.0),
+                SizedBox(width: 10.0.w),
                 FWText({
                   Role.trainer: '새 플랜 추가하기',
                   Role.trainee: '새 플랜 가입하기',
