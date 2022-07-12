@@ -126,10 +126,8 @@ class TraineeExerciseCard extends StatelessWidget {
 
     return GetBuilder<TrainerDetailPresenter>(
       builder: (controller) {
+        todoList = plan.todos[controller.selectedDay];
         print(plan.todos);
-        todoList =
-            plan.todos[controller.selectedDay.subtract(Duration(days: 1))];
-        print(todoList);
 
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 4.0),

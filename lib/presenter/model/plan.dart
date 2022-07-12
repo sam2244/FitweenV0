@@ -13,6 +13,7 @@ class PlanPresenter extends GetxController {
     plan.trainer = await UserPresenter.loadDB(plan.trainerUid!);
     update();
   }
+
   Future loadTrainee() async {
     if (plan.traineeUid == null) return;
     plan.trainee = await UserPresenter.loadDB(plan.traineeUid!);
@@ -25,7 +26,6 @@ class PlanPresenter extends GetxController {
     var data = await FirebasePresenter.f.collection('plans').doc(plan.id).get();
     Map<String, dynamic> json = data.data() ?? {};
     if (data.exists) plan.fromJson(json);
-
     return plan;
   }
 

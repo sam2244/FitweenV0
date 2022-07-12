@@ -192,17 +192,41 @@ class Plan {
   static Map<DateTime, List<Todo>>? toTodos(List<dynamic>? jsonTodos) {
     Map<DateTime, List<Todo>> result = {};
     if (jsonTodos == null) return null;
-    for (var jsonTodo in jsonTodos) {
-      result[jsonTodo['date'].toDate()] = jsonTodo['todos'] ?? [];
+    for (var jsonTodoList in jsonTodos) {
+      List<Todo> todoList = [];
+      for (var jsonTodo in jsonTodoList['todoList']) {
+        Map<String, int> numbers = {};
+        List<Weekday> selectedDays = [];
+        for (var jsonNumber in jsonTodo['numbers']) {
+          numbers[jsonNumber['unit']] = jsonNumber['number'];
+        }
+        for (var jsonDay in jsonTodo['selectedDays']) {
+          selectedDays.add(stringToWeekDay(jsonDay));
+        }
+        todoList.add(Todo(
+          name: jsonTodo['name'],
+          numbers: numbers,
+          selectedDays: selectedDays,
+        ));
+      }
+      result[jsonTodoList['date'].toDate()] = todoList;
     }
     return result;
   }
 
-  static Map<DateTime, List<Todo>>? toDiets(List<dynamic>? jsonDiets) {
-    Map<DateTime, List<Todo>> result = {};
+  static Map<DateTime, List<Diet>>? toDiets(List<dynamic>? jsonDiets) {
+    Map<DateTime, List<Diet>> result = {};
     if (jsonDiets == null) return null;
-    for (var jsonDiet in jsonDiets) {
-      result[jsonDiet['date'].toDate()] = jsonDiet['diets'] ?? [];
+    for (var jsonDietList in jsonDiets) {
+      List<Diet> dietList = [];
+      for (var jsonDiet in jsonDietList['dietList']) {
+        dietList.add(Diet(
+          description: jsonDiet['description'],
+          type: jsonDiet['type'],
+          selectedDays: jsonDiet['selectedDays'],
+        ));
+      }
+      result[jsonDietList['date'].toDate()] = dietList;
     }
     return result;
   }
