@@ -1,0 +1,21 @@
+{
+  "todos": [
+    {
+      "date": "Timestamp",
+      "todoList": [
+        {
+          "selectedDays": ["String"],
+          "name": "String",
+          "numbers": [
+            {
+              "number": "Number",
+              "unit": "String"
+            }
+          ],
+          "completed": "Boolean"
+        }
+      ]
+    }
+  ]
+}
+

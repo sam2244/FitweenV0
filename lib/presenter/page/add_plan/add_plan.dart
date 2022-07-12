@@ -45,16 +45,16 @@ class AddPlanPresenter extends GetxController {
   static final trainerPresenter = Get.find<TrainerPresenter>();
 
   void initialize() {
+    initDates();
     pageIndex = 0;
-    hintText = Plan.purposes.first;
+    plan.purpose = Plan.purposes.first;
+    hintText = plan.purpose!;
     fieldActive = false;
     period = 1;
 
     selectedDays = [];
     todos = [];
     diets = [];
-
-    initDates();
   }
 
   // 현재 페이지 인덱스 증가
@@ -71,8 +71,15 @@ class AddPlanPresenter extends GetxController {
 
   // 뒤로가기 버튼 클릭 트리거
   void backPressed() {
-    if (pageIndex == 0) { Get.back(); }
+    bool isLastPage = pageIndex == CarouselView.widgetCount - 1;
 
+    if (pageIndex == 0) { Get.back(); }
+    if (isLastPage) {
+      if (!plan.isDiet) {
+        carouselCont.jumpToPage(3);
+        pageIndexDecrease();
+      }
+    }
     carouselCont.previousPage(
       curve: transitionCurve,
       duration: transitionDuration,
@@ -82,11 +89,15 @@ class AddPlanPresenter extends GetxController {
 
   // 다음 버튼 클릭 트리거
   void nextPressed() {
-    bool isLastPage = plan.isDiet && pageIndex == CarouselView.widgetCount - 1;
-    isLastPage |= !plan.isDiet && pageIndex == CarouselView.widgetCount - 2;
-
-    if (pageIndex == 1) initDates();
-    if (pageIndex == 2) plan.endDate = Chat.fullTime(plan.endDate!);
+    extendDiets();
+    bool isLastPage = pageIndex == CarouselView.widgetCount - 1;
+    if (pageIndex == 2) {
+      plan.endDate = Chat.fullTime(plan.endDate!);
+      if (!plan.isDiet) {
+        carouselCont.jumpToPage(3);
+        pageIndexIncrease();
+      }
+    }
     if (pageIndex == 3) plan.generatePlanId();
     if (isLastPage) {
       extendTodos(); extendDiets(); complete();
@@ -131,15 +142,9 @@ class AddPlanPresenter extends GetxController {
   }
 
   void initDates() {
-    if (plan.startDate == null) {
-      if (plan.endDate == null) { plan.startDate = Plan.today; }
-      else { plan.startDate = plan.endDate; }
-    }
-    if (plan.endDate == null) {
-      if (plan.startDate == null) { plan.endDate = Plan.today; }
-      else { plan.endDate = plan.startDate; }
-    }
-
+    plan.startDate = Plan.today;
+    plan.endDate = Plan.today;
+    setPeriod();
   }
 
   void setPeriod() {
@@ -160,8 +165,6 @@ class AddPlanPresenter extends GetxController {
   }
 
   void startDateSelected() async {
-    initDates();
-
     Future<DateTime?> date = showDatePicker(
       context: Get.context!,
       initialDate: plan.startDate!,
@@ -177,8 +180,6 @@ class AddPlanPresenter extends GetxController {
   }
 
   void endDateSelected() async {
-    initDates();
-
     Future<DateTime?> date = showDatePicker(
       context: Get.context!,
       initialDate: plan.endDate!,
@@ -193,8 +194,6 @@ class AddPlanPresenter extends GetxController {
   }
 
   void periodSelected(int period) {
-    initDates();
-
     this.period = period;
     plan.endDate = plan.startDate!.add(Duration(days: period - 1));
 
@@ -265,15 +264,14 @@ class AddPlanPresenter extends GetxController {
   void extendTodos() {
     DateTime date = plan.startDate!;
     while (date.isBefore(plan.endDate!)) {
-      List<Todo> todos = getTodos([Plan.toWeekday(date)]);
-      List<Todo> dailyTodos = [];
+      List<Todo> dailyTodoList = [];
 
       for (Todo todo in todos) {
         if (todo.selectedDays.contains(Plan.toWeekday(date))) {
-          dailyTodos.add(todo);
+          dailyTodoList.add(todo);
         }
       }
-      plan.todos[date] = dailyTodos;
+      plan.todos[date] = dailyTodoList;
       date = date.add(const Duration(days: 1));
     }
   }
@@ -306,7 +304,7 @@ class AddPlanPresenter extends GetxController {
     List<Diet> result = [];
     for (Diet diet in diets) {
       bool add = true;
-      for (Weekday day in selectedDays) {
+      for (Weekday day in diet.selectedDays) {
         if (!days.contains(day)) add = false;
       }
       if (add
@@ -324,7 +322,14 @@ class AddPlanPresenter extends GetxController {
   void extendDiets() {
     DateTime date = plan.startDate!;
     while (date.isBefore(plan.endDate!)) {
-      plan.diets[date] = getDiets([Plan.toWeekday(date)]);
+      List<Diet> dailyDietList = [];
+
+      for (Diet diet in diets) {
+        if (diet.selectedDays.contains(Plan.toWeekday(date))) {
+          dailyDietList.add(diet);
+        }
+      }
+      plan.diets[date] = dailyDietList;
       date = date.add(const Duration(days: 1));
     }
   }

@@ -1,4 +1,3 @@
-// Carousel 뷰 위젯
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fitween1/global/config/theme.dart';
 import 'package:fitween1/model/plan/plan.dart';
@@ -9,6 +8,7 @@ import 'package:fitween1/presenter/page/main/trainer.dart';
 import 'package:fitween1/view/page/main/widget.dart';
 import 'package:fitween1/view/widget/text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
@@ -59,7 +59,7 @@ class TraineeCategoryBar extends StatelessWidget {
     final controller = Get.find<TrainerPresenter>();
 
     return Padding(
-      padding: const EdgeInsets.only(top: 20.0),
+      padding: EdgeInsets.only(top: 20.0.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -74,7 +74,7 @@ class TraineeCategoryBar extends StatelessWidget {
             ),
           Container(
             alignment: Alignment.center,
-            width: MediaQuery.of(context).size.width - 150,
+            width: MediaQuery.of(context).size.width.w - 150.w,
             child: FWText(
               controller.currentGroup,
               style: Theme.of(context).textTheme.headlineMedium,

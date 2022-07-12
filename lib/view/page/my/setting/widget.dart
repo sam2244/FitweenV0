@@ -4,6 +4,7 @@ import 'package:fitween1/presenter/global.dart';
 import 'package:fitween1/view/widget/image.dart';
 import 'package:fitween1/view/widget/text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 // 설정 페이지의 위젯 모음
@@ -47,7 +48,7 @@ class MyProfileImageButton extends StatelessWidget {
           return Column(
             children: [
               ProfileImageCircle(
-                size: 100.0,
+                size: 100.0.h,
                 user: SettingPresenter.userPresenter.user,
                 onPressed: () => GlobalPresenter.imageUpload(context, Theme.of(context))
                 //onPressed: () => controller.profileImageChange(context,Theme.of(context)),
@@ -56,7 +57,7 @@ class MyProfileImageButton extends StatelessWidget {
                 onPressed: () => GlobalPresenter.imageUpload(context, Theme.of(context)),
                 //onPressed: () => controller.profileImageChange(context,Theme.of(context)),
                 label: const Icon(Icons.add_photo_alternate_outlined, size: 24),
-                icon: FWText("사진 변경", size: 20.0,
+                icon: FWText("사진 변경", size: 20.0.h,
                     style: Theme.of(context).textTheme.labelLarge,
                     color: Theme.of(context).colorScheme.primary,
                 ),
@@ -83,7 +84,7 @@ class NameTextField extends StatelessWidget {
                   children: [
                     Container(
                       alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 8.0),
+                      padding: EdgeInsets.fromLTRB(0.0, 10.0.h, 0.0, 8.0.h),
                       child: FWText(
                         "이름",
                         style: Theme.of(context).textTheme.headlineSmall,
@@ -106,7 +107,7 @@ class NameTextField extends StatelessWidget {
                           Align(
                               alignment: Alignment.centerLeft,
                               child: FWText(
-                                SettingPresenter.userPresenter.user.nickname!, size: 20.0,
+                                SettingPresenter.userPresenter.user.nickname!, size: 20.0.h,
                                 style: Theme.of(context).textTheme.labelLarge,
                                 color: Theme.of(context).colorScheme.onSurface,
                               ),
@@ -139,7 +140,7 @@ class HeightTextField extends StatelessWidget {
                   children: [
                     Container(
                       alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 8.0),
+                      padding: EdgeInsets.fromLTRB(0.0, 10.0.h, 0.0, 8.0.h),
                       child: FWText(
                         "신장",
                         style: Theme.of(context).textTheme.headlineSmall,
@@ -162,7 +163,7 @@ class HeightTextField extends StatelessWidget {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: FWText(
-                              "${SettingPresenter.userPresenter.user.height} cm", size: 20.0,
+                              "${SettingPresenter.userPresenter.user.height} cm", size: 20.0.h,
                               style: Theme.of(context).textTheme.labelLarge,
                               color: Theme.of(context).colorScheme.onSurface,
                             ),
@@ -190,7 +191,7 @@ class LogOutButton extends StatelessWidget {
           return Column(
             children: [
               Container(
-                margin: const EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 10.0),
+                margin: EdgeInsets.fromLTRB(0.0, 50.0.h, 0.0, 10.0.h),
                 width: 343,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -202,7 +203,7 @@ class LogOutButton extends StatelessWidget {
                   onPressed: SettingPresenter.logoutPressed,
                   child: FWText(
                     '로그아웃',
-                    size: 15.0,
+                    size: 15.0.h,
                     style: Theme.of(context).textTheme.titleMedium,
                     color: Theme.of(context).colorScheme.inverseSurface,
                   ),
@@ -235,7 +236,7 @@ class DeleteUserButton extends StatelessWidget {
                   onPressed: () => SettingPresenter.askDelete(Theme.of(context)),
                   child: FWText(
                     '계정 삭제하기',
-                    size: 15.0,
+                    size: 15.0.h,
                     style: Theme.of(context).textTheme.titleMedium,
                     color: Theme.of(context).colorScheme.onPrimary,
                   ),

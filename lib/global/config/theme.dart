@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class FWTheme {
@@ -15,11 +16,19 @@ class FWTheme {
   static const Color white = Colors.white;
   static const Color fitween1 = Color(0xFF0086FF);
   static const Color fitween2 = Color(0xFF00DBFF);
+  static const Color fitween3 = Color(0xFFA5C8FF);
+  static const Color fitween4 = Color(0xFFD4E3FF);
   static const LinearGradient fitweenGradient = LinearGradient(
     colors: [fitween1, fitween2],
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
   );
+  static const LinearGradient cardGradient = LinearGradient(
+    colors: [fitween4, fitween3],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  );
+
 
   // materialColor
   static const MaterialColor primary = MaterialColor(0xFF018DFF, {
@@ -234,86 +243,86 @@ class FWTheme {
   /// typography
   static const fontFamily = 'Noto_Sans_KR';
 
-  static TextTheme textTheme = const TextTheme(
+  static TextTheme textTheme = TextTheme(
 
     //Headline
     headlineLarge: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w700,
-      fontSize: 32.0,
-      height: 40 / 32,
+      fontSize: 32.0.sp,
+      height: (40 / 32).h,
     ),
     headlineMedium: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w700,
-      fontSize: 24.0,
-      height: 36 / 24,
+      fontSize: 24.0.sp,
+      height: (36 / 24).h,
     ),
     headlineSmall: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w700,
-      fontSize: 16.0,
-      height: 32 / 16,
+      fontSize: 16.0.sp,
+      height: (32 / 16).h,
     ),
 
     //Title
     titleLarge: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w500,
-      fontSize: 22.0,
-      height: 28 / 22,
+      fontSize: 22.0.sp,
+      height: (28 / 22).h,
     ),
     titleMedium: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w500,
-      fontSize: 18.0,
-      height: 24 / 18,
+      fontSize: 18.0.sp,
+      height: (24 / 18).h,
     ),
     titleSmall: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w500,
-      fontSize: 14.0,
-      height: 20 / 14,
+      fontSize: 14.0.sp,
+      height: (20 / 14).h,
     ),
 
     //Label
     labelLarge: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w500,
-      fontSize: 16.0,
-      height: 20 / 16,
+      fontSize: 16.0.sp,
+      height: (20 / 16).h,
     ),
     labelMedium: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w500,
-      fontSize: 12.0,
-      height: 16 / 12,
+      fontSize: 12.0.sp,
+      height: (16 / 12).h,
     ),
     labelSmall: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w500,
-      fontSize: 11.0,
-      height: 16 / 11,
+      fontSize: 11.0.sp,
+      height: (16 / 11).h,
     ),
 
     //Body
     bodyLarge: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w400,
-      fontSize: 16.0,
-      height: 24 / 16,
+      fontSize: 16.0.sp,
+      height: (24 / 16).h,
     ),
     bodyMedium: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w400,
-      fontSize: 14.0,
-      height: 20 / 14,
+      fontSize: 14.0.sp,
+      height: (20 / 14).h,
     ),
     bodySmall: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w400,
-      fontSize: 12.0,
-      height: 16 / 12,
+      fontSize: 12.0.sp,
+      height: (16 / 12).h,
     ),
   );
 }
