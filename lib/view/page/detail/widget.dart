@@ -5,11 +5,12 @@ import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:weekly_date_picker/weekly_date_picker.dart';
 
-import '../../../presenter/page/main/trainer.dart';
+import '../../../model/plan/plan.dart';
+import '../../../model/plan/todo.dart';
 
-class TraineeDetailPage extends StatelessWidget {
-  final Trainee trainee;
-  const TraineeDetailPage({Key? key, required this.trainee}) : super(key: key);
+class PlanDetailPage extends StatelessWidget {
+  final Plan plan;
+  const PlanDetailPage({Key? key, required this.plan}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +19,9 @@ class TraineeDetailPage extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            TraineeInformation(trainee: trainee),
+            TraineeInformation(plan: plan),
             const TraineeWeeklyCalendar(),
-            const TraineeExerciseCard(),
+            TraineeExerciseCard(plan: plan),
           ],
         ),
       ),
@@ -29,11 +30,13 @@ class TraineeDetailPage extends StatelessWidget {
 }
 
 class TraineeInformation extends StatelessWidget {
-  final Trainee trainee;
-  const TraineeInformation({Key? key, required this.trainee}) : super(key: key);
+  final Plan plan;
+  const TraineeInformation({Key? key, required this.plan}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final difference = plan.endDate!.difference(plan.startDate!).inDays;
+
     return Container(
       padding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 12.0),
       height: 124.0,
@@ -46,13 +49,13 @@ class TraineeInformation extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 FWText(
-                  'D - 60',
+                  'D - $difference',
                   style: Theme.of(context).textTheme.titleSmall,
                   color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
                 const SizedBox(height: 8.0),
                 FWText(
-                  trainee.name,
+                  plan.trainee!.nickname!,
                   style: Theme.of(context).textTheme.titleMedium,
                   color: Theme.of(context).colorScheme.onSurface,
                 ),
@@ -114,22 +117,17 @@ class TraineeWeeklyCalendar extends StatelessWidget {
 }
 
 class TraineeExerciseCard extends StatelessWidget {
-  const TraineeExerciseCard({Key? key}) : super(key: key);
+  final Plan plan;
+  const TraineeExerciseCard({Key? key, required this.plan}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Map? sameDay;
-    int? sanDayIndex;
+    List<Todo>? todoList;
 
     return GetBuilder<TrainerDetailPresenter>(
       builder: (controller) {
-        sameDay = controller.demo.firstWhereOrNull(
-          (element) =>
-              element['dateTime'].year == controller.selectedDay.year &&
-              element['dateTime'].month == controller.selectedDay.month &&
-              element['dateTime'].day == controller.selectedDay.day,
-        );
-        sameDay != null ? sanDayIndex = controller.demo.indexOf(sameDay!) : 0;
+        todoList = plan.todos[controller.selectedDay];
+        print(plan.todos);
 
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -148,16 +146,17 @@ class TraineeExerciseCard extends StatelessWidget {
                   Divider(
                     color: Theme.of(context).colorScheme.outline,
                   ),
-                  if (sameDay != null)
-                    for (int i = 0; i < sameDay!['exercises'].length; i++)
+                  if (todoList != null)
+                    for (int i = 0; i < todoList!.length; i++)
                       ListTile(
                         leading: Checkbox(
-                          value: sameDay!['completed'][i],
-                          onChanged: (value) =>
-                              controller.checkboxState(sanDayIndex!, i, value!),
+                          value: todoList![i].completed,
+                          onChanged: (bool? value) {},
+                          // onChanged: (value) =>
+                          //     controller.checkboxState(i, value!),
                         ),
                         title: FWText(
-                          sameDay!['exercises'][i],
+                          todoList![i].toString(),
                           style: Theme.of(context).textTheme.bodyLarge,
                           color: Theme.of(context).colorScheme.onSurface,
                         ),

@@ -8,9 +8,17 @@ import 'package:intl/intl.dart';
 
 // 플랜의 상태
 enum PlanState { training, fail, complete }
+
 // 요일
 enum Weekday {
-  mon, tue, wed, thu, fri, sat, sun;
+  mon,
+  tue,
+  wed,
+  thu,
+  fri,
+  sat,
+  sun;
+
   get kr => ['월', '화', '수', '목', '금', '토', '일'][index];
 }
 
@@ -33,8 +41,11 @@ class Plan {
   String? traineeUid;
 
   Plan({String? id}) {
-    if (id == null) { generatePlanId(); }
-    else { this.id = id; }
+    if (id == null) {
+      generatePlanId();
+    } else {
+      this.id = id;
+    }
     todos = initMap<Todo>();
     diets = initMap<Diet>();
   }
@@ -71,19 +82,19 @@ class Plan {
   }
 
   Map<String, dynamic> toMap() => {
-    'group': group,
-    'id': id,
-    'purpose': purpose,
-    'state': state,
-    'trainer': trainer,
-    'trainee': trainee,
-    'trainerUid': trainerUid,
-    'traineeUid': traineeUid,
-    'startDate': startDate,
-    'endDate': endDate,
-    'isDiet': isDiet,
-    'isWeight': isWeight,
-  };
+        'group': group,
+        'id': id,
+        'purpose': purpose,
+        'state': state,
+        'trainer': trainer,
+        'trainee': trainee,
+        'trainerUid': trainerUid,
+        'traineeUid': traineeUid,
+        'startDate': startDate,
+        'endDate': endDate,
+        'isDiet': isDiet,
+        'isWeight': isWeight,
+      };
 
   // json 데이터를 plan 객체에 주입
   void fromJson(Map<String, dynamic> json) {
@@ -98,33 +109,41 @@ class Plan {
 
   // plan 객체에서 json 데이터 추출
   Map<String, dynamic> toJson() => {
-    'group': group,
-    'id': id,
-    'state': state.name,
-    'purpose': purpose,
-    'trainerUid': trainerUid,
-    'traineeUid': traineeUid,
-    'startDate': startDate,
-    'endDate': endDate,
-    'todos': todos.entries.map((dateTodo) => {
-      'date': dateTodo.key,
-      'todoList': dateTodo.value.map((todo) => todo.toJson()).toList(),
-    }).toList(),
-    'diets': diets.entries.map((dateDiet) => {
-      'date': dateDiet.key,
-      'dietList': dateDiet.value.map((diet) => diet.toJson()).toList(),
-    }).toList(),
-    'isDiet': isDiet,
-    'isWeight': isWeight,
-  };
+        'group': group,
+        'id': id,
+        'state': state.name,
+        'purpose': purpose,
+        'trainerUid': trainerUid,
+        'traineeUid': traineeUid,
+        'startDate': startDate,
+        'endDate': endDate,
+        'todos': todos.entries
+            .map((dateTodo) => {
+                  'date': dateTodo.key,
+                  'todoList':
+                      dateTodo.value.map((todo) => todo.toJson()).toList(),
+                })
+            .toList(),
+        'diets': diets.entries
+            .map((dateDiet) => {
+                  'date': dateDiet.key,
+                  'dietList':
+                      dateDiet.value.map((diet) => diet.toJson()).toList(),
+                })
+            .toList(),
+        'isDiet': isDiet,
+        'isWeight': isWeight,
+      };
 
   void generatePlanId() {
     int length = 7;
     const String chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
     id = String.fromCharCodes(
-      Iterable.generate(length, (_) => chars.codeUnitAt(
-        Random().nextInt(chars.length),
-      )),
+      Iterable.generate(
+          length,
+          (_) => chars.codeUnitAt(
+                Random().nextInt(chars.length),
+              )),
     );
   }
 
@@ -156,7 +175,7 @@ class Plan {
   String toString() {
     return '\n\nPLAN INFO\n${toMap().entries.map(
           (data) => '  ${data.key}: ${data.value}',
-    ).join('\n')}\n';
+        ).join('\n')}\n';
   }
 
   // 문자열을 상태 enum 으로 전환 ('training' => State.training)
@@ -173,22 +192,47 @@ class Plan {
   static Map<DateTime, List<Todo>>? toTodos(List<dynamic>? jsonTodos) {
     Map<DateTime, List<Todo>> result = {};
     if (jsonTodos == null) return null;
-    for (var jsonTodo in jsonTodos) {
-      result[jsonTodo['date'].toDate()] = jsonTodo['todos'] ?? [];
+    for (var jsonTodoList in jsonTodos) {
+      List<Todo> todoList = [];
+      for (var jsonTodo in jsonTodoList['todoList']) {
+        Map<String, int> numbers = {};
+        List<Weekday> selectedDays = [];
+        for (var jsonNumber in jsonTodo['numbers']) {
+          numbers[jsonNumber['unit']] = jsonNumber['number'];
+        }
+        for (var jsonDay in jsonTodo['selectedDays']) {
+          selectedDays.add(stringToWeekDay(jsonDay));
+        }
+        todoList.add(Todo(
+          name: jsonTodo['name'],
+          numbers: numbers,
+          selectedDays: selectedDays,
+        ));
+      }
+      result[jsonTodoList['date'].toDate()] = todoList;
     }
     return result;
   }
 
-  static Map<DateTime, List<Todo>>? toDiets(List<dynamic>? jsonDiets) {
-    Map<DateTime, List<Todo>> result = {};
+  static Map<DateTime, List<Diet>>? toDiets(List<dynamic>? jsonDiets) {
+    Map<DateTime, List<Diet>> result = {};
     if (jsonDiets == null) return null;
-    for (var jsonDiet in jsonDiets) {
-      result[jsonDiet['date'].toDate()] = jsonDiet['diets'] ?? [];
+    for (var jsonDietList in jsonDiets) {
+      List<Diet> dietList = [];
+      for (var jsonDiet in jsonDietList['dietList']) {
+        dietList.add(Diet(
+          description: jsonDiet['description'],
+          type: jsonDiet['type'],
+          selectedDays: jsonDiet['selectedDays'],
+        ));
+      }
+      result[jsonDietList['date'].toDate()] = dietList;
     }
     return result;
   }
 
-  static dateToString(DateTime date) => DateFormat('yyyy년 MM월 dd일').format(date);
+  static dateToString(DateTime date) =>
+      DateFormat('yyyy년 MM월 dd일').format(date);
   static DateTime get today => Chat.removeTime(DateTime.now());
   static DateTime get tomorrow => Chat.fullTime(today);
 

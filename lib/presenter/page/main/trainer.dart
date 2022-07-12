@@ -31,6 +31,7 @@ class TrainerPresenter extends GetxController {
   }
 
   void initialize() async {
+    await userPresenter.loadPlans();
     plans = userPresenter.user.trainerPlans ?? [];
     categories = userPresenter.allCategories;
     planCount = plans.length;
@@ -85,9 +86,10 @@ class TrainerPresenter extends GetxController {
   void planTilePressed({Plan? plan, int? index}) {
     if (selectMode) {
       toggleSelectState(index!);
-    }
-    else {
+    } else {
       // 트레이너가 피트위너를 등록하는 방법
+      initialize();
+      Get.toNamed('/detail/trainer', arguments: plan);
     }
   }
 
@@ -111,6 +113,7 @@ class TrainerPresenter extends GetxController {
     update();
   }
 }
+
 class Trainee {
   final String category;
   final String name;
