@@ -85,9 +85,9 @@ class TrainerPresenter extends GetxController {
   void planTilePressed({Plan? plan, int? index}) {
     if (selectMode) {
       toggleSelectState(index!);
-    }
-    else {
+    } else {
       // 트레이너가 피트위너를 등록하는 방법
+      Get.toNamed('/detail/trainer', arguments: plan);
     }
   }
 
@@ -111,6 +111,7 @@ class TrainerPresenter extends GetxController {
     update();
   }
 }
+
 class Trainee {
   final String category;
   final String name;

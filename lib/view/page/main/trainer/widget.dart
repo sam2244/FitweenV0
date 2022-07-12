@@ -17,41 +17,38 @@ class SelectModeBottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<TrainerPresenter>(
-      builder: (controller) {
-        return BottomAppBar(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.drive_file_move_outline),
-                  iconSize: 40.0,
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.add),
-                  iconSize: 40.0,
-                ),
-                IconButton(
-                  onPressed: () {
-                    controller.resetSelectState();
-                    controller.changeMode(false);
-                  },
-                  icon: const Icon(Icons.close_rounded),
-                  iconSize: 40.0,
-                ),
-              ],
-            ),
+    return GetBuilder<TrainerPresenter>(builder: (controller) {
+      return BottomAppBar(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.drive_file_move_outline),
+                iconSize: 40.0,
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.add),
+                iconSize: 40.0,
+              ),
+              IconButton(
+                onPressed: () {
+                  controller.resetSelectState();
+                  controller.changeMode(false);
+                },
+                icon: const Icon(Icons.close_rounded),
+                iconSize: 40.0,
+              ),
+            ],
           ),
-        );
-      }
-    );
+        ),
+      );
+    });
   }
 }
-
 
 // 트레이너 메인 페이지 CategoryBar
 class TraineeCategoryBar extends StatelessWidget {
@@ -67,14 +64,14 @@ class TraineeCategoryBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           if (!controller.selectMode)
-          IconButton(
-            onPressed: controller.backPressed,
-            icon: Icon(
-              Icons.arrow_back_ios_new,
-              color: Theme.of(context).colorScheme.primary,
+            IconButton(
+              onPressed: controller.backPressed,
+              icon: Icon(
+                Icons.arrow_back_ios_new,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              iconSize: 24,
             ),
-            iconSize: 24,
-          ),
           Container(
             alignment: Alignment.center,
             width: MediaQuery.of(context).size.width - 150,
@@ -84,14 +81,14 @@ class TraineeCategoryBar extends StatelessWidget {
             ),
           ),
           if (!controller.selectMode)
-          IconButton(
-            onPressed: controller.nextPressed,
-            icon: Icon(
-              Icons.arrow_forward_ios,
-              color: Theme.of(context).colorScheme.primary,
+            IconButton(
+              onPressed: controller.nextPressed,
+              icon: Icon(
+                Icons.arrow_forward_ios,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              iconSize: 24,
             ),
-            iconSize: 24,
-          ),
         ],
       ),
     );
@@ -108,8 +105,9 @@ class TraineeCardView extends StatelessWidget {
     return GetBuilder<TrainerPresenter>(
       builder: (controller) {
         List<Plan> filteredPlans = [];
-        if (group == null) { filteredPlans = [...controller.plans]; }
-        else {
+        if (group == null) {
+          filteredPlans = [...controller.plans];
+        } else {
           filteredPlans = controller.plans.where((plan) {
             return plan.group == group;
           }).toList();
@@ -131,7 +129,10 @@ class TraineeCardView extends StatelessWidget {
                           ? Theme.of(context).colorScheme.primaryContainer
                           : Colors.transparent,
                       child: InkWell(
-                        onTap: () => controller.planTilePressed(index: index),
+                        onTap: () => controller.planTilePressed(
+                          plan: filteredPlans[index],
+                          index: index,
+                        ),
                         onLongPress: () {
                           controller.changeMode(true);
                           controller.toggleSelectState(index);
@@ -164,7 +165,6 @@ class TraineeCardView extends StatelessWidget {
   }
 }
 
-
 // 트레이너 메인 페이지 Trainee Information
 class TraineeInfoTile extends StatelessWidget {
   final Plan plan;
@@ -186,19 +186,21 @@ class TraineeInfoTile extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 15.0),
-          trainee == null ? FWText(
-            '피트위너를 등록하세요.\n${plan.id}',
-            color: Theme.of(context).colorScheme.onSurface,
-            style: Theme.of(context).textTheme.labelLarge,
-          ) : Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TraineeNameWidget(trainee: trainee),
-                Expanded(child: TraineeGraphView(plan: plan)),
-              ],
-            ),
-          ),
+          trainee == null
+              ? FWText(
+                  '피트위너를 등록하세요.\n${plan.id}',
+                  color: Theme.of(context).colorScheme.onSurface,
+                  style: Theme.of(context).textTheme.labelLarge,
+                )
+              : Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TraineeNameWidget(trainee: trainee),
+                      Expanded(child: TraineeGraphView(plan: plan)),
+                    ],
+                  ),
+                ),
         ],
       ),
     );
@@ -236,6 +238,7 @@ class TraineeProfileImage extends StatelessWidget {
     );
   }
 }
+
 // 트레이너 메인 페이지 CategoryBar
 class TraineeNameWidget extends StatelessWidget {
   final FWUser? trainee;
@@ -243,7 +246,8 @@ class TraineeNameWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FWText(trainee!.nickname!,
+    return FWText(
+      trainee!.nickname!,
       color: Theme.of(context).colorScheme.onSurface,
       style: Theme.of(context).textTheme.labelLarge,
     );
@@ -264,10 +268,10 @@ class TraineeGraphView extends StatelessWidget {
           rate: plan.todoRate,
         ),
         if (plan.isDiet)
-        TrainerMainPageGraph(
-          title: '식단',
-          rate: plan.dietRate,
-        ),
+          TrainerMainPageGraph(
+            title: '식단',
+            rate: plan.dietRate,
+          ),
       ],
     );
   }
@@ -344,24 +348,26 @@ class TrainerView extends StatelessWidget {
               return controller.plans.isEmpty
                   ? const NoPlanWidget(role: Role.trainer)
                   : Column(
-                children: [
-                  const TraineeCategoryBar(),
-                  Expanded(
-                    child: CarouselSlider(
-                      carouselController: TrainerPresenter.carouselCont,
-                      items: items,
-                      options: CarouselOptions(
-                        height: double.infinity,
-                        viewportFraction: 1.0,
-                        scrollPhysics: controller.selectMode || controller.categories.isEmpty
-                            ? const NeverScrollableScrollPhysics()
-                            : null,
-                        onPageChanged: (index, _) => controller.pageChanged(index),
-                      ),
-                    ),
-                  ),
-                ],
-              );
+                      children: [
+                        const TraineeCategoryBar(),
+                        Expanded(
+                          child: CarouselSlider(
+                            carouselController: TrainerPresenter.carouselCont,
+                            items: items,
+                            options: CarouselOptions(
+                              height: double.infinity,
+                              viewportFraction: 1.0,
+                              scrollPhysics: controller.selectMode ||
+                                      controller.categories.isEmpty
+                                  ? const NeverScrollableScrollPhysics()
+                                  : null,
+                              onPageChanged: (index, _) =>
+                                  controller.pageChanged(index),
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
             },
           ),
         ),
@@ -369,7 +375,8 @@ class TrainerView extends StatelessWidget {
           builder: (controller) {
             if (!controller.loading) return Container();
             return CircularProgressIndicator(
-              backgroundColor: Theme.of(context).colorScheme.onSurface.withOpacity(.7),
+              backgroundColor:
+                  Theme.of(context).colorScheme.onSurface.withOpacity(.7),
             );
           },
         ),

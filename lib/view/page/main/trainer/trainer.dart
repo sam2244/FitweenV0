@@ -15,7 +15,7 @@ class TrainerMainPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: const MainAppBar(role: Role.trainer),
-      body: TrainerView(),
+      body: const TrainerView(),
       bottomNavigationBar: GetBuilder<TrainerPresenter>(
         builder: (controller) {
           return controller.selectMode == false

@@ -1,8 +1,18 @@
+import 'package:fitween1/model/plan/todo.dart';
+import 'package:fitween1/presenter/model/plan.dart';
 import 'package:get/get.dart';
 
 // 트레이너 디테일 페이지 프리젠터
 class TrainerDetailPresenter extends GetxController {
-  DateTime selectedDay = DateTime.now();
+  DateTime selectedDay = DateTime(
+    DateTime.now().year,
+    DateTime.now().month,
+    DateTime.now().day,
+  );
+
+  static final planPresenter = Get.find<PlanPresenter>();
+  Map<DateTime, List<Todo>> todos = planPresenter.plan.todos;
+
   final demo = <Map>[
     {
       'dateTime': DateTime(
@@ -54,8 +64,13 @@ class TrainerDetailPresenter extends GetxController {
     update();
   }
 
-  void checkboxState(int index, int exercise, bool state) {
-    demo[index]['completed'][exercise] = state;
+  // void checkboxState(int index, int exercise, bool state) {
+  //   demo[index]['completed'][exercise] = state;
+  //   update();
+  // }
+
+  void checkboxState(int index, bool state) {
+    todos[selectedDay]![index].completed = state;
     update();
   }
 }

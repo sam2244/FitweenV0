@@ -12,7 +12,7 @@ class TrainerDetailPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(),
-      body: TraineeDetailPage(trainee: Get.arguments),
+      body: PlanDetailPage(plan: Get.arguments),
     );
   }
 }
